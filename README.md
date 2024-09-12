@@ -1,11 +1,11 @@
 # Desarrollo de la aplicación para gestionar eventos "QueSale?"
 
 ## Integrantes
-    -Hideki Sotero
-    -Kohji Onaja
-    -Walter Campos
-    -Luis Martinez
-    -Alvaro Sanchez
+    - Hideki Sotero
+    - Kohji Onaja
+    - Walter Campos
+    - Luis Martinez
+    - Alvaro Sanchez
 
 ## Índice
 - [Aspectos técnicos del software](#aspectos-técnicos-del-software)
