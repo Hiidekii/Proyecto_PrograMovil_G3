@@ -1,16 +1,19 @@
-# proyecto_programovil_g3
+# Desarrollo de la aplicación para gestionar eventos "QueSale?"
 
-A new Flutter project.
+- [Aspectos técnicos del software](#aspectos-técnicos-del-software)
+    - [Entorno de desarrollo](#entorno-de-desarrollo)
+    - [Diagrama de despliegue](#diagrama-de-despliegue)
+    - [Requerimientos no funcionales](#requerimientos-no-funcionales)
+    - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
+    - [Requerimientos funcionales](#requerimientos-funcionales)
+    - [Descripción de casos de uso](#descripción-de-casos-de-uso)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Aspectos técnicos del software
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Entorno de desarrollo
+### Diagrama de despliegue
+### Requerimientos no funcionales
+### Diagrama de casos de uso
+### Requerimientos funcionales
+### Descripción de casos de uso
