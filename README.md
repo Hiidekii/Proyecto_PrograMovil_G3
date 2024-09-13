@@ -138,6 +138,12 @@ Si se siguieron todos los pasos solo debería faltar la instalaciuón de Visual 
 
 ### Diagrama de despliegue
 
+![grafico_diagramadespliege](images/grafico_diagramadespliege.png)
+
+El diagrama de despliegue representa la disposición física de los componentes del sistema mostrando como estos interactúan entre sí en una cierta infraestructura. 
+
+Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Google Pixel 7 , el cual va a ejecutar nuestra app
+
 ### Requerimientos no funcionales
 
 ### Diagrama de casos de uso
