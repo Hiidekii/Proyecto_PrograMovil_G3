@@ -167,7 +167,7 @@ Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Go
 - **Privacidad**: La app debe cumplir con estándares básicos de **protección de datos personales**, asegurando que los datos sensibles no se compartan sin consentimiento.
 
 4. **Mantenimiento**
-- **Actualizaciones**: La arquitectura del código sigue un tipo de programación funcional de código limpio, garantizando que nuevas funcionalidades puedan ser agregadas sin grandes cambios al sistema.
+- **Actualizaciones**: La arquitectura del código sigue un tipo de programación funcional y orientada a objetos manteniendo código limpio, garantizando que nuevas funcionalidades puedan ser agregadas sin grandes cambios al sistema.
 - **Soporte para bugs**: El sistema debe incluir mecanismos para la **gestión de errores**.
 
 5. **Usabilidad**
