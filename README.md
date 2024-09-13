@@ -37,7 +37,8 @@ Para iniciar con el desarrollo de la aplicacion primero fue necesario realizar e
 
 El diagrama de despliegue representa la disposición física de los componentes del sistema mostrando como estos interactúan entre sí en una cierta infraestructura. 
 
-Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Google Pixel 7 , el cual va a ejecutar nuestra app
+Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Google Pixel 7 , el cual va a ejecutar nuestra app qSale desarrollada en FlutterSDK v3.19.3. Nuestro Backend y Base de datos se van a encontrar soportados en Replit. El backend qSale estará desarrollado en Python v3.12 usando el framework Django y la base de datos será una base de datos SQLite3.
+
 ### Requerimientos no funcionales
 
 ### Diagrama de casos de uso
