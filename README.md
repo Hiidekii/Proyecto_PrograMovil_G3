@@ -180,6 +180,9 @@ Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Go
 7. **Portabilidad**
 - **Migración entre dispositivos**: La app debe permitir que los usuarios accedan a su cuenta desde diferentes dispositivos sin perder datos, utilizando sincronización con el servidor backend.
 
+8. **Criterios de desarrollo**
+- **Requisitos de desarrollo**: La app será desarrollada en FlutterSDK v3.19.3 , su backend será desarrollado en Python v3.12 usando el framework DJango y su base de datos será desarrollada en SQLite3.
+
 
 ### Diagrama de casos de uso
 
