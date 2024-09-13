@@ -261,3 +261,5 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 ### Diagrama Entidad Relación
 
 ---
+
+![entidad_relacion](images/entidad_relacion.png)
