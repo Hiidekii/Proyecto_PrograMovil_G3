@@ -203,6 +203,8 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
   - El sistema debe permitir el **registro de nuevos usuarios** y administradores mediante un formulario de registro con correo electrónico, contraseña y otros datos personales.
   - El sistema debe permitir el **inicio de sesión** para usuarios registrados, validando las credenciales.
 
+![req1](images/req1.png)
+
 2. **Registro de eventos**
 - Administradores: 
   - Los administradores deben poder **crear nuevos eventos**, ingresando detalles como título, fecha, hora, lugar, descripción, y elementos del inventario necesarios (trago, snacks, etc.).
@@ -223,6 +225,8 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 - Ambos (Usuarios y Administradores): 
   - La aplicación debe permitir a los usuarios y administradores **visualizar los eventos programados** en un calendario interactivo, mostrando fechas y horas de los eventos.
 
+![req2](images/req2.png)
+
 6. **Observar pendientes de inventario**
 - Administradores: 
   - Los administradores deben poder **ver un listado de pendientes** de inventario para cada evento, como bebidas, comida, decoración, etc.
@@ -236,6 +240,8 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 - Ambos (Usuarios y Administradores): 
   - Tanto usuarios como administradores deben poder **ver los detalles completos de un evento**, que incluyen la fecha, lugar, descripción y otros datos relevantes.
 
+![req3](images/req3.png)
+
 9. **Configurar opciones de la app**
 - Ambos (Usuarios y Administradores): 
   - Los usuarios y administradores deben poder **configurar ajustes** personales en la aplicación, como notificaciones, idioma, privacidad, entre otros.
@@ -243,6 +249,8 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 10. **Observar lista de inventario para evento**
 - Administradores: 
   - Los administradores deben poder **visualizar y gestionar el inventario** completo de cada evento, viendo la cantidad de elementos disponibles y lo que aún falta por gestionar.
+
+![req4](images/req4.png)
 
 #### Diferenciación de Roles
 - **Usuarios**: 
