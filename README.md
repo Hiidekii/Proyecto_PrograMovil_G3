@@ -143,6 +143,8 @@ Si se siguieron todos los pasos solo debería faltar la instalaciuón de Visual 
 
 ---
 
+<br>
+
 ![grafico_diagramadespliege](images/grafico_diagramadespliege.png)
 
 El diagrama de despliegue representa la disposición física de los componentes del sistema mostrando como estos interactúan entre sí en una cierta infraestructura. 
@@ -160,35 +162,32 @@ Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Go
 
 2. **Compatibilidad**
 - **Dispositivos soportados**: La aplicación debe ser compatible con dispositivos Android con versiones **6.0 (Marshmallow)** o superior.
-- **Resoluciones de pantalla**: La app debe adaptarse a diferentes tamaños y resoluciones de pantalla, asegurando una experiencia consistente en teléfonos y tablets.
+- **Responsiveness**: La app debe adaptarse a diferentes tamaños y resoluciones de pantalla, asegurando una experiencia consistente en teléfonos y tablets.
 
 3. **Seguridad**
 - **Autenticación**: Las credenciales de los usuarios deben ser protegidas mediante **encriptación**.
 - **Privacidad**: La app debe cumplir con estándares básicos de **protección de datos personales**, asegurando que los datos sensibles no se compartan sin consentimiento.
 
 4. **Mantenimiento**
-- **Actualizaciones**: La arquitectura del código debe permitir la **facilidad de mantenimiento**, garantizando que nuevas funcionalidades puedan ser agregadas sin grandes cambios al sistema.
-- **Soporte para bugs**: El sistema debe incluir mecanismos para la **gestión de errores** y el envío de reportes a los desarrolladores.
+- **Actualizaciones**: La arquitectura del código sigue un tipo de programación funcional de código limpio, garantizando que nuevas funcionalidades puedan ser agregadas sin grandes cambios al sistema.
+- **Soporte para bugs**: El sistema debe incluir mecanismos para la **gestión de errores**.
 
 5. **Usabilidad**
-- **Interfaz amigable**: La aplicación debe tener una **UI intuitiva**, siguiendo principios de diseño como consistencia, simplicidad y accesibilidad.
+- **Interfaz amigable**: La aplicación debe tener una **UI intuitiva**, siguiendo principios de diseño como consistencia, simplicidad y accesibilidad considerado también en los colores.
 - **Tiempos de aprendizaje**: Los nuevos usuarios deben poder aprender a usar la app en menos de **10 minutos**.
 
 6. **Confiabilidad**
 - **Tasa de disponibilidad**: La aplicación debe tener una **disponibilidad** de al menos el **99%**, minimizando tiempos de caída y errores críticos.
-- **Recuperación de fallos**: En caso de falla, la app debe **recuperarse** y permitir que el usuario continúe desde donde se quedó sin perder datos críticos.
 
-7. **Conectividad**
-- **Uso offline**: Algunas funciones de la app deben estar disponibles sin conexión a internet, como la visualización de eventos previamente cargados.
-- **Ancho de banda**: El uso de datos debe estar optimizado, de modo que la app consuma una cantidad mínima de ancho de banda, especialmente al cargar listas de eventos o inventario.
-
-8. **Portabilidad**
+7. **Portabilidad**
 - **Migración entre dispositivos**: La app debe permitir que los usuarios accedan a su cuenta desde diferentes dispositivos sin perder datos, utilizando sincronización con el servidor backend.
 
 
 ### Diagrama de casos de uso
 
 ---
+
+<br>
 
 ![grafico_diagramadecasosdeuso](images/grafico_diagramadecasosdeuso.png)
 
@@ -275,5 +274,7 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 ### Diagrama Entidad Relación
 
 ---
+
+<br>
 
 ![entidad_relacion](images/entidad_relacion.png)
