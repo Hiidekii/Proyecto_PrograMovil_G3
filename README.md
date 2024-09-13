@@ -148,6 +148,12 @@ Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Go
 
 ### Diagrama de casos de uso
 
+![grafico_diagramadecasosdeuso](images/grafico_diagramadecasosdeuso.png)
+
+En el diagrama de casos de uso , podemos observar los distintos casos de uso para las entidades Usuario y Administrador de eventos en nuestro sistema. Podemos ver así cuales son los límites de nuestro sistema y que tanto abarca. 
+
 ### Requerimientos funcionales
 
-### Descripción de casos de uso
+### Descripción de casos de uso 
+
+### Diagrama Entidad Relación
