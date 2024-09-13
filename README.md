@@ -15,6 +15,7 @@
     - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
     - [Requerimientos funcionales](#requerimientos-funcionales)
     - [Descripción de casos de uso](#descripción-de-casos-de-uso)
+    - [Diagrama de entidad relación](#diagrama-entidad-relación)
 
 
 ## Aspectos técnicos del software
@@ -257,6 +258,19 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 ### Descripción de casos de uso
 
 ---
+
+- Inicio de sesión / Registro (Usuario, Admin de Eventos): El usuario puede registrarse como usuario y accede a su cuenta con su información privada.
+- Registro en Evento (Usuario) : El usuario pueden registrarse en diversos eventos que puede explorar
+- Observa invitados del evento (Usuario, Admin de Eventos) : Los usuarios y administradores pueden ver quienes asisten a los respectivos eventos
+- Observa eventos creados (Usuario, Admin de Eventos) : Los usuarios y administradores pueden ver que eventos han creado
+- Crea y modifica Evento (Usuario, Admin de Eventos) : Los usuarios y administradores pueden crear y editar los eventos que han creado
+- Observa eventos asistidos y filtra (Usuario, Admin de Eventos) : Los usuarios y administradores pueden observar a que eventos han asistido y pueden filtrarlos
+- Observa calendario de eventos (Usuario, Admin de Eventos) : Los usuarios y administradores tienen un calendario donde pueden observar los eventos que tienen para el mes actual
+- Observa pendientes de inventario (Usuario) : El usuario puede ver que items pendientes tiene para los distintos eventos o si ya estan completos o cuales son en defecto.
+- Observa listado de eventos (Usuario) : El usuario puede observar el listado de eventos principal donde puede explorar los distintos eventos que existen en la app
+- Observa detalles de eventos (Usuario) : El usuario puede desplegar las descripciones de cada evento con todos los detalles 
+- Configura opciones de la app (Usuario, Admin de Eventos) : Los usuarios y administradores pueden configurar ciertas opciones como su cuenta, activar notificaciones , temas de privacidad y seguridad , acerca de la app y cerrar sesión.
+- Observa lista de inventario para evento (Admin de Eventos) : El usuario puede ver que items necesita el evento y cuales se les ha asignado a él respectivamente. 
 
 ### Diagrama Entidad Relación
 
