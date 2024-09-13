@@ -23,6 +23,8 @@
 
 ### Entorno de desarrollo
 
+---
+
 El entorno de desarrollo que se utilizará para la aplicación de qSale será Flutter. Se tiene planeado usar el framework multiplataforma para poder desplegar la aplicación en móviles tanto en Android como iOS. Se utilizará todo lo que ofrece el lenguaje dart y las librerías de google para ofrecer al público una aplicación moderna y sencilla de usar. Gracias a la libreria de material3 se pueden mostrar componentes llamativos e intuitivos de usar. De este modo "qSale" será capaz de ofrecer una experiencia de usuario de alto nivel para crear, compartir y asistir a eventos de la comunidad.
 
 <p align="center">
@@ -138,6 +140,8 @@ Si se siguieron todos los pasos solo debería faltar la instalaciuón de Visual 
 
 ### Diagrama de despliegue
 
+---
+
 ![grafico_diagramadespliege](images/grafico_diagramadespliege.png)
 
 El diagrama de despliegue representa la disposición física de los componentes del sistema mostrando como estos interactúan entre sí en una cierta infraestructura. 
@@ -146,7 +150,44 @@ Para el desarollo de nuestro proyecto utilizaremos un celular simulado modelo Go
 
 ### Requerimientos no funcionales
 
+---
+
+1. **Rendimiento**
+- **Tiempo de respuesta**: La app debe responder a las interacciones del usuario en menos de **2 segundos** en la mayoría de las pantallas.
+- **Velocidad de carga**: El tiempo de inicio de la aplicación no debe exceder los **5 segundos**.
+- **Uso eficiente de recursos**: La app debe optimizar el uso de memoria y CPU del dispositivo, manteniendo el consumo de batería al mínimo durante su uso normal.
+
+2. **Compatibilidad**
+- **Dispositivos soportados**: La aplicación debe ser compatible con dispositivos Android con versiones **6.0 (Marshmallow)** o superior.
+- **Resoluciones de pantalla**: La app debe adaptarse a diferentes tamaños y resoluciones de pantalla, asegurando una experiencia consistente en teléfonos y tablets.
+
+3. **Seguridad**
+- **Autenticación**: Las credenciales de los usuarios deben ser protegidas mediante **encriptación**.
+- **Privacidad**: La app debe cumplir con estándares básicos de **protección de datos personales**, asegurando que los datos sensibles no se compartan sin consentimiento.
+
+4. **Mantenimiento**
+- **Actualizaciones**: La arquitectura del código debe permitir la **facilidad de mantenimiento**, garantizando que nuevas funcionalidades puedan ser agregadas sin grandes cambios al sistema.
+- **Soporte para bugs**: El sistema debe incluir mecanismos para la **gestión de errores** y el envío de reportes a los desarrolladores.
+
+5. **Usabilidad**
+- **Interfaz amigable**: La aplicación debe tener una **UI intuitiva**, siguiendo principios de diseño como consistencia, simplicidad y accesibilidad.
+- **Tiempos de aprendizaje**: Los nuevos usuarios deben poder aprender a usar la app en menos de **10 minutos**.
+
+6. **Confiabilidad**
+- **Tasa de disponibilidad**: La aplicación debe tener una **disponibilidad** de al menos el **99%**, minimizando tiempos de caída y errores críticos.
+- **Recuperación de fallos**: En caso de falla, la app debe **recuperarse** y permitir que el usuario continúe desde donde se quedó sin perder datos críticos.
+
+7. **Conectividad**
+- **Uso offline**: Algunas funciones de la app deben estar disponibles sin conexión a internet, como la visualización de eventos previamente cargados.
+- **Ancho de banda**: El uso de datos debe estar optimizado, de modo que la app consuma una cantidad mínima de ancho de banda, especialmente al cargar listas de eventos o inventario.
+
+8. **Portabilidad**
+- **Migración entre dispositivos**: La app debe permitir que los usuarios accedan a su cuenta desde diferentes dispositivos sin perder datos, utilizando sincronización con el servidor backend.
+
+
 ### Diagrama de casos de uso
+
+---
 
 ![grafico_diagramadecasosdeuso](images/grafico_diagramadecasosdeuso.png)
 
@@ -154,6 +195,69 @@ En el diagrama de casos de uso , podemos observar los distintos casos de uso par
 
 ### Requerimientos funcionales
 
-### Descripción de casos de uso 
+---
+
+1. **Inicio de sesión y registro**
+- Ambos (Usuarios y Administradores): 
+  - El sistema debe permitir el **registro de nuevos usuarios** y administradores mediante un formulario de registro con correo electrónico, contraseña y otros datos personales.
+  - El sistema debe permitir el **inicio de sesión** para usuarios registrados, validando las credenciales.
+
+2. **Registro de eventos**
+- Administradores: 
+  - Los administradores deben poder **crear nuevos eventos**, ingresando detalles como título, fecha, hora, lugar, descripción, y elementos del inventario necesarios (trago, snacks, etc.).
+  - Los administradores deben poder **modificar los detalles de eventos** ya creados.
+  - Los administradores deben poder **eliminar eventos**.
+
+3. **Observar invitados a los eventos**
+- Administradores: 
+  - Los administradores deben poder **visualizar la lista de invitados** a cada evento.
+  - Los administradores deben poder **invitar a personas** a los eventos o **eliminar invitados** de la lista.
+
+4. **Observar eventos asistidos y filtrar**
+- Ambos (Usuarios y Administradores): 
+  - Los usuarios y administradores deben poder **ver una lista de eventos a los que han asistido**.
+  - Los usuarios deben poder **filtrar eventos** por fecha, lugar, o tipo de evento.
+  
+5. **Observar calendario de eventos**
+- Ambos (Usuarios y Administradores): 
+  - La aplicación debe permitir a los usuarios y administradores **visualizar los eventos programados** en un calendario interactivo, mostrando fechas y horas de los eventos.
+
+6. **Observar pendientes de inventario**
+- Administradores: 
+  - Los administradores deben poder **ver un listado de pendientes** de inventario para cada evento, como bebidas, comida, decoración, etc.
+  - Los administradores deben poder **gestionar el estado de los elementos** de inventario, marcando si están pendientes, en proceso o completados.
+
+7. **Observar listado de eventos**
+- Ambos (Usuarios y Administradores): 
+  - La aplicación debe mostrar un **listado general de todos los eventos** a los usuarios y administradores, permitiendo ver tanto los eventos futuros como los pasados.
+
+8. **Observar detalles de los eventos**
+- Ambos (Usuarios y Administradores): 
+  - Tanto usuarios como administradores deben poder **ver los detalles completos de un evento**, que incluyen la fecha, lugar, descripción y otros datos relevantes.
+
+9. **Configurar opciones de la app**
+- Ambos (Usuarios y Administradores): 
+  - Los usuarios y administradores deben poder **configurar ajustes** personales en la aplicación, como notificaciones, idioma, privacidad, entre otros.
+
+10. **Observar lista de inventario para evento**
+- Administradores: 
+  - Los administradores deben poder **visualizar y gestionar el inventario** completo de cada evento, viendo la cantidad de elementos disponibles y lo que aún falta por gestionar.
+
+#### Diferenciación de Roles
+- **Usuarios**: 
+  - Pueden observar los eventos a los que asisten.
+  - Pueden observar los detalles y filtrar eventos.
+  
+- **Administradores**: 
+  - Tienen control sobre la creación, modificación, y eliminación de eventos.
+  - Pueden gestionar el inventario, lista de invitados, y observar pendientes del evento.
+  - Tienen acceso a un calendario global de eventos.
+
+
+### Descripción de casos de uso
+
+---
 
 ### Diagrama Entidad Relación
+
+---
