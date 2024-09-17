@@ -17,13 +17,6 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
-                  // logo
-                  Image.asset(
-                    'lib/images/logo_ulima.png',
-                    width: 400,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 20),
                   // welcome back, you've been missed!
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
