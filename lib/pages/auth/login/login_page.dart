@@ -1,22 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:proyecto_programovil_g3/pages/auth/login/login_controller.dart';
 
 class LoginPage extends StatelessWidget {
   //Se dejara para conexctar despues
   LoginPage({super.key});
 
-  // text editing controllers
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  LoginController control = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
+                  //logo
+                  Image.asset(
+                    'assets/images/shaka_logo.png',
+                    width: 400,
+                    height: 100,
+                  ),
+                  const SizedBox(height: 20),
                   // welcome back, you've been missed!
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,14 +55,14 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(height: 25),
                         // username textfield
                         TextField(
-                          controller: usernameController,
+                          controller: control.usernameController,
                           //hintText: 'Codigo',
                           obscureText: false,
                         ),
                         const SizedBox(height: 10),
                         // password textfield
                         TextField(
-                          controller: passwordController,
+                          controller: control.passwordController,
                           //hintText: 'Clave',
                           obscureText: true,
                         ),
@@ -65,9 +82,11 @@ class LoginPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 25),
                         // sign in button
-                        ElevatedButton(
-                          onPressed: () {},
+                        OutlinedButton(
                           child: const Text("Iniciar Sesion"),
+                          onPressed: () {
+                            control.goHome(context);
+                          },
                         ),
                         const SizedBox(height: 30),
                         // not a member? register now
@@ -88,6 +107,12 @@ class LoginPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        Obx(() {
+                          return Text(control.mesage.value,
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                              ));
+                        })
                       ],
                     ),
                   ),
@@ -95,6 +120,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }
