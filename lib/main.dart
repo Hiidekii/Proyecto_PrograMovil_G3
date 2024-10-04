@@ -9,20 +9,35 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isDarkMode = false; // Estado para el modo oscuro
+
+  void _toggleTheme() {
+    setState(() {
+      _isDarkMode = !_isDarkMode; // Cambia el estado del tema
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'qSale',
-      theme:
-          AppTheme.lightTheme(), // Usa el tema claro definido en app_theme.dart
-      darkTheme:
-          AppTheme.darkTheme(), // Usa el tema oscuro definido en app_theme.dart
+      theme: AppTheme.lightTheme(), // Tema claro
+      darkTheme: AppTheme.darkTheme(), // Tema oscuro
+      themeMode: _isDarkMode
+          ? ThemeMode.dark
+          : ThemeMode.light, // Cambiar tema basado en el estado
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginScreen(),
+        '/': (context) => LoginScreen(), // Pasar la función
         '/register': (context) => RegisterScreen(),
-        '/wrapper': (context) => Wrapper(),
+        '/wrapper': (context) =>
+            Wrapper(onToggleTheme: _toggleTheme), // Pasar la función
       },
     );
   }
