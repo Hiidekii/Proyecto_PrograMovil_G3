@@ -57,6 +57,7 @@ class HomeViewModel extends ChangeNotifier {
       'Pueblo Libre',
       AppColors.blue,
       isFavorite: true,
+      isPublic: true,
     ),
     CalendarEvent(
       9,
@@ -64,20 +65,18 @@ class HomeViewModel extends ChangeNotifier {
       DateTime(2024, 10, 6, 10, 0),
       'La Molina',
       AppColors.yellow,
+      isPublic: true,
     ),
-    CalendarEvent(
-      10,
-      'Reunión de Evaluación',
-      DateTime(2024, 10, 6, 13, 0),
-      'Magdalena',
-      AppColors.red,
-    ),
+    CalendarEvent(10, 'Reunión de Evaluación', DateTime(2024, 10, 6, 13, 0),
+        'Magdalena', AppColors.red,
+        isPublic: true),
     CalendarEvent(
       11,
       'Cena de Gala',
       DateTime(2024, 10, 7, 18, 0),
       'San Miguel',
       AppColors.pink,
+      isPublic: true,
     ),
     CalendarEvent(
       12,
@@ -86,6 +85,7 @@ class HomeViewModel extends ChangeNotifier {
       'Callao',
       AppColors.blue,
       isFavorite: true,
+      isPublic: true,
     ),
   ];
 
@@ -97,6 +97,28 @@ class HomeViewModel extends ChangeNotifier {
     DateTime now = DateTime.now();
     List<CalendarEvent> futureEvents =
         events.where((event) => event.date.isAfter(now)).toList();
+
+    futureEvents.sort((a, b) => a.date.compareTo(b.date));
+
+    return futureEvents;
+  }
+
+  List<CalendarEvent> getFavoriteEvents() {
+    DateTime now = DateTime.now();
+    List<CalendarEvent> futureEvents = events
+        .where((event) => event.date.isAfter(now) && event.isFavorite)
+        .toList();
+
+    futureEvents.sort((a, b) => a.date.compareTo(b.date));
+
+    return futureEvents;
+  }
+
+  List<CalendarEvent> getPublicEvents() {
+    DateTime now = DateTime.now();
+    List<CalendarEvent> futureEvents = events
+        .where((event) => event.date.isAfter(now) && event.isPublic)
+        .toList();
 
     futureEvents.sort((a, b) => a.date.compareTo(b.date));
 

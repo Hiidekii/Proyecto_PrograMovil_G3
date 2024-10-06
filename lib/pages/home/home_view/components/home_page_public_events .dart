@@ -5,16 +5,16 @@ import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_view_model.dart';
 
-class HomePageFavoritesEvents extends StatelessWidget {
+class HomePagePublicEvents extends StatelessWidget {
   final HomeViewModel viewModel;
-  const HomePageFavoritesEvents({super.key, required this.viewModel});
+  const HomePagePublicEvents({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Builder(
         builder: (context) {
-          final events = viewModel.getFavoriteEvents();
+          final events = viewModel.getPublicEvents();
           return Column(
             children: [
               Container(

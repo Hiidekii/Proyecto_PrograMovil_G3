@@ -6,13 +6,13 @@ class CalendarEvent {
   final int id;
   final String title;
   final DateTime date;
-  final String location; // Agrega la ubicación
+  final String location;
   final Color color;
   final bool isFavorite;
+  final bool isPublic;
   CalendarEvent(this.id, this.title, this.date, this.location, this.color,
-      {this.isFavorite = false});
+      {this.isFavorite = false, this.isPublic = false});
 
-  // Método para formatear la hora del evento
   String getFormattedTime() {
     return DateFormat('HH:mm').format(date);
   }

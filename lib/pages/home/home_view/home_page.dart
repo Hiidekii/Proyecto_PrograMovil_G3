@@ -4,6 +4,7 @@ import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/pages/home/calendar_view/componets/calendar_view_event_card.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_all_events.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_favorite_events%20.dart';
+import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_public_events%20.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_view_app_bar.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_view_model.dart';
 
@@ -30,7 +31,7 @@ class HomeTab extends StatelessWidget {
                       'Próximos Eventos',
                       style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                         color: Colors.black,
                       ),
                     ),
@@ -47,14 +48,31 @@ class HomeTab extends StatelessWidget {
                       'Favoritos',
                       style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.red,
                       ),
                     ),
                   ],
                 ),
               ),
-              HomePageFavoritesEvents(viewModel: viewModel)
+              HomePageFavoritesEvents(viewModel: viewModel),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Eventos Públicos',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              HomePagePublicEvents(viewModel: viewModel),
             ],
           ),
         ),

@@ -30,7 +30,7 @@ class HomePageEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         width: MediaQuery.of(context).size.width * 0.8,
         child: Column(
           children: [
@@ -42,14 +42,14 @@ class HomePageEventCard extends StatelessWidget {
                   padding: const EdgeInsets.all(4.0),
                   width: 150,
                   decoration: BoxDecoration(
-                    color: Colors.white, // Fondo oscuro
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 10,
                         spreadRadius: 1,
-                        offset: const Offset(0, 4), // Sombra hacia abajo
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
@@ -57,8 +57,7 @@ class HomePageEventCard extends StatelessWidget {
                     stream: _countdownStream(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                            child: CircularProgressIndicator()); // Cargando
+                        return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasData) {
                         final remainingTime = snapshot.data!;
                         final days = remainingTime.inDays;
@@ -93,15 +92,14 @@ class HomePageEventCard extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
-                  color: event.color, // Fondo oscuro
+                  color: event.color,
                   borderRadius: BorderRadius.circular(16.0),
-
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       blurRadius: 10,
                       spreadRadius: 1,
-                      offset: const Offset(0, 4), // Sombra hacia abajo
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -120,7 +118,7 @@ class HomePageEventCard extends StatelessWidget {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +128,7 @@ class HomePageEventCard extends StatelessWidget {
                               format: 'dd/MM/yy - HH:mm')),
                           const Expanded(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Icon(Icons.location_on, color: Colors.white),
                                 Icon(Icons.edit, color: Colors.white),

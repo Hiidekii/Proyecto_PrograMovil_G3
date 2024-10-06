@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/home/calendar_view/models/calendar_event.dart';
 
 class CalendarEventCard extends StatelessWidget {
@@ -15,7 +16,7 @@ class CalendarEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Formato de fecha
-    final String formattedHour = DateFormat('hh').format(event.date);
+    final String formattedHour = event.date.formatToCustomString(format: 'HH');
     final String formattedMinutes = DateFormat('mm').format(event.date);
 
     return Padding(
