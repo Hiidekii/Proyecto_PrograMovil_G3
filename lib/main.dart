@@ -15,11 +15,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isDarkMode = false; // Estado para el modo oscuro
+  bool _isDarkMode = false;
 
   void _toggleTheme() {
     setState(() {
-      _isDarkMode = !_isDarkMode; // Cambia el estado del tema
+      _isDarkMode = !_isDarkMode;
     });
   }
 
@@ -27,17 +27,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'qSale',
-      theme: AppTheme.lightTheme(), // Tema claro
-      darkTheme: AppTheme.darkTheme(), // Tema oscuro
-      themeMode: _isDarkMode
-          ? ThemeMode.dark
-          : ThemeMode.light, // Cambiar tema basado en el estado
+      theme: AppTheme.lightTheme(),
+      darkTheme: AppTheme.darkTheme(),
+      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginScreen(), // Pasar la función
+        '/': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
-        '/wrapper': (context) =>
-            Wrapper(onToggleTheme: _toggleTheme), // Pasar la función
+        '/wrapper': (context) => Wrapper(onToggleTheme: _toggleTheme),
       },
     );
   }

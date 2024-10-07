@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:proyecto_programovil_g3/components/bottom_bar.dart';
 import 'package:proyecto_programovil_g3/pages/events/events_page.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_page.dart';
-import 'package:proyecto_programovil_g3/pages/profile/profile_page.dart';
+import 'package:proyecto_programovil_g3/pages/list/list_page.dart';
+import 'package:proyecto_programovil_g3/pages/settings/settings_page.dart';
 
 class Wrapper extends StatefulWidget {
-  final Function onToggleTheme; // Para alternar el tema
+  final Function onToggleTheme;
 
-  Wrapper({required this.onToggleTheme}); // Constructor
+  Wrapper({required this.onToggleTheme});
 
   @override
   _WrapperState createState() => _WrapperState();
@@ -16,22 +19,26 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [
-    HomeTab(), // Asegúrate de que HomeTab esté correctamente definido
-    EventsTab(), // Asegúrate de que EventsTab esté correctamente definido
-    ProfileTab(), // Asegúrate de que ProfileTab esté correctamente definido
-  ];
+  final List<Widget> _children = [];
 
-  // Lista de títulos para cada pestaña
-  final List<String> _titles = [
-    'Inicio',
-    'Eventos',
-    'Perfil',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _children.addAll([
+      HomeTab(),
+      EventsTab(),
+      ListTab(),
+      SettingsTab(
+          onToggleTheme: () =>
+              widget.onToggleTheme()), // Pasar la función para alternar el tema
+    ]);
+  }
+
+  final List<String> _titles = ['Inicio', 'Eventos', 'Lista', 'Perfil'];
 
   void onTabTapped(int index) {
     setState(() {
-      _currentIndex = index; // Actualiza el índice actual
+      _currentIndex = index;
     });
   }
 
@@ -39,30 +46,17 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            _titles[_currentIndex]), // Cambia el título según el índice actual
+        title: Text(_titles[_currentIndex]),
         actions: [
+          IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
           IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.event),
-            onPressed: () {},
-          ),
-          Switch(
-            value: Theme.of(context).brightness == Brightness.dark,
-            onChanged: (value) {
-              widget.onToggleTheme(); // Cambia el tema al presionar
-            },
-          ),
+              icon: Icon(CupertinoIcons.calendar_today), onPressed: () {}),
         ],
       ),
-      body:
-          _children[_currentIndex], // Muestra el widget según el índice actual
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomBar(
         currentIndex: _currentIndex,
-        onTabTapped: onTabTapped, // Pasar la función para cambiar de pestañas
+        onTabTapped: onTabTapped,
       ),
     );
   }
