@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:proyecto_programovil_g3/components/bottom_bar.dart';
 import 'package:proyecto_programovil_g3/pages/events/events_page.dart';
-import 'package:proyecto_programovil_g3/pages/home/home_page.dart';
 import 'package:proyecto_programovil_g3/pages/list/list_page.dart';
 import 'package:proyecto_programovil_g3/pages/settings/settings_page.dart';
+import 'package:proyecto_programovil_g3/pages/home/home_view/home_page.dart';
 
 class Wrapper extends StatefulWidget {
   final Function onToggleTheme;
