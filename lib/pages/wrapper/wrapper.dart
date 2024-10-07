@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:proyecto_programovil_g3/components/bottom_bar.dart';
 import 'package:proyecto_programovil_g3/pages/events/events_page.dart';
+import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_view.dart';
 import 'package:proyecto_programovil_g3/pages/list/list_page.dart';
 import 'package:proyecto_programovil_g3/pages/settings/settings_page.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_page.dart';
@@ -50,7 +51,21 @@ class _WrapperState extends State<Wrapper> {
         actions: [
           IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
           IconButton(
-              icon: Icon(CupertinoIcons.calendar_today), onPressed: () {}),
+            icon: const Icon(
+              CupertinoIcons.calendar,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                builder: (BuildContext context) {
+                  return const CalendarView();
+                },
+              );
+            },
+          ),
         ],
       ),
       body: _children[_currentIndex],

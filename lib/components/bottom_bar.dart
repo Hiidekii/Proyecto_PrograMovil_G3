@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 
 class BottomBar extends StatelessWidget {
   final int currentIndex;
@@ -17,7 +18,7 @@ class BottomBar extends StatelessWidget {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: Color(0xFFF7F0E9),
+            color: AppColors.softYellow, // Cambiado a softYellow
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(

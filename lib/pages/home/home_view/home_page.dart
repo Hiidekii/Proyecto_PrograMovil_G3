@@ -16,65 +16,61 @@ class HomeTab extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => HomeViewModel(),
       child: Consumer<HomeViewModel>(
-        builder: (context, viewModel, child) => Scaffold(
-          appBar: HomeViewAppBar(viewModel: viewModel),
-          backgroundColor: AppColors.cream,
-          body: ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Próximos Eventos',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black,
-                      ),
+        builder: (context, viewModel, child) => ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Próximos Eventos',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              HomePageAllEvents(viewModel: viewModel),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Favoritos',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.red,
-                      ),
+            ),
+            HomePageAllEvents(viewModel: viewModel),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Favoritos',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.red,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              HomePageFavoritesEvents(viewModel: viewModel),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Eventos Públicos',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.blue,
-                      ),
+            ),
+            HomePageFavoritesEvents(viewModel: viewModel),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Eventos Públicos',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.blue,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              HomePagePublicEvents(viewModel: viewModel),
-            ],
-          ),
+            ),
+            HomePagePublicEvents(viewModel: viewModel),
+          ],
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryColor = Color(0xFFF5E5C0);
+  static const Color primaryColor = Color(0xFFFDF4E9);
   //PALETTE COLORS
   static const Color yellow = Color(0xFFF6A701);
   static const Color red = Color(0xFFE05C2C);
@@ -10,7 +10,7 @@ class AppColors {
   static const Color cream = Color(0xFFFDF4E9);
 
   //SOFT COLORS
-  static const Color softYellow = Color(0xFFF4D592);
+  static const Color softYellow = Color(0xFFF5E5C0);
   static const Color softRed = Color(0xFFEAA890);
   static const Color softPink = Color(0xFFF1D2E4);
   static const Color softBlue = Color(0xFF89D7FA);
@@ -19,7 +19,7 @@ class AppColors {
   static const Color secondaryColor = Color(0xFF615049);
 
   // Colores de fondo
-  static const Color lightBackgroundColor = Color(0xFFF5E5C0); // Fondo claro
+  static const Color lightBackgroundColor = Color(0xFFFDF4E9); // Fondo claro
   static const Color darkBackgroundColor = Color(0xFF28242c); // Fondo oscuro
 
   static const Color textColor = Color(0xFF262F34);

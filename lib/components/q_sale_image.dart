@@ -23,7 +23,7 @@ class QSaleImage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: FadeInImage(
-          placeholder: const AssetImage('assets/placeholder.png'),
+          placeholder: const AssetImage('assets/img/E1.png'),
           image: NetworkImage(imgUrlString),
           width: width,
           height: height,
