@@ -6,7 +6,7 @@ import 'package:proyecto_programovil_g3/pages/settings/components/profile_card.d
 class SettingsTab extends StatefulWidget {
   final Function onToggleTheme;
 
-  SettingsTab({required this.onToggleTheme});
+  const SettingsTab({super.key, required this.onToggleTheme});
 
   @override
   _SettingsTabState createState() => _SettingsTabState();
@@ -24,7 +24,7 @@ class _SettingsTabState extends State<SettingsTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           ProfileCard(
             name: userName,

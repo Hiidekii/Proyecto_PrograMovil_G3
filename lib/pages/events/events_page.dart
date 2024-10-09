@@ -3,15 +3,17 @@ import 'package:proyecto_programovil_g3/pages/events/components/event_card.dart'
 import 'package:proyecto_programovil_g3/pages/events/components/section_header.dart';
 
 class EventsTab extends StatelessWidget {
+  const EventsTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          SectionHeader(title: 'Mis eventos'),
+          const SectionHeader(title: 'Mis eventos'),
           EventCard(
-            title: 'Cumpleaños de Hideki',
+            title: 'Cumpleaños de Hidekiii',
             date: '21/10/24',
             time: '21:00',
             imageUrl: 'assets/img/E1.png',
@@ -21,7 +23,7 @@ class EventsTab extends StatelessWidget {
             isEditable: true,
             isFavorite: false,
           ),
-          SectionHeader(title: 'Favoritos'),
+          const SectionHeader(title: 'Favoritos'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '21/10/24',
@@ -33,7 +35,7 @@ class EventsTab extends StatelessWidget {
             isEditable: false,
             isFavorite: true,
           ),
-          SectionHeader(title: 'Mis planes'),
+          const SectionHeader(title: 'Mis planes'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '21/10/24',
@@ -51,8 +53,8 @@ class EventsTab extends StatelessWidget {
         padding: const EdgeInsets.only(right: 10),
         child: FloatingActionButton(
           onPressed: () {},
-          child: Icon(Icons.add),
           backgroundColor: Colors.yellow[700],
+          child: Icon(Icons.add),
         ),
       ),
     );

@@ -14,7 +14,7 @@ class EventCard extends StatelessWidget {
   final bool isFavorite;
 
   const EventCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.date,
     required this.time,
@@ -24,7 +24,7 @@ class EventCard extends StatelessWidget {
     this.onManage,
     required this.isEditable,
     required this.isFavorite,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +41,11 @@ class EventCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       elevation: 5,
-      margin: EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
       color: Colors.black54,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Color(0xFF9E3D62), Color(0xFF2E2E5B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -53,7 +53,7 @@ class EventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: ListTile(
-          contentPadding: EdgeInsets.only(
+          contentPadding: const EdgeInsets.only(
             left: 9.0,
             right: 5.0,
             top: 0.0,
@@ -61,14 +61,14 @@ class EventCard extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
           subtitle: Text(
             '$date - $time',
-            style: TextStyle(color: Colors.white70),
+            style: const TextStyle(color: Colors.white70),
           ),
         ),
       ),
@@ -81,7 +81,7 @@ class EventCard extends StatelessWidget {
       top: 10,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
-        child: Container(
+        child: SizedBox(
           height: 95,
           width: 83,
           child: Image.asset(
@@ -109,7 +109,7 @@ class EventCard extends StatelessWidget {
                     : CupertinoIcons.heart),
             isEditable ? onEdit : onShare,
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           _buildActionButton(
             context,
             Icons.checklist,

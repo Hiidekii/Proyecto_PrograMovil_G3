@@ -16,7 +16,7 @@ class HomePageAllEvents extends StatelessWidget {
           final events = viewModel.getFutureEvents();
           return Column(
             children: [
-              Container(
+              SizedBox(
                 height: 200,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,

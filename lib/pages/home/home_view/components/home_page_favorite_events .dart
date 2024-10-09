@@ -17,7 +17,7 @@ class HomePageFavoritesEvents extends StatelessWidget {
           final events = viewModel.getFavoriteEvents();
           return Column(
             children: [
-              Container(
+              SizedBox(
                 height: 300,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -48,7 +48,7 @@ class HomePageFavoritesEvents extends StatelessWidget {
                                 width: 200,
                                 height: 300,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 200,
                                 height: 300,
                                 child: Column(

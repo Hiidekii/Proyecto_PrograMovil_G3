@@ -13,7 +13,7 @@ class ProfileCard extends StatelessWidget {
   final bool isFavorite;
 
   const ProfileCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.email,
     required this.imageUrl,
@@ -22,7 +22,7 @@ class ProfileCard extends StatelessWidget {
     this.onManage,
     required this.isEditable,
     required this.isFavorite,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,11 @@ class ProfileCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       elevation: 5,
-      margin: EdgeInsets.only(left: 95.0, right: 0.0, top: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(left: 95.0, right: 0.0, top: 10.0, bottom: 10.0),
       color: Colors.black54,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Color.fromARGB(255, 16, 92, 124), Color(0xFF2E2E5B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -51,7 +51,7 @@ class ProfileCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: ListTile(
-          contentPadding: EdgeInsets.only(
+          contentPadding: const EdgeInsets.only(
             left: 9.0,
             right: 5.0,
             top: 10.0,
@@ -59,14 +59,14 @@ class ProfileCard extends StatelessWidget {
           ),
           title: Text(
             name,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
           subtitle: Text(
             email,
-            style: TextStyle(color: Colors.white70),
+            style: const TextStyle(color: Colors.white70),
           ),
         ),
       ),
@@ -79,7 +79,7 @@ class ProfileCard extends StatelessWidget {
       top: 10,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
-        child: Container(
+        child: SizedBox(
           height: 95,
           width: 83,
           child: Image.asset(

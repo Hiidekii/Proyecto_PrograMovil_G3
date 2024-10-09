@@ -6,7 +6,7 @@ class BottomBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTabTapped;
 
-  BottomBar({required this.currentIndex, required this.onTabTapped});
+  const BottomBar({super.key, required this.currentIndex, required this.onTabTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class BottomBar extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -34,7 +34,7 @@ class BottomBar extends StatelessWidget {
             backgroundColor: Colors.transparent,
             type: BottomNavigationBarType.fixed,
             elevation: 0,
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.house_alt,
                     size: 32, color: Colors.black87),

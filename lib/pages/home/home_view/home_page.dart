@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
-import 'package:proyecto_programovil_g3/pages/home/calendar_view/componets/calendar_view_event_card.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_all_events.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_favorite_events%20.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_public_events%20.dart';
-import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_view_app_bar.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_view_model.dart';
 
 class HomeTab extends StatelessWidget {

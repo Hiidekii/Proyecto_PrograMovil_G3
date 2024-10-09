@@ -3,13 +3,15 @@ import 'package:proyecto_programovil_g3/pages/list/components/list_card.dart';
 import 'package:proyecto_programovil_g3/pages/list/components/section_header.dart';
 
 class ListTab extends StatelessWidget {
+  const ListTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          SectionHeader(title: 'Mis eventos'),
+          const SectionHeader(title: 'Mis eventos'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '13/12/24',
@@ -26,7 +28,7 @@ class ListTab extends StatelessWidget {
             isEditable: true,
             isFavorite: false,
           ),
-          SectionHeader(title: 'Favoritos'),
+          const SectionHeader(title: 'Favoritos'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '13/12/24',
@@ -43,7 +45,7 @@ class ListTab extends StatelessWidget {
             isEditable: true,
             isFavorite: false,
           ),
-          SectionHeader(title: 'Mis planes'),
+          const SectionHeader(title: 'Mis planes'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '13/12/24',

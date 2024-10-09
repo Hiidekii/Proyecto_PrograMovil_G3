@@ -11,7 +11,7 @@ import 'package:proyecto_programovil_g3/pages/home/home_view/home_page.dart';
 class Wrapper extends StatefulWidget {
   final Function onToggleTheme;
 
-  Wrapper({required this.onToggleTheme});
+  const Wrapper({super.key, required this.onToggleTheme});
 
   @override
   _WrapperState createState() => _WrapperState();
@@ -26,9 +26,9 @@ class _WrapperState extends State<Wrapper> {
   void initState() {
     super.initState();
     _children.addAll([
-      HomeTab(),
-      EventsTab(),
-      ListTab(),
+      const HomeTab(),
+      const EventsTab(),
+      const ListTab(),
       SettingsTab(
           onToggleTheme: () =>
               widget.onToggleTheme()), // Pasar la función para alternar el tema
@@ -49,7 +49,7 @@ class _WrapperState extends State<Wrapper> {
       appBar: AppBar(
         title: Text(_titles[_currentIndex]),
         actions: [
-          IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
+          IconButton(icon: const Icon(CupertinoIcons.search), onPressed: () {}),
           IconButton(
             icon: const Icon(
               CupertinoIcons.calendar,
