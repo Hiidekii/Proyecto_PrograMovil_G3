@@ -15,6 +15,7 @@ class EventCard extends StatelessWidget {
   final VoidCallback? onEdit;
   final VoidCallback? onShare;
   final VoidCallback? onManage;
+  final VoidCallback? onTap;  // Añadir el parámetro onTap
   final bool isEditable;
   final bool isFavorite;
 
@@ -32,6 +33,7 @@ class EventCard extends StatelessWidget {
     this.onEdit,
     this.onShare,
     this.onManage,
+    this.onTap,  // Añadir aquí también
     required this.isEditable,
     required this.isFavorite,
   }) : super(key: key);
@@ -41,64 +43,65 @@ class EventCard extends StatelessWidget {
     return Stack(
       children: [
         Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           elevation: 5,
-          margin:
-              EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
+          margin: EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
           color: Colors.black54,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF9E3D62), Color(0xFF2E2E5B)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          child: GestureDetector(  // Envuelve el Card con GestureDetector
+            onTap: onTap,  // Vincular onTap
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF9E3D62), Color(0xFF2E2E5B)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(15.0),
               ),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: ListTile(
-              contentPadding: EdgeInsets.only(
-                left: 9.0,
-                right: 5.0,
-                top: 6.0,
-                bottom: 6.0,
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6.0),
-                    child: Text(
-                      date,
+              child: ListTile(
+                contentPadding: EdgeInsets.only(
+                  left: 9.0,
+                  right: 5.0,
+                  top: 6.0,
+                  bottom: 6.0,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
                       style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              subtitle: Column(
-                children: [
-                  SizedBox(height: 6.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _buildItemInfo(itemDescription, itemValue,
-                          isItemConfirmed, false, context),
-                      SizedBox(width: 5.0),
-                      _buildItemInfo(moneyDescription, moneyValue,
-                          isMoneyConfirmed, true, context),
-                    ],
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6.0),
+                      child: Text(
+                        date,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                subtitle: Column(
+                  children: [
+                    SizedBox(height: 6.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildItemInfo(itemDescription, itemValue,
+                            isItemConfirmed, false, context),
+                        SizedBox(width: 5.0),
+                        _buildItemInfo(moneyDescription, moneyValue,
+                            isMoneyConfirmed, true, context),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
