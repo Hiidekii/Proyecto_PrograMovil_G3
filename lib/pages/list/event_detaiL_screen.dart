@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
@@ -46,7 +47,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
   final TextEditingController _searchController = TextEditingController();
 
-
   List<Person> people = [
     Person("Hideki", "assets/img/E1.png"),
     Person("Kohji", "assets/img/E2.png"),
@@ -56,10 +56,26 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   ];
   List<Person> filteredPeople = [];
 
+/*   List<Aportantes> aportantes = [
+    Aportantes("Hideki", "assets/img/E1.png", 600, "Confirmado", "Dinero"),
+    Aportantes("Kohji", "assets/img/E2.png", 300, "Confirmado", "Dinero"),
+    Aportantes("Walter", "assets/img/E3.png", 3, "Confirmado", "Bebida"),
+    Aportantes("Luis", "assets/img/E4.png", 3, "Confirmado", "Bebida"),
+    Aportantes("Alvaro", "assets/img/E1.png", 3, "Confirmado", "Comida"),
+  ] */
+
+  List<Lista> listas = [
+    Lista("Comida", "Lista de comestibles", 500),
+    Lista("Bebida", "Lista de bebidas", 500),
+    Lista("Dinero", "Lista de aportes", 500),
+  ];
+  List<Lista> filteredListas = [];
+
   @override
   void initState() {
     super.initState();
     filteredPeople = List.from(people);
+    filteredListas = List.from(listas);
   }
 
   GoogleMapController? mapController;
@@ -107,7 +123,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       elevation: 5,
-      margin: const EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(
+          left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
       color: Colors.black54,
       child: Container(
         decoration: BoxDecoration(
@@ -188,18 +205,23 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     );
   }
 
-  Widget _buildElevatedButton(
-      BuildContext context, IconData icon, String label, VoidCallback onPressed, bool isSelected) {
+  Widget _buildElevatedButton(BuildContext context, IconData icon, String label,
+      VoidCallback onPressed, bool isSelected) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Colors.blueAccent : AppColors.getBackgroundColor(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Rounded shape
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // Padding for the button
+        backgroundColor: isSelected
+            ? Colors.blueAccent
+            : AppColors.getBackgroundColor(context),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)), // Rounded shape
+        padding: const EdgeInsets.symmetric(
+            horizontal: 16, vertical: 12), // Padding for the button
         elevation: isSelected ? 8 : 4, // Increase elevation when selected
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min, // Button size will depend on its content
+        mainAxisSize:
+            MainAxisSize.min, // Button size will depend on its content
         children: [
           Icon(
             icon,
@@ -208,7 +230,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           const SizedBox(width: 8), // Space between icon and label
           Text(
             label,
-            style: TextStyle(color: AppColors.getTextColor(context)), // Set label color
+            style: TextStyle(
+                color: AppColors.getTextColor(context)), // Set label color
           ),
         ],
       ),
@@ -267,22 +290,26 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
 
   Widget _buildListSection() {
-    String text = 'Sección de listas asociadas al evento';
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black54),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(fontSize: 16),
-        textAlign: TextAlign.center,
-      ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _buildSearchBarList(),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: filteredListas.length,
+            itemBuilder: (context, index) {
+              return _buildListTile(filteredListas[index]);
+            },
+          ),
+        ),
+      ],
     );
   }
 
- Widget _buildPeopleSection() {
+  Widget _buildPeopleSection() {
     return Column(
       children: [
         Padding(
@@ -309,58 +336,115 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   }
 
   Widget _buildSearchBar() {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    decoration: BoxDecoration(
-      color: AppColors.getBackgroundColor(context),
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: TextField(
-      onChanged: (value) {
-        setState(() {
-          filteredPeople = people
-              .where((person) =>
-                  person.name.toLowerCase().contains(value.toLowerCase()))
-              .toList();
-        });
-      },
-      controller: _searchController, // Controlador para manejar el texto
-      decoration: InputDecoration(
-        hintText: 'Buscar',
-        border: InputBorder.none,
-        prefixIcon: const Icon(Icons.search), // Icono de lupa dentro del borde
-        suffixIcon: _searchController.text.isNotEmpty // Muestra el icono de "equis" si hay texto
-            ? IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  setState(() {
-                    _searchController.clear(); // Limpia el campo de búsqueda
-                    filteredPeople = people; // Resetea la lista filtrada
-                  });
-                },
-              )
-            : null, // No muestra nada si no hay texto
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColors.getBorderColor(context), // Color del borde
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColors.getFocusedBorderColor(context), // Color del borde al enfocarse
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(30),
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppColors.getBackgroundColor(context),
+        borderRadius: BorderRadius.circular(30),
       ),
-      style: TextStyle(color: AppColors.getTextColor(context)),
-    ),
-  );
-}
+      child: TextField(
+        onChanged: (value) {
+          setState(() {
+            filteredPeople = people
+                .where((person) =>
+                    person.name.toLowerCase().contains(value.toLowerCase()))
+                .toList();
+          });
+        },
+        controller: _searchController, // Controlador para manejar el texto
+        decoration: InputDecoration(
+          hintText: 'Buscar',
+          border: InputBorder.none,
+          prefixIcon:
+              const Icon(Icons.search), // Icono de lupa dentro del borde
+          suffixIcon: _searchController
+                  .text.isNotEmpty // Muestra el icono de "equis" si hay texto
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.clear(); // Limpia el campo de búsqueda
+                      filteredPeople = people; // Resetea la lista filtrada
+                    });
+                  },
+                )
+              : null, // No muestra nada si no hay texto
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.getBorderColor(context), // Color del borde
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.getFocusedBorderColor(
+                  context), // Color del borde al enfocarse
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        style: TextStyle(color: AppColors.getTextColor(context)),
+      ),
+    );
+  }
 
-
+  Widget _buildSearchBarList() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppColors.getBackgroundColor(context),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: TextField(
+        onChanged: (value) {
+          setState(() {
+            // Filtra la lista en función del nombre de las listas
+            filteredListas = listas
+                .where((lista) =>
+                    lista.name.toLowerCase().contains(value.toLowerCase()))
+                .toList();
+          });
+        },
+        controller: _searchController, // Controlador para manejar el texto
+        decoration: InputDecoration(
+          hintText: 'Buscar listas',
+          border: InputBorder.none,
+          prefixIcon:
+              const Icon(Icons.search), // Icono de lupa dentro del borde
+          suffixIcon: _searchController
+                  .text.isNotEmpty // Muestra el icono de "equis" si hay texto
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.clear(); // Limpia el campo de búsqueda
+                      filteredListas = listas; // Resetea la lista filtrada
+                    });
+                  },
+                )
+              : null, // No muestra nada si no hay texto
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.getBorderColor(context), // Color del borde
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.getFocusedBorderColor(
+                  context), // Color al enfocarse
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        style: TextStyle(color: AppColors.getTextColor(context)),
+      ),
+    );
+  }
 
   Widget _buildPersonTile(Person person) {
     return Container(
@@ -397,6 +481,282 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       ),
     );
   }
+
+  Widget _buildListTile(Lista lista) {
+    // Assigning the icon and title based on the category
+    IconData icon;
+    String title;
+
+    if (lista.category == "Dinero") {
+      icon = Icons.monetization_on;
+      title = "La chancha";
+    } else if (lista.category == "Bebida") {
+      icon = Icons.local_bar;
+      title = "El trago";
+    } else if (lista.category == "Comida") {
+      icon = Icons.fastfood;
+      title = "La bajona";
+    } else {
+      icon = Icons.category; // Default icon if none of the above match
+      title = "Sin categoría"; // Default title if no category matches
+    }
+
+    // Assuming totalQuantity is currentQuantity for now, replace as needed
+    int currentQuantity = lista.totalQuantity;
+
+    return Column(
+      crossAxisAlignment:
+          CrossAxisAlignment.start, // Align the title to the start (left)
+      children: [
+        // Title above the container
+        Padding(
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 4.0), // Higher space on top than bottom
+          child: Text(
+            title, // Title based on the category
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        // Main container with the list item details
+        Container(
+          margin: const EdgeInsets.only(
+              left: 4.0, right: 4.0, top: 10.0, bottom: 10.0),
+          padding: const EdgeInsets.all(8.0), // Set container padding
+          decoration: BoxDecoration(
+            color: const Color(0xFF554E5A),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(0, 3), // Shadow position
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align children to the start (left)
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[200],
+                    radius: 25,
+                    child: Icon(
+                      icon, // Using the appropriate icon based on the category
+                      size: 30,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .spaceBetween, // Spread the icon and name
+                      children: [
+                        Text(
+                          lista.name, // Displaying the list's name
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white, // Set the text color
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Spacing between name and tag
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4), // Padding inside the tag
+                          decoration: BoxDecoration(
+                            color: const Color(
+                                0xFF4B8254), // Updated color to the specified green
+                            borderRadius: BorderRadius.circular(9),
+                          ),
+                          child: Text(
+                            '$currentQuantity/${lista.totalQuantity}', // The quantity tag
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 255, 255,
+                                  255), // Black text for contrast
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            lista.isExpanded
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              lista.isExpanded =
+                                  !lista.isExpanded; // Toggle expansion state
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              if (lista.isExpanded) ...[
+                // Add extra rows if expanded
+                const Divider(
+                    color:
+                        Colors.white), // White line above the expanded section
+
+                Container(
+                  margin: const EdgeInsets.only(
+                      top: 6,
+                      bottom: 4,
+                      left: 8.0,
+                      right: 20), // Add margin here
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundColor: Colors.grey[200],
+                        radius: 25,
+                        child: Icon(
+                          Icons.verified_user, // Using the appropriate icon based on the category
+                          size: 30,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween, // Spread the icon and name
+                          children: [
+                            Text(
+                              "Kohji", // Displaying the list's name
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white, // Set the text color
+                              ),
+                            ),
+                            const SizedBox(
+                                width: 8), // Spacing between name and tag
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4), // Padding inside the tag
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                    0xFF4B8254), // Updated color to the specified green
+                                borderRadius: BorderRadius.circular(9),
+                              ),
+                              child: Text(
+                                '150/150', // The quantity tag
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255,
+                                      255), // Black text for contrast
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      top: 6,
+                      bottom: 4,
+                      left: 8.0,
+                      right: 20), // Add margin here
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      CircleAvatar(
+                        backgroundColor: Colors.grey[200],
+                        radius: 25,
+                        child: Icon(
+                          Icons.verified_user, // Using the appropriate icon based on the category
+                          size: 30,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween, // Spread the icon and name
+                          children: [
+                            Text(
+                              "Hideki", // Displaying the list's name
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white, // Set the text color
+                              ),
+                            ),
+                            const SizedBox(
+                                width: 8), // Spacing between name and tag
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4), // Padding inside the tag
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                    0xFF4B8254), // Updated color to the specified green
+                                borderRadius: BorderRadius.circular(9),
+                              ),
+                              child: Text(
+                                '150/150', // The quantity tag
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255,
+                                      255), // Black text for contrast
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/* class Aportantes {
+  final String name;
+  final String avatarUrl;
+  final int aporte;
+  final String category;
+  final String status;
+
+  Aportantes(this.name, this.avatarUrl, this.aporte, this.status, this.category);
+
+} */
+
+class Lista {
+  final String category;
+  final String name;
+  final int totalQuantity;
+  bool isExpanded = false;
+  /* final List<Aportantes> aportantes; */
+
+  Lista(this.category, this.name, this.totalQuantity);
 }
 
 class Person {
