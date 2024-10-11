@@ -81,13 +81,25 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        TextField(
-                          controller: control.passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Ingrese su contraseña',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.lock),
+                        Obx(
+                          () => TextField(
+                            controller: control.passwordController,
+                            obscureText: !control.isPasswordVisible.value,
+                            decoration: InputDecoration(
+                              hintText: 'Ingrese su contraseña',
+                              border: const OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  control.isPasswordVisible.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  control.togglePasswordVisibility();
+                                },
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -99,27 +111,45 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        TextField(
-                          controller: control.confirmPasswordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Repita su contraseña',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.lock),
+                        Obx(
+                          () => TextField(
+                            controller: control.confirmPasswordController,
+                            obscureText:
+                                !control.isConfirmPasswordVisible.value,
+                            decoration: InputDecoration(
+                              hintText: 'Repita su contraseña',
+                              border: const OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  control.isConfirmPasswordVisible.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  control.toggleConfirmPasswordVisibility();
+                                },
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              control.onRegisterClick(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              textStyle: const TextStyle(fontSize: 16),
+                        Obx(
+                          () => SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: control.isButtonEnabled.value
+                                  ? () {
+                                      control.onRegisterClick(context);
+                                    }
+                                  : null, // El botón se deshabilita si no cumple las validaciones
+                              style: ElevatedButton.styleFrom(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                textStyle: const TextStyle(fontSize: 16),
+                              ),
+                              child: const Text('Registrarse'),
                             ),
-                            child: const Text('Registrarse'),
                           ),
                         ),
                         const SizedBox(height: 20),

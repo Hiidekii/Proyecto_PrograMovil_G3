@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           AppTheme.lightTheme(), // Usa el tema claro definido en app_theme.dart
       darkTheme:
           AppTheme.darkTheme(), // Usa el tema oscuro definido en app_theme.dart
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),

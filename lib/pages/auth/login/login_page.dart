@@ -11,7 +11,6 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       resizeToAvoidBottomInset: false,
       body: SizedBox.expand(
-        // Hace que el container ocupe todo el espacio disponible
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -31,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                     height: 150,
                   ),
                   const SizedBox(height: 40),
-                  // Nuevo Container gris
+                  // Container gris
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -69,27 +68,47 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        TextField(
-                          controller: control.passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Ingrese su contraseña',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.lock),
+                        // TextField con icono de visibilidad (ojito)
+                        Obx(
+                          () => TextField(
+                            controller: control.passwordController,
+                            obscureText: !control.isPasswordVisible
+                                .value, // Controla la visibilidad de la contraseña
+                            decoration: InputDecoration(
+                              hintText: 'Ingrese su contraseña',
+                              border: const OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  control.isPasswordVisible.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  control.togglePasswordVisibility();
+                                },
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              control.onLoginClick(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              textStyle: const TextStyle(fontSize: 16),
+                        // Botón de iniciar sesión reactivo
+                        Obx(
+                          () => SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: control.isButtonEnabled.value
+                                  ? () {
+                                      control.onLoginClick(context);
+                                    }
+                                  : null, // El botón se deshabilita si no cumple las validaciones
+                              style: ElevatedButton.styleFrom(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                textStyle: const TextStyle(fontSize: 16),
+                              ),
+                              child: const Text('Iniciar sesión'),
                             ),
-                            child: const Text('Iniciar sesión'),
                           ),
                         ),
                         const SizedBox(height: 20),
