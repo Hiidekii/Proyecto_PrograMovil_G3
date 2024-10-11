@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Permiso para acceder a la ubicación precisa -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Permiso para acceder a la ubicación de red -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Declara el uso del hardware de GPS -->
+    <uses-feature android:name="android.hardware.location.gps" />
     <application
         android:label="proyecto_programovil_g3"
         android:name="${applicationName}"
@@ -30,6 +38,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="com.google.android.geo.AIzaSyC8NzJnWoESPvjfh8e4lxknHyJjCIqgGPQ"
+            android:value="AIzaSyC8NzJnWoESPvjfh8e4lxknHyJjCIqgGPQ" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

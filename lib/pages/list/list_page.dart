@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_programovil_g3/pages/list/event_detaiL_screen.dart';
+import 'package:proyecto_programovil_g3/pages/list/event_detail_screen.dart';
 import 'package:proyecto_programovil_g3/pages/list/components/list_card.dart';
 import 'package:proyecto_programovil_g3/pages/list/components/section_header.dart';
 

@@ -51,4 +51,18 @@ class AppColors {
         ? darkBackgroundColor // Color de fondo oscuro
         : lightBackgroundColor; // Color de fondo claro
   }
+
+  // Método para obtener el color de bordes
+static Color getBorderColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? softGray // Borde gris suave para modo oscuro
+      : softGray; // Borde gris suave para modo claro
+}
+
+// Método para obtener el color de bordes enfocados
+static Color getFocusedBorderColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? blue // Color azul brillante para modo oscuro
+      : blue; // Color azul brillante para modo claro
+}
 }

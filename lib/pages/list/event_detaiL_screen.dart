@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final String title;
@@ -43,6 +44,28 @@ class EventDetailScreen extends StatefulWidget {
 class _EventDetailScreenState extends State<EventDetailScreen> {
   int? selectedButtonIndex; // Track which button is selected
 
+  final TextEditingController _searchController = TextEditingController();
+
+
+  List<Person> people = [
+    Person("Hideki", "assets/img/E1.png"),
+    Person("Kohji", "assets/img/E2.png"),
+    Person("Walter", "assets/img/E3.png"),
+    Person("Luis", "assets/img/E4.png"),
+    Person("Alvaro", "assets/img/E1.png"),
+  ];
+  List<Person> filteredPeople = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredPeople = List.from(people);
+  }
+
+  //GoogleMapController? mapController;
+
+  //final LatLng _eventLocation = LatLng(-12.046374, -77.042793); // Coordenadas de ejemplo
+
   void _onButtonPressed(int index) {
     setState(() {
       selectedButtonIndex = index; // Update selected button index
@@ -53,24 +76,29 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalles del evento"),
+        title: const Text("Detalles del evento"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Stack(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               children: [
-                _buildCard(context),
-                _buildImage(),
+                Stack(
+                  children: [
+                    _buildCard(context),
+                    _buildImage(),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                _buildActionButtons(context),
               ],
             ),
-            SizedBox(height: 20),
-            _buildActionButtons(context), // Action buttons
-            SizedBox(height: 20),
-            _buildSectionContent(), // Display content based on selected button
-          ],
-        ),
+          ),
+          Expanded(
+            child: _buildSectionContent(),
+          ),
+        ],
       ),
     );
   }
@@ -79,11 +107,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       elevation: 5,
-      margin: EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(left: 95.0, right: 4.0, top: 10.0, bottom: 10.0),
       color: Colors.black54,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Color(0xFF9E3D62), Color(0xFF2E2E5B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -91,7 +119,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: ListTile(
-          contentPadding: EdgeInsets.only(
+          contentPadding: const EdgeInsets.only(
             left: 9.0,
             right: 5.0,
             top: 0.0,
@@ -99,14 +127,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           ),
           title: Text(
             widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
           subtitle: Text(
-            '${widget.date}',
-            style: TextStyle(color: Colors.white70),
+            widget.date,
+            style: const TextStyle(color: Colors.white70),
           ),
         ),
       ),
@@ -119,7 +147,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       top: 10,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
-        child: Container(
+        child: SizedBox(
           height: 95,
           width: 83,
           child: Image.asset(
@@ -165,9 +193,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Colors.blueAccent : Theme.of(context).primaryColor,
+        backgroundColor: isSelected ? Colors.blueAccent : AppColors.getBackgroundColor(context),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Rounded shape
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12), // Padding for the button
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // Padding for the button
         elevation: isSelected ? 8 : 4, // Increase elevation when selected
       ),
       child: Row(
@@ -177,7 +205,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
             icon,
             color: AppColors.getTextColor(context),
           ),
-          SizedBox(width: 8), // Space between icon and label
+          const SizedBox(width: 8), // Space between icon and label
           Text(
             label,
             style: TextStyle(color: AppColors.getTextColor(context)), // Set label color
@@ -188,33 +216,205 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   }
 
   Widget _buildSectionContent() {
-    String text = '';
     switch (selectedButtonIndex) {
       case 0:
-        text = 'Sección de ubicación asociada al evento';
-        break;
+        return _buildLocationSection(); // Sección de ubicación
       case 1:
-        text = 'Sección de listas asociadas al evento';
-        break;
+        return _buildListSection();
       case 2:
-        text = 'Sección de personas asociadas al evento';
-        break;
+        return _buildPeopleSection();
       default:
-        text = 'Seleccione una sección';
-        break;
+        return const Text('Seleccione una sección');
     }
+  }
 
+  Widget _buildLocationSection() {
+    return  const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Dirección del evento:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        SizedBox(height: 8),
+        Text('Av. Ejemplo 123, Ciudad Ejemplo'), // Dirección del evento
+        SizedBox(height: 16),
+        // Container(
+        //   height: 300, // Altura del mapa
+        //   child: GoogleMap(
+        //     onMapCreated: (GoogleMapController controller) {
+        //       mapController = controller;
+        //     },
+        //     myLocationEnabled: true, // Asegúrate de tener permisos
+        //     initialCameraPosition: CameraPosition(
+        //       target: _eventLocation, // Coordenadas del evento
+        //       zoom: 14.0,
+        //     ),
+        //     markers: {
+        //       Marker(
+        //         markerId: MarkerId('eventLocation'),
+        //         position: _eventLocation,
+        //       ),
+        //     },
+        //   ),
+        // ),
+      ],
+    );
+  }
+
+  Widget _buildListSection() {
+    String text = 'Sección de listas asociadas al evento';
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black54),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
         textAlign: TextAlign.center,
       ),
     );
   }
+
+ Widget _buildPeopleSection() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _buildSearchBar(),
+        ),
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(16.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2.5,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemCount: filteredPeople.length,
+            itemBuilder: (context, index) {
+              return _buildPersonTile(filteredPeople[index]);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSearchBar() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    decoration: BoxDecoration(
+      color: AppColors.getBackgroundColor(context),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: TextField(
+      onChanged: (value) {
+        setState(() {
+          filteredPeople = people
+              .where((person) =>
+                  person.name.toLowerCase().contains(value.toLowerCase()))
+              .toList();
+        });
+      },
+      controller: _searchController, // Controlador para manejar el texto
+      decoration: InputDecoration(
+        hintText: 'Buscar',
+        border: InputBorder.none,
+        prefixIcon: const Icon(Icons.search), // Icono de lupa dentro del borde
+        suffixIcon: _searchController.text.isNotEmpty // Muestra el icono de "equis" si hay texto
+            ? IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: () {
+                  setState(() {
+                    _searchController.clear(); // Limpia el campo de búsqueda
+                    filteredPeople = people; // Resetea la lista filtrada
+                  });
+                },
+              )
+            : null, // No muestra nada si no hay texto
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.getBorderColor(context), // Color del borde
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.getFocusedBorderColor(context), // Color del borde al enfocarse
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      style: TextStyle(color: AppColors.getTextColor(context)),
+    ),
+  );
 }
+
+
+
+  Widget _buildPersonTile(Person person) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.getBackgroundColor(context),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 10),
+          CircleAvatar(
+            backgroundImage: AssetImage(person.avatarUrl),
+            radius: 25,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              person.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Person {
+  final String name;
+  final String avatarUrl;
+
+  Person(this.name, this.avatarUrl);
+}
+
+  // Widget _buildPeopleSection() {
+  //   String text = 'Sección de personas asociadas al evento';
+  //   return Container(
+  //     padding: const EdgeInsets.all(16.0),
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: Colors.black54),
+  //       borderRadius: BorderRadius.circular(8.0),
+  //     ),
+  //     child: Text(
+  //       text,
+  //       style: const TextStyle(fontSize: 16),
+  //       textAlign: TextAlign.center,
+  //     ),
+  //   );
+  // }
+
