@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/configs/theme.dart';
 import 'package:proyecto_programovil_g3/pages/auth/login/login_page.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_page.dart';
 import 'package:proyecto_programovil_g3/pages/landing/landing_page.dart';
 import 'package:proyecto_programovil_g3/pages/wrapper/wrapper.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
