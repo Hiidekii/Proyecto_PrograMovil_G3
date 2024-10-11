@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final String title;
@@ -62,9 +62,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     filteredPeople = List.from(people);
   }
 
-  //GoogleMapController? mapController;
+  GoogleMapController? mapController;
 
-  //final LatLng _eventLocation = LatLng(-12.046374, -77.042793); // Coordenadas de ejemplo
+  final LatLng _eventLocation = LatLng(-12.046374, -77.042793); // Coordenadas de ejemplo
 
   void _onButtonPressed(int index) {
     setState(() {
@@ -229,7 +229,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   }
 
   Widget _buildLocationSection() {
-    return  const Column(
+  return Padding(
+    padding: const EdgeInsets.all(16.0), // Aquí añades el padding a todo el contenido
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -239,28 +241,30 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         SizedBox(height: 8),
         Text('Av. Ejemplo 123, Ciudad Ejemplo'), // Dirección del evento
         SizedBox(height: 16),
-        // Container(
-        //   height: 300, // Altura del mapa
-        //   child: GoogleMap(
-        //     onMapCreated: (GoogleMapController controller) {
-        //       mapController = controller;
-        //     },
-        //     myLocationEnabled: true, // Asegúrate de tener permisos
-        //     initialCameraPosition: CameraPosition(
-        //       target: _eventLocation, // Coordenadas del evento
-        //       zoom: 14.0,
-        //     ),
-        //     markers: {
-        //       Marker(
-        //         markerId: MarkerId('eventLocation'),
-        //         position: _eventLocation,
-        //       ),
-        //     },
-        //   ),
-        // ),
+        Container(
+          height: 300, // Altura del mapa
+          child: GoogleMap(
+            onMapCreated: (GoogleMapController controller) {
+              mapController = controller;
+            },
+            myLocationEnabled: true, // Asegúrate de tener permisos
+            initialCameraPosition: CameraPosition(
+              target: _eventLocation, // Coordenadas del evento
+              zoom: 14.0,
+            ),
+            markers: {
+              Marker(
+                markerId: MarkerId('eventLocation'),
+                position: _eventLocation,
+              ),
+            },
+          ),
+        ),
       ],
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildListSection() {
     String text = 'Sección de listas asociadas al evento';
