@@ -80,7 +80,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
   GoogleMapController? mapController;
 
-  final LatLng _eventLocation = LatLng(-12.046374, -77.042793); // Coordenadas de ejemplo
+  final LatLng _eventLocation =
+      LatLng(-12.046374, -77.042793); // Coordenadas de ejemplo
 
   void _onButtonPressed(int index) {
     setState(() {
@@ -247,47 +248,47 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       case 2:
         return _buildPeopleSection();
       default:
-        return const Text('Seleccione una sección');
+        return _buildListSection();
     }
   }
 
   Widget _buildLocationSection() {
-  return Padding(
-    padding: const EdgeInsets.all(16.0), // Aquí añades el padding a todo el contenido
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Dirección del evento:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        SizedBox(height: 8),
-        Text('Av. Ejemplo 123, Ciudad Ejemplo'), // Dirección del evento
-        SizedBox(height: 16),
-        Container(
-          height: 300, // Altura del mapa
-          child: GoogleMap(
-            onMapCreated: (GoogleMapController controller) {
-              mapController = controller;
-            },
-            myLocationEnabled: true, // Asegúrate de tener permisos
-            initialCameraPosition: CameraPosition(
-              target: _eventLocation, // Coordenadas del evento
-              zoom: 14.0,
-            ),
-            markers: {
-              Marker(
-                markerId: MarkerId('eventLocation'),
-                position: _eventLocation,
-              ),
-            },
+    return Padding(
+      padding: const EdgeInsets.all(
+          16.0), // Aquí añades el padding a todo el contenido
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Dirección del evento:',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+          SizedBox(height: 8),
+          Text('Av. Ejemplo 123, Ciudad Ejemplo'), // Dirección del evento
+          SizedBox(height: 16),
+          Container(
+            height: 300, // Altura del mapa
+            child: GoogleMap(
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+              },
+              myLocationEnabled: true, // Asegúrate de tener permisos
+              initialCameraPosition: CameraPosition(
+                target: _eventLocation, // Coordenadas del evento
+                zoom: 14.0,
+              ),
+              markers: {
+                Marker(
+                  markerId: MarkerId('eventLocation'),
+                  position: _eventLocation,
+                ),
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildListSection() {
     return Column(
@@ -625,7 +626,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         backgroundColor: Colors.grey[200],
                         radius: 25,
                         child: Icon(
-                          Icons.verified_user, // Using the appropriate icon based on the category
+                          Icons
+                              .verified_user, // Using the appropriate icon based on the category
                           size: 30,
                           color: Colors.black54,
                         ),
@@ -651,17 +653,25 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                   vertical: 4), // Padding inside the tag
                               decoration: BoxDecoration(
                                 color: const Color(
-                                    0xFF4B8254), // Updated color to the specified green
+                                    0xFF26212A), // Updated color to the specified green
                                 borderRadius: BorderRadius.circular(9),
                               ),
                               child: Text(
-                                '150/150', // The quantity tag
+                                '150', // The quantity tag
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 255, 255,
                                       255), // Black text for contrast
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
+                              ),
+                            ),
+                            Container(
+                              child: Icon(
+                                Icons.access_time_rounded, // Check icon
+                                size: 25, // Size of the check icon
+                                color: const Color(
+                                    0xFF1EBAFF), // Set the color for the check icon
                               ),
                             ),
                           ],
@@ -672,10 +682,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(
-                      top: 6,
-                      bottom: 4,
-                      left: 8.0,
-                      right: 20), // Add margin here
+                    top: 6,
+                    bottom: 4,
+                    left: 8.0,
+                    right: 20,
+                  ), // Add margin here
                   child: Row(
                     children: [
                       const SizedBox(width: 10),
@@ -683,7 +694,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         backgroundColor: Colors.grey[200],
                         radius: 25,
                         child: Icon(
-                          Icons.verified_user, // Using the appropriate icon based on the category
+                          Icons
+                              .verified_user, // Using the appropriate icon based on the category
                           size: 30,
                           color: Colors.black54,
                         ),
@@ -702,24 +714,34 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                               ),
                             ),
                             const SizedBox(
-                                width: 8), // Spacing between name and tag
+                                width: 1), // Spacing between name and tag
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4), // Padding inside the tag
+                                horizontal: 8,
+                                vertical: 4,
+                              ), // Padding inside the tag
                               decoration: BoxDecoration(
                                 color: const Color(
-                                    0xFF4B8254), // Updated color to the specified green
+                                    0xFF26212A), // Updated color to the specified color
                                 borderRadius: BorderRadius.circular(9),
                               ),
                               child: Text(
-                                '150/150', // The quantity tag
+                                '150', // The quantity tag
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 255, 255,
-                                      255), // Black text for contrast
+                                      255), // White text for contrast
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
+                              ),
+                            ),
+                            Container(
+                              child: Icon(
+                                Icons
+                                    .check_circle_outline_rounded, // Check icon
+                                size: 25, // Size of the check icon
+                                color: const Color(
+                                    0xFF5FBD6E), // Set the color for the check icon
                               ),
                             ),
                           ],
@@ -728,8 +750,55 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ],
                   ),
                 ),
-              
-              ],
+                const SizedBox(height: 10), // Space before the TextField
+
+                Container(
+  margin: const EdgeInsets.only(
+    top: 6,
+    bottom: 4,
+    left: 20.0,
+    right: 20,
+  ),
+  child: Row(
+    children: [
+      // Set a fixed width or max width for the TextField
+      SizedBox(
+        width: 120, // Adjust this width as needed
+        height: 30,
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Monto", // Placeholder text
+            fillColor: Colors.white, // Background color
+            filled: true,
+            contentPadding: const EdgeInsets.only(
+                left: 8, right: 20), // Padding inside the TextField
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(width: 50), // Space between TextField and button
+      ElevatedButton(
+        onPressed: () {
+          // Add your button action here
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFF6B630), // Button color
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.monetization_on), // Money symbol icon
+            const SizedBox(width: 4), // Space between icon and text
+            const Text("Aportar"), // Button text
+          ],
+        ),
+      ),
+    ],
+  ),
+)
+                ],
             ],
           ),
         ),
