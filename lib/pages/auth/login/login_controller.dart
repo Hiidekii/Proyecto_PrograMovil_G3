@@ -41,37 +41,35 @@ class LoginController extends GetxController {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-  // Función para manejar el clic en el botón de iniciar sesión
   Future<void> onLoginClick(BuildContext context) async {
     String email = emailController.text;
     String password = passwordController.text;
 
-    // Validar si las credenciales son correctas
     Usuario? user = await userService.login(email, password);
 
     if (user != null) {
       // Si el usuario existe, navega a la pantalla de Home
-      Navigator.pushReplacementNamed(context, "/home");
+      //Navigator.pushReplacementNamed(context, "/home");
+      print("navegar a home"); //descomentar el de arriba despues del merge
     } else {
       if (Get.isSnackbarOpen) {
         Get.closeAllSnackbars();
       }
-      // Si el usuario no existe o la contraseña es incorrecta
+
       Get.snackbar(
         "Error",
         "Correo o contraseña incorrectos",
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red, // Cambia el color de fondo
-        colorText: Colors.white, // Cambia el color del texto
-        duration: Duration(seconds: 3), // Duración de 3 segundos
-        margin: EdgeInsets.all(10), // Añadir margen si lo deseas
-        borderRadius: 8, // Añadir borde redondeado
-        icon: const Icon(Icons.error, color: Colors.white), // Icono opcional
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(10),
+        borderRadius: 8,
+        icon: const Icon(Icons.error, color: Colors.white),
       );
     }
   }
 
-  // Función para manejar el clic en el botón de registro
   void onRegisterClick(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/register");
   }
