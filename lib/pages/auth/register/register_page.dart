@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_controller.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   RegisterController control = Get.put(RegisterController());
 
   @override
