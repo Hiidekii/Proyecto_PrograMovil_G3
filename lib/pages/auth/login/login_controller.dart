@@ -49,8 +49,7 @@ class LoginController extends GetxController {
 
     if (user != null) {
       // Si el usuario existe, navega a la pantalla de Home
-      //Navigator.pushReplacementNamed(context, "/home");
-      print("navegar a home"); //descomentar el de arriba despues del merge
+      Navigator.pushReplacementNamed(context, "/wrapper");
     } else {
       if (Get.isSnackbarOpen) {
         Get.closeAllSnackbars();
