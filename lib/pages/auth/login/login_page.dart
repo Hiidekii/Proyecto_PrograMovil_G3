@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_const
-
-import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/pages/auth/login/login_controller.dart';
