@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/user.dart';
 import 'package:proyecto_programovil_g3/services/user_service.dart';
 
@@ -12,6 +13,7 @@ class LoginController extends GetxController {
   var isPasswordVisible = false.obs; // Controla la visibilidad de la contraseña
 
   final UserService userService = UserService(); // Instancia de UserService
+  final GetStorage storage = GetStorage(); // Instancia de GetStorage
 
   @override
   void onInit() {
@@ -49,6 +51,7 @@ class LoginController extends GetxController {
 
     if (user != null) {
       // Si el usuario existe, navega a la pantalla de Home
+      storage.write('user', user.toJson());
       Navigator.pushReplacementNamed(context, "/wrapper");
     } else {
       if (Get.isSnackbarOpen) {
