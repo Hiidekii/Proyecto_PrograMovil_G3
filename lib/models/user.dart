@@ -1,34 +1,39 @@
-class User {
-  int id;
-  String name;
-  String email;
+class Usuario {
+  int idUsuario;
+  String nombreUsuario;
+  String correo;
   String password;
 
-  User({required this.id, required this.name, required this.email, required this.password});
+  Usuario({
+    required this.idUsuario,
+    required this.nombreUsuario,
+    required this.correo,
+    required this.password,
+  });
 
-  // fromMap method to create a User object from a map
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      id: map['id'],
-      name: map['name'],
-      email: map['email'],
-      password: map['password'],
-    );
+  // Método toString para representar la clase como un String
+  @override
+  String toString() {
+    return 'Usuario{idUsuario: $idUsuario, nombreUsuario: $nombreUsuario, correo: $correo, password: $password}';
   }
 
-  // toJson method to convert the User object to a map
+  // Método para convertir la instancia a un Map (JSON)
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'name': name,
-      'email': email,
+      'idUsuario': idUsuario,
+      'nombreUsuario': nombreUsuario,
+      'correo': correo,
       'password': password,
     };
   }
 
-  // toString method for a readable format of the User object
-  @override
-  String toString() {
-    return 'User{id: $id, name: $name, email: $email, password: $password}';
+  // Método para crear una instancia de Usuario a partir de un Map
+  factory Usuario.fromMap(Map<String, dynamic> map) {
+    return Usuario(
+      idUsuario: map['idUsuario'],
+      nombreUsuario: map['nombreUsuario'],
+      correo: map['correo'],
+      password: map['password'],
+    );
   }
 }
