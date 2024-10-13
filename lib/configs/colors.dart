@@ -8,6 +8,7 @@ class AppColors {
   static const Color pink = Color(0xFFEEB0D4);
   static const Color blue = Color(0xFF1EBAFF);
   static const Color cream = Color(0xFFFDF4E9);
+  static const Color Osbcream = Color.fromARGB(255, 236, 236, 236);
 
   //SOFT COLORS
   static const Color softYellow = Color(0xFFF5E5C0);
@@ -15,6 +16,7 @@ class AppColors {
   static const Color softPink = Color(0xFFF1D2E4);
   static const Color softBlue = Color(0xFF89D7FA);
   static const Color softGray = Color(0xFF8D8B8F);
+  static const Color softBlack = Color(0xFF554E5A);
 
   static const Color secondaryColor = Color(0xFF615049);
 
@@ -53,16 +55,16 @@ class AppColors {
   }
 
   // Método para obtener el color de bordes
-static Color getBorderColor(BuildContext context) {
-  return Theme.of(context).brightness == Brightness.dark
-      ? softGray // Borde gris suave para modo oscuro
-      : softGray; // Borde gris suave para modo claro
-}
+  static Color getBorderColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? softGray // Borde gris suave para modo oscuro
+        : softGray; // Borde gris suave para modo claro
+  }
 
 // Método para obtener el color de bordes enfocados
-static Color getFocusedBorderColor(BuildContext context) {
-  return Theme.of(context).brightness == Brightness.dark
-      ? blue // Color azul brillante para modo oscuro
-      : blue; // Color azul brillante para modo claro
-}
+  static Color getFocusedBorderColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? blue // Color azul brillante para modo oscuro
+        : blue; // Color azul brillante para modo claro
+  }
 }

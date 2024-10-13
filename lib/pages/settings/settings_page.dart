@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
+import 'package:proyecto_programovil_g3/pages/auth/login/login_page.dart';
 import 'package:proyecto_programovil_g3/pages/settings/components/profile_card.dart';
 
 class SettingsTab extends StatefulWidget {
@@ -75,7 +76,16 @@ class _SettingsTabState extends State<SettingsTab> {
           _buildListTile(
             icon: CupertinoIcons.power,
             title: 'Cerrar sesión',
-            onTap: () {},
+            onTap: () {
+              // Navegar a la pantalla de "Iniciar sesión"
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      LoginPage(), // Reemplaza LoginPage con tu página de inicio de sesión
+                ),
+              );
+            },
           ),
         ],
       ),

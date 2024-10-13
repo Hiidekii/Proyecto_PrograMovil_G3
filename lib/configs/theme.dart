@@ -20,7 +20,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: AppColors.yellow,
           foregroundColor:
               AppColors.textColor, // Color de fondo de los botones elevados
         ),

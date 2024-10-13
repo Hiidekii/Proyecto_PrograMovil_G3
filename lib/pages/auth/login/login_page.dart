@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/pages/auth/login/login_controller.dart';
 
 class LoginPage extends StatelessWidget {
@@ -34,10 +35,8 @@ class LoginPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(
-                          255, 84, 82, 82), // Fondo gris claro
-                      borderRadius:
-                          BorderRadius.circular(10), // Bordes redondeados
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,12 +67,10 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        // TextField con icono de visibilidad (ojito)
                         Obx(
                           () => TextField(
                             controller: control.passwordController,
-                            obscureText: !control.isPasswordVisible
-                                .value, // Controla la visibilidad de la contraseña
+                            obscureText: !control.isPasswordVisible.value,
                             decoration: InputDecoration(
                               hintText: 'Ingrese su contraseña',
                               border: const OutlineInputBorder(),
@@ -92,7 +89,6 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        // Botón de iniciar sesión reactivo
                         Obx(
                           () => SizedBox(
                             width: double.infinity,
@@ -100,8 +96,11 @@ class LoginPage extends StatelessWidget {
                               onPressed: control.isButtonEnabled.value
                                   ? () {
                                       control.onLoginClick(context);
+                                      // Limpiar los controladores de texto después de iniciar sesión
+                                      control.emailController.clear();
+                                      control.passwordController.clear();
                                     }
-                                  : null, // El botón se deshabilita si no cumple las validaciones
+                                  : null,
                               style: ElevatedButton.styleFrom(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
@@ -123,17 +122,20 @@ class LoginPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              control.onRegisterClick(context);
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              control.onRegisterClick(
+                                  context); // Acción al hacer clic en el texto
                             },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              textStyle: const TextStyle(fontSize: 16),
+                            child: const Text(
+                              'Crear una cuenta',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(
+                                    0xFF8A2BE2), // Color morado (puedes usar tu color preferido)
+                              ),
                             ),
-                            child: const Text('Crear cuenta'),
                           ),
                         ),
                       ],

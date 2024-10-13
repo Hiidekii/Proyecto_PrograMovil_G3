@@ -53,7 +53,6 @@ class _WrapperState extends State<Wrapper> {
           IconButton(
             icon: const Icon(
               CupertinoIcons.calendar,
-              color: Colors.black,
             ),
             onPressed: () {
               showModalBottomSheet(

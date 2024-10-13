@@ -65,8 +65,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   ] */
 
   List<Lista> listas = [
-    Lista("Comida", "Lista de comestibles", 500),
-    Lista("Bebida", "Lista de bebidas", 500),
+    Lista("Comida", "Lista de comestibles", 40),
+    Lista("Bebida", "Lista de bebidas", 30),
     Lista("Dinero", "Lista de aportes", 500),
   ];
   List<Lista> filteredListas = [];
@@ -211,9 +211,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected
-            ? Colors.blueAccent
-            : AppColors.getBackgroundColor(context),
+        backgroundColor: isSelected ? AppColors.yellow : AppColors.Osbcream,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30)), // Rounded shape
         padding: const EdgeInsets.symmetric(
@@ -226,13 +224,12 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         children: [
           Icon(
             icon,
-            color: AppColors.getTextColor(context),
+            color: AppColors.textColor,
           ),
           const SizedBox(width: 8), // Space between icon and label
           Text(
             label,
-            style: TextStyle(
-                color: AppColors.getTextColor(context)), // Set label color
+            style: TextStyle(color: AppColors.textColor), // Set label color
           ),
         ],
       ),
@@ -450,7 +447,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   Widget _buildPersonTile(Person person) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.getBackgroundColor(context),
+        color: AppColors.softBlack,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -475,6 +472,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: Colors.white,
               ),
             ),
           ),
@@ -527,7 +525,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               left: 4.0, right: 4.0, top: 10.0, bottom: 10.0),
           padding: const EdgeInsets.all(8.0), // Set container padding
           decoration: BoxDecoration(
-            color: const Color(0xFF554E5A),
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors
+                    .softBlack // Si está en modo oscuro, usar primaryColor
+                : AppColors
+                    .darkBackgroundColor, // Si no está en modo oscuro, usar darkBackgroundColor
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -751,54 +753,60 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 10), // Space before the TextField
-
-                Container(
-  margin: const EdgeInsets.only(
-    top: 6,
-    bottom: 4,
-    left: 20.0,
-    right: 20,
-  ),
-  child: Row(
-    children: [
-      // Set a fixed width or max width for the TextField
-      SizedBox(
-        width: 120, // Adjust this width as needed
-        height: 30,
-        child: TextField(
-          decoration: InputDecoration(
-            hintText: "Monto", // Placeholder text
-            fillColor: Colors.white, // Background color
-            filled: true,
-            contentPadding: const EdgeInsets.only(
-                left: 8, right: 20), // Padding inside the TextField
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-      ),
-      const SizedBox(width: 50), // Space between TextField and button
-      ElevatedButton(
-        onPressed: () {
-          // Add your button action here
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFF6B630), // Button color
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.monetization_on), // Money symbol icon
-            const SizedBox(width: 4), // Space between icon and text
-            const Text("Aportar"), // Button text
-          ],
-        ),
-      ),
-    ],
-  ),
-)
+                if (lista.category == "Dinero") ...[
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: 6,
+                      bottom: 4,
+                      left: 20.0,
+                      right: 20,
+                    ),
+                    child: Row(
+                      children: [
+                        // Set a fixed width or max width for the TextField
+                        SizedBox(
+                          width: 120, // Adjust this width as needed
+                          height: 30,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Monto", // Placeholder text
+                              fillColor: Colors.white, // Background color
+                              filled: true,
+                              contentPadding: const EdgeInsets.only(
+                                  left: 8,
+                                  right: 20), // Padding inside the TextField
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 50), // Space between TextField and button
+                        ElevatedButton(
+                          onPressed: () {
+                            // Add your button action here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color(0xFFF6B630), // Button color
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                  Icons.monetization_on), // Money symbol icon
+                              const SizedBox(
+                                  width: 4), // Space between icon and text
+                              const Text("Aportar"), // Button text
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
+              ],
             ],
           ),
         ),

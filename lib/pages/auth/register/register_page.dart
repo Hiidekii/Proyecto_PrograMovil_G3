@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_controller.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -30,8 +31,7 @@ class RegisterPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color:
-                          const Color.fromARGB(255, 84, 82, 82), // Fondo gris
+                      color: AppColors.primaryColor,
                       borderRadius:
                           BorderRadius.circular(10), // Bordes redondeados
                     ),
@@ -164,17 +164,20 @@ class RegisterPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              control.onLoginClick(context);
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              control.onLoginClick(
+                                  context); // Acción al hacer clic en el texto
                             },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              textStyle: const TextStyle(fontSize: 16),
+                            child: const Text(
+                              'Iniciar Sesión',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(
+                                    0xFF8A2BE2), // Color morado (puedes usar tu color preferido)
+                              ),
                             ),
-                            child: const Text('Iniciar Sesión'),
                           ),
                         ),
                       ],
