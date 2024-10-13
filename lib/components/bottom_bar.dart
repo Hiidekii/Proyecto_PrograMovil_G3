@@ -11,64 +11,71 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
       child: ClipRRect(
-        borderRadius:
-            BorderRadius.circular(25), // Recorta el contenido al borde circular
+        borderRadius: BorderRadius.circular(25),
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: AppColors.softYellow, // Cambiado a softYellow
+            color: AppColors.softYellow,
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
-          child: BottomNavigationBar(
-            currentIndex: currentIndex,
-            onTap: onTabTapped,
-            backgroundColor: Colors.transparent,
-            type: BottomNavigationBarType.fixed,
-            elevation: 0,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.house_alt,
-                    size: 32, color: Colors.black87),
-                activeIcon: Icon(CupertinoIcons.house_alt,
-                    size: 32, color: Colors.orangeAccent),
-                label: '',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildTabItem(
+                icon: CupertinoIcons.house_alt,
+                isActive: currentIndex == 0,
+                index: 0,
+                onTap: onTabTapped,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.collections,
-                    size: 32, color: Colors.black87),
-                activeIcon: Icon(CupertinoIcons.collections,
-                    size: 32, color: Colors.orangeAccent),
-                label: '',
+              _buildTabItem(
+                icon: CupertinoIcons.collections,
+                isActive: currentIndex == 1,
+                index: 1,
+                onTap: onTabTapped,
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(CupertinoIcons.square_list,
-              //       size: 32, color: Colors.black87),
-              //   activeIcon: Icon(CupertinoIcons.square_list,
-              //       size: 32, color: Colors.orangeAccent),
-              //   label: '',
+              // _buildTabItem(
+              //   icon: CupertinoIcons.square_list,
+              //   isActive: currentIndex == 2,
+              //   index: 2,
+              //   onTap: onTabTapped,
               // ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.square_grid_2x2,
-                    size: 32, color: Colors.black87),
-                activeIcon: Icon(CupertinoIcons.square_grid_2x2,
-                    size: 32, color: Colors.orangeAccent),
-                label: '',
+              _buildTabItem(
+                icon: CupertinoIcons.square_grid_2x2,
+                isActive: currentIndex == 3,
+                index: 3,
+                onTap: onTabTapped,
               ),
             ],
-            selectedItemColor: Colors.orangeAccent,
-            unselectedItemColor: Colors.black87,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabItem({
+    required IconData icon,
+    required bool isActive,
+    required int index,
+    required Function(int) onTap,
+  }) {
+    return GestureDetector(
+      onTap: () => onTap(index),
+      child: Container(
+        width: 50,
+        height: 50,
+        child: Icon(
+          icon,
+          size: 32,
+          color: isActive ? Colors.orangeAccent : Colors.black87,
         ),
       ),
     );

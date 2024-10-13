@@ -44,32 +44,40 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_titles[_currentIndex]),
-        actions: [
-          IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
-          IconButton(
-            icon: const Icon(
-              CupertinoIcons.calendar,
+        appBar: AppBar(
+          title: Text(_titles[_currentIndex]),
+          actions: [
+            // IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
+            IconButton(
+              icon: const Icon(
+                CupertinoIcons.calendar,
+              ),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (BuildContext context) {
+                    return const CalendarView();
+                  },
+                );
+              },
             ),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                useSafeArea: true,
-                builder: (BuildContext context) {
-                  return const CalendarView();
-                },
-              );
-            },
-          ),
-        ],
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomBar(
-        currentIndex: _currentIndex,
-        onTabTapped: onTabTapped,
-      ),
-    );
+          ],
+        ),
+        body: Stack(children: [
+          _children[_currentIndex],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              BottomBar(
+                currentIndex: _currentIndex,
+                onTabTapped: onTabTapped,
+              )
+            ],
+          )
+        ])
+        // bottomNavigationBar: ,
+        );
   }
 }
