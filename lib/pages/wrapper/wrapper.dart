@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/components/bottom_bar.dart';
 import 'package:proyecto_programovil_g3/pages/events/events_page.dart';
 import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_view.dart';
-import 'package:proyecto_programovil_g3/pages/list/list_page.dart';
 import 'package:proyecto_programovil_g3/pages/settings/settings_page.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_page.dart';
 
@@ -28,14 +27,13 @@ class _WrapperState extends State<Wrapper> {
     _children.addAll([
       HomeTab(),
       EventsTab(),
-      ListTab(),
       SettingsTab(
           onToggleTheme: () =>
               widget.onToggleTheme()), // Pasar la función para alternar el tema
     ]);
   }
 
-  final List<String> _titles = ['Inicio', 'Eventos', 'Lista', 'Perfil'];
+  final List<String> _titles = ['Inicio', 'Eventos', 'Perfil'];
 
   void onTabTapped(int index) {
     setState(() {

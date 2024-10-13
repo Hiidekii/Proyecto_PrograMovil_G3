@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 
-class EventCard extends StatelessWidget {
+class EventCard extends StatefulWidget {
   final String title;
   final String date;
   final String time;
@@ -12,6 +12,8 @@ class EventCard extends StatelessWidget {
   final VoidCallback? onManage;
   final bool isEditable;
   final bool isFavorite;
+
+  final VoidCallback? onTap; // Agregar esta línea
 
   const EventCard({
     Key? key,
@@ -24,7 +26,14 @@ class EventCard extends StatelessWidget {
     this.onManage,
     required this.isEditable,
     required this.isFavorite,
+    this.onTap,
   }) : super(key: key);
+  @override
+  _EventCardState createState() => _EventCardState();
+}
+
+class _EventCardState extends State<EventCard> {
+  bool showDetails = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,25 +61,102 @@ class EventCard extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(15.0),
         ),
-        child: ListTile(
-          contentPadding: EdgeInsets.only(
-            left: 9.0,
-            right: 5.0,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 0.0,
+            right: 25.0,
             top: 0.0,
-            bottom: 21.0,
+            bottom: 01.0,
           ),
-          title: Text(
-            title,
+          child: ListTile(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            subtitle: showDetails
+                ? ConstrainedBox(
+                    constraints: BoxConstraints(),
+                    child: _buildItemDetails(context),
+                  )
+                : Container(
+                    height: 50.0,
+                    child: Text(
+                      '${widget.date} - ${widget.time}',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                  ),
+            onTap: widget.onTap,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItemDetails(BuildContext context) {
+    return Container(
+      height: 50.0,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _buildItemInfo('Bajona', '5', true, false, context),
+            SizedBox(width: 10.0),
+            _buildItemInfo('Trago', '20', false, true, context),
+            SizedBox(width: 10.0),
+            _buildItemInfo('Chancha', '300', true, true, context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItemInfo(String label, String value, bool isConfirmed,
+      bool isMonetary, BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
+      margin: EdgeInsets.symmetric(vertical: 3.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Row(
+        children: [
+          Text(
+            label,
             style: TextStyle(
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
-          subtitle: Text(
-            '$date - $time',
-            style: TextStyle(color: Colors.white70),
+          SizedBox(width: 8.0),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Text(
+              isMonetary ? '\$$value' : value,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: AppColors.getTextColor(context),
+              ),
+            ),
           ),
-        ),
+          SizedBox(width: 4.0),
+          Icon(
+            isConfirmed
+                ? CupertinoIcons.checkmark_alt_circle
+                : CupertinoIcons.clock,
+            color: isConfirmed ? Colors.green : Colors.lightBlue,
+            size: 25.0,
+          ),
+        ],
       ),
     );
   }
@@ -85,7 +171,7 @@ class EventCard extends StatelessWidget {
           height: 95,
           width: 83,
           child: Image.asset(
-            imageUrl,
+            widget.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
@@ -102,18 +188,22 @@ class EventCard extends StatelessWidget {
         children: [
           _buildActionButton(
             context,
-            isEditable
+            widget.isEditable
                 ? CupertinoIcons.pencil
-                : (isFavorite
+                : (widget.isFavorite
                     ? CupertinoIcons.heart_fill
                     : CupertinoIcons.heart),
-            isEditable ? onEdit : onShare,
+            widget.isEditable ? widget.onEdit : widget.onShare,
           ),
           SizedBox(height: 6),
           _buildActionButton(
             context,
             Icons.checklist,
-            onManage,
+            () {
+              setState(() {
+                showDetails = !showDetails;
+              });
+            },
           ),
         ],
       ),
@@ -136,5 +226,4 @@ class EventCard extends StatelessWidget {
       ),
     );
   }
-  
 }

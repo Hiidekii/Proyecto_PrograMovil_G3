@@ -49,13 +49,13 @@ class BottomBar extends StatelessWidget {
                     size: 32, color: Colors.orangeAccent),
                 label: '',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.square_list,
-                    size: 32, color: Colors.black87),
-                activeIcon: Icon(CupertinoIcons.square_list,
-                    size: 32, color: Colors.orangeAccent),
-                label: '',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(CupertinoIcons.square_list,
+              //       size: 32, color: Colors.black87),
+              //   activeIcon: Icon(CupertinoIcons.square_list,
+              //       size: 32, color: Colors.orangeAccent),
+              //   label: '',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.square_grid_2x2,
                     size: 32, color: Colors.black87),
