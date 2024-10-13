@@ -50,8 +50,8 @@ class BottomBar extends StatelessWidget {
               // ),
               _buildTabItem(
                 icon: CupertinoIcons.square_grid_2x2,
-                isActive: currentIndex == 3,
-                index: 3,
+                isActive: currentIndex == 2,
+                index: 2,
                 onTap: onTabTapped,
               ),
             ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/event_card.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/section_header.dart';
-import 'package:proyecto_programovil_g3/pages/list/event_detail_screen.dart'; // Asegúrate de importar esta clase
+import 'package:proyecto_programovil_g3/pages/events/event_detail_screen.dart'; // Asegúrate de importar esta clase
 
 class EventsTab extends StatelessWidget {
   @override
@@ -109,7 +109,7 @@ class EventsTab extends StatelessWidget {
         ],
       ),
       floatingActionButton: Container(
-        padding: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.only(right: 5, bottom: 100),
         child: FloatingActionButton(
           onPressed: () {},
           child: Icon(Icons.add),
