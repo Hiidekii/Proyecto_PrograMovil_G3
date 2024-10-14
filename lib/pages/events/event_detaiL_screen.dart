@@ -377,7 +377,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           child: Row(
             children: [
               Expanded(child: _buildSearchBar()),
-              const SizedBox(width: 10),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.yellow,
@@ -421,7 +420,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Agregar Persona'),
+          title: const Text('Invitar gente'),
           content: TextField(
             controller: _nameController,
             decoration: const InputDecoration(hintText: 'Nombre de la persona'),
