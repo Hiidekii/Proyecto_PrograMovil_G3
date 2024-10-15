@@ -82,9 +82,30 @@ class ProfileCard extends StatelessWidget {
         child: Container(
           height: 95,
           width: 83,
-          child: Image.asset(
+          child: Image.network(
             imageUrl,
             fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          (loadingProgress.expectedTotalBytes ?? 1)
+                      : null,
+                ),
+              );
+            },
+            errorBuilder:
+                (BuildContext context, Object error, StackTrace? stackTrace) {
+              return Container(
+                height: 95,
+                width: 83,
+                color: Colors.grey, // Color de fondo en caso de error
+                child: Icon(Icons.error, color: Colors.red), // Icono de error
+              );
+            },
           ),
         ),
       ),

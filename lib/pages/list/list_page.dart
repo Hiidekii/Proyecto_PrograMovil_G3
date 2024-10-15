@@ -8,9 +8,9 @@ class ListTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          SectionHeader(title: 'Mis eventos'),
+          const SectionHeader(title: 'Mis eventos'),
           EventCard(
             title: 'Cumpleaños de Hideki',
             date: '13/12/24',
