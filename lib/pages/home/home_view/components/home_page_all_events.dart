@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_programovil_g3/pages/home/calendar_view/componets/calendar_view_event_card.dart';
+import 'package:get/get.dart'; // Importa GetX
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_event_card.dart';
-
-import 'package:proyecto_programovil_g3/pages/home/home_view/home_view_model.dart';
+import 'package:proyecto_programovil_g3/pages/home/home_view/home_controller.dart';
 
 class HomePageAllEvents extends StatelessWidget {
-  final HomeViewModel viewModel;
-  const HomePageAllEvents({super.key, required this.viewModel});
+  const HomePageAllEvents({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find<HomeController>();
+
     return Expanded(
-      child: Builder(
-        builder: (context) {
-          final events = viewModel.getFutureEvents();
-          return Column(
-            children: [
-              Container(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    final event = events[index];
-                    return HomePageEventCard(event: event);
-                  },
-                ),
+      child: Column(
+        children: [
+          Obx(() {
+            final events = controller.userEvents;
+            return Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                itemCount: events.length,
+                itemBuilder: (context, index) {
+                  final event = events[index];
+                  return HomePageEventCard(event: event);
+                },
               ),
-            ],
-          );
-        },
+            );
+          }),
+        ],
       ),
     );
   }

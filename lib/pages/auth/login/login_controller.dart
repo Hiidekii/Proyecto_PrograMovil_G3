@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/webServices/Auth/web_service_login.dart';
-import 'package:proyecto_programovil_g3/models/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/User/web_service_user_data.dart';
 
 class LoginController extends GetxController {

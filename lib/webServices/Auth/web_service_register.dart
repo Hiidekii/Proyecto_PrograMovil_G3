@@ -1,5 +1,5 @@
+import 'package:proyecto_programovil_g3/models/Auth/register_response.dart';
 import 'package:proyecto_programovil_g3/models/base_response.dart';
-import 'package:proyecto_programovil_g3/models/register_response.dart';
 import 'package:proyecto_programovil_g3/webServices/network_manager.dart';
 import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
 
@@ -25,7 +25,8 @@ class WebServiceRegister implements WebServiceProtocol {
         method: httpMethod,
         body: body,
       );
-      return BaseResponse.fromJson(response, RegisterResponse.fromJson);
+      return BaseResponse.fromJson(
+          response, RegisterResponse.fromJson as dynamic);
     } catch (error) {
       throw Exception('Error al realizar el login: $error');
     }

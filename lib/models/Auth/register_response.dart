@@ -1,5 +1,3 @@
-import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
-
 class RegisterResponse {
   final String? message;
   final String? error;

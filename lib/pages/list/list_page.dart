@@ -21,8 +21,8 @@ class ListTab extends StatelessWidget {
             isItemConfirmed: true,
             isMoneyConfirmed: true,
             imageUrl: 'assets/img/E1.png',
-            isEditable: true,  // Añadir este argumento
-            isFavorite: false,  // Añadir este argumento
+            isEditable: true, // Añadir este argumento
+            isFavorite: false, // Añadir este argumento
             onTap: () {
               Navigator.push(
                 context,

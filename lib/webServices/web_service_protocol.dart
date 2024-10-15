@@ -6,7 +6,7 @@ abstract class WebServiceProtocol {
 }
 
 abstract class JsonSerializable {
-  factory JsonSerializable.fromJson(Map<String, dynamic> json) {
+  factory JsonSerializable.fromJson(dynamic json) {
     throw UnimplementedError('fromJson no implementado');
   }
 }

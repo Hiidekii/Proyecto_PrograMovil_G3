@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/event_card.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/section_header.dart';
-import 'package:proyecto_programovil_g3/pages/events/event_detail_screen.dart'; // Asegúrate de importar esta clase
-import 'package:proyecto_programovil_g3/pages/events/components/new_event.dart'; // Importa el nuevo archivo
+import 'package:proyecto_programovil_g3/pages/events/event_detail_screen.dart';
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart'; // Asegúrate de importar esta clase
 
 class EventsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
@@ -113,7 +114,14 @@ class EventsTab extends StatelessWidget {
         padding: const EdgeInsets.only(right: 5, bottom: 100),
         child: FloatingActionButton(
           onPressed: () {
-            showNewEventModal(context);
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (BuildContext context) {
+                return NewEventPage();
+              },
+            );
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.yellow[700],

@@ -58,6 +58,7 @@ class NetworkManager {
     if (response.statusCode == 200) {
       try {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
+        print("RESPONSE DATA ===== $responseData");
         return responseData;
       } catch (e) {
         throw Exception(e);
@@ -88,9 +89,14 @@ enum HTTPMethod {
 }
 
 enum EndPoint {
+  //auth
   login,
   register,
+  //user
   userData,
+  userEvents,
+  //events,
+  publicEvents
 }
 
 extension EndPointExtension on EndPoint {
@@ -102,6 +108,10 @@ extension EndPointExtension on EndPoint {
         return 'auth/register';
       case EndPoint.userData:
         return 'user/info';
+      case EndPoint.userEvents:
+        return 'user/events';
+      case EndPoint.publicEvents:
+        return 'event/public';
     }
   }
 }
