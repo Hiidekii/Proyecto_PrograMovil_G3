@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:proyecto_programovil_g3/models/user.dart';
-import 'package:proyecto_programovil_g3/services/user_service.dart';
+import 'package:proyecto_programovil_g3/webServices/Auth/web_service_login.dart';
+import 'package:proyecto_programovil_g3/models/user_response.dart';
+import 'package:proyecto_programovil_g3/webServices/User/web_service_user_data.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -12,9 +13,9 @@ class LoginController extends GetxController {
       false.obs; // Controla si el botón de login está habilitado
   var isPasswordVisible = false.obs; // Controla la visibilidad de la contraseña
 
-  final UserService userService = UserService(); // Instancia de UserService
   final GetStorage storage = GetStorage(); // Instancia de GetStorage
-
+  final webServiceLogin = WebServiceLogin();
+  final webServiceUserData = WebServiceUserData();
   @override
   void onInit() {
     super.onInit();
@@ -29,12 +30,10 @@ class LoginController extends GetxController {
     return emailRegex.hasMatch(email);
   }
 
-  // Validar que el formulario esté completo y correcto
   void _validateForm() {
     String email = emailController.text;
     String password = passwordController.text;
 
-    // El botón se habilita solo si el correo es válido y la contraseña no está vacía
     isButtonEnabled.value = _isValidEmail(email) && password.isNotEmpty;
   }
 
@@ -46,21 +45,37 @@ class LoginController extends GetxController {
   Future<void> onLoginClick(BuildContext context) async {
     String email = emailController.text;
     String password = passwordController.text;
+    try {
+      final loginResponse = await webServiceLogin.fetchData(email, password);
 
-    Usuario? user = await userService.login(email, password);
+      if (loginResponse.success) {
+        final token = loginResponse.data.token;
+        storage.write('token', token);
+        Navigator.pushReplacementNamed(context, "/wrapper");
+      } else {
+        if (Get.isSnackbarOpen) {
+          Get.closeAllSnackbars();
+        }
 
-    if (user != null) {
-      // Si el usuario existe, navega a la pantalla de Home
-      storage.write('user', user.toJson());
-      Navigator.pushReplacementNamed(context, "/wrapper");
-    } else {
+        Get.snackbar(
+          "Error",
+          "Correo o contraseña incorrectos",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(10),
+          borderRadius: 8,
+          icon: const Icon(Icons.error, color: Colors.white),
+        );
+      }
+    } catch (e) {
       if (Get.isSnackbarOpen) {
         Get.closeAllSnackbars();
       }
-
       Get.snackbar(
         "Error",
-        "Correo o contraseña incorrectos",
+        "Usuario o Clave incorrecta",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -78,7 +93,6 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    // Limpiar controladores cuando se destruya el controlador
     emailController.dispose();
     passwordController.dispose();
     super.onClose();

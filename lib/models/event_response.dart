@@ -1,3 +1,5 @@
+import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
+
 class Event {
   int id;
   String title;

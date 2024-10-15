@@ -21,7 +21,7 @@ class SettingsTab extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             children: [
               ProfileCard(
-                name: viewModel.userName,
+                name: "Hola, " + viewModel.userName + '!',
                 email: viewModel.userEmail,
                 imageUrl: viewModel.userImageUrl,
                 isEditable: true,
