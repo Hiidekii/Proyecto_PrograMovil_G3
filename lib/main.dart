@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         darkTheme: AppTheme.darkTheme(),
         themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
         initialRoute: '/',
+        debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => LandingPage(),
           '/login': (context) => LoginPage(),

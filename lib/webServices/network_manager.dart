@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:proyecto_programovil_g3/models/base_response.dart';
-
 class NetworkManager {
   static final NetworkManager _instance = NetworkManager._internal();
 
