@@ -696,26 +696,27 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             color: Colors.white, // Set the text color
                           ),
                         ),
-                        const SizedBox(
-                            width: 8), // Spacing between name and tag
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4), // Padding inside the tag
-                          decoration: BoxDecoration(
-                            color: const Color(
-                                0xFF4B8254), // Updated color to the specified green
-                            borderRadius: BorderRadius.circular(9),
-                          ),
-                          child: Text(
-                            '$currentQuantity/${lista.totalQuantity}', // The quantity tag
-                            style: const TextStyle(
-                              color: Colors.white, // White text for contrast
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                        const Expanded(
+                            child: const SizedBox(
+                                width: 15)), // Spacing between name and tag
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 8,
+                        //       vertical: 4), // Padding inside the tag
+                        //   decoration: BoxDecoration(
+                        //     color: const Color(
+                        //         0xFF4B8254), // Updated color to the specified green
+                        //     borderRadius: BorderRadius.circular(9),
+                        //   ),
+                        //   child: Text(
+                        //     '$currentQuantity/${lista.totalQuantity}', // The quantity tag
+                        //     style: const TextStyle(
+                        //       color: Colors.white, // White text for contrast
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: 14,
+                        //     ),
+                        //   ),
+                        // ),
                         IconButton(
                           icon: Icon(
                             lista.isExpanded
@@ -747,7 +748,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       // Set a fixed width or max width for the TextField
                       SizedBox(
                         width: 120, // Adjust this width as needed
-                        height: 30,
+                        height: 40,
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: "Monto", // Placeholder text
@@ -757,7 +758,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 left: 8,
                                 right: 20), // Padding inside the TextField
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none,
                             ),
                           ),
@@ -778,7 +779,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             const Icon(
                                 Icons.monetization_on), // Money symbol icon
                             const SizedBox(
-                                width: 4), // Space between icon and text
+                                width: 2), // Space between icon and text
                             const Text("Aportar"), // Button text
                           ],
                         ),
@@ -835,14 +836,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 4), // Padding inside the tag
                   decoration: BoxDecoration(
-                    color:
-                        const Color(0xFF26212A), // Background color for the tag
+                    color: const Color(
+                        0xFF4B8254), // Updated color to the specified green
                     borderRadius: BorderRadius.circular(9),
                   ),
                   child: Text(
-                    quantity, // The quantity tag
+                    '$quantity/${5}', // The quantity tag
                     style: const TextStyle(
-                      color: Colors.white, // Text color for contrast
+                      color: Colors.white, // White text for contrast
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),

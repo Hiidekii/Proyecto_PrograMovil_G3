@@ -47,24 +47,24 @@ class SettingsTab extends StatelessWidget {
                   onToggleTheme();
                 },
               ),
-              _buildListTile(
-                context: context,
-                icon: CupertinoIcons.lock,
-                title: 'Privacidad y seguridad',
-                onTap: () {},
-              ),
-              _buildListTile(
-                context: context,
-                icon: CupertinoIcons.question_circle,
-                title: 'Soporte',
-                onTap: () {},
-              ),
-              _buildListTile(
-                context: context,
-                icon: CupertinoIcons.info,
-                title: 'Acerca de',
-                onTap: () {},
-              ),
+              // _buildListTile(
+              //   context: context,
+              //   icon: CupertinoIcons.lock,
+              //   title: 'Privacidad y seguridad',
+              //   onTap: () {},
+              // ),
+              // _buildListTile(
+              //   context: context,
+              //   icon: CupertinoIcons.question_circle,
+              //   title: 'Soporte',
+              //   onTap: () {},
+              // ),
+              // _buildListTile(
+              //   context: context,
+              //   icon: CupertinoIcons.info,
+              //   title: 'Acerca de',
+              //   onTap: () {},
+              // ),
               _buildListTile(
                 context: context,
                 icon: CupertinoIcons.power,

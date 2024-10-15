@@ -123,18 +123,23 @@ class HomePageEventCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(event.title),
-                          Text(event.date.formatToCustomString(
-                              format: 'dd/MM/yy - HH:mm')),
+                          Text(
+                            event.title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                            overflow: TextOverflow.fade,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            event.date.formatToCustomString(
+                                format: 'dd/MM/yy - HH:mm'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
                           const Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(Icons.location_on, color: Colors.white),
-                                Icon(Icons.edit, color: Colors.white),
-                                Icon(Icons.music_note, color: Colors.white),
-                                Icon(Icons.comment, color: Colors.white),
-                              ],
+                              children: [],
                             ),
                           )
                         ],

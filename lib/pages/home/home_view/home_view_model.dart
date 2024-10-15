@@ -27,13 +27,6 @@ class HomeViewModel extends ChangeNotifier {
       AppColors.pink,
     ),
     CalendarEvent(
-      4,
-      'Conferencia de Innovación',
-      DateTime(2024, 11, 5, 10, 30),
-      'Miraflores',
-      AppColors.blue,
-    ),
-    CalendarEvent(
       5,
       'Taller de Desarrollo',
       DateTime(2024, 11, 5, 11, 0),

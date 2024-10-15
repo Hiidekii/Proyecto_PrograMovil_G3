@@ -68,6 +68,9 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             HomePagePublicEvents(viewModel: viewModel),
+            const SizedBox(
+              height: 60,
+            )
           ],
         ),
       ),
