@@ -1,98 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/pages/auth/login/login_page.dart';
 import 'package:proyecto_programovil_g3/pages/settings/components/profile_card.dart';
+import 'package:proyecto_programovil_g3/pages/settings/settings_view_model.dart';
 
-class SettingsTab extends StatefulWidget {
+class SettingsTab extends StatelessWidget {
   final Function onToggleTheme;
 
   SettingsTab({required this.onToggleTheme});
 
   @override
-  _SettingsTabState createState() => _SettingsTabState();
-}
-
-class _SettingsTabState extends State<SettingsTab> {
-  bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
-
-  final String userName = "Nombre del Usuario";
-  final String userEmail = "usuario@example.com";
-  final String userImageUrl = "assets/img/E1.png";
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          ProfileCard(
-            name: userName,
-            email: userEmail,
-            imageUrl: userImageUrl,
-            isEditable: true,
-            isFavorite: false,
-            onEdit: () {},
-            onShare: () {},
-            onManage: () {},
+    return ChangeNotifierProvider(
+      create: (context) => SettingsViewModel(),
+      child: Consumer<SettingsViewModel>(
+        builder: (context, viewModel, child) => Scaffold(
+          body: ListView(
+            padding: EdgeInsets.all(16.0),
+            children: [
+              ProfileCard(
+                name: viewModel.userName,
+                email: viewModel.userEmail,
+                imageUrl: viewModel.userImageUrl,
+                isEditable: true,
+                isFavorite: false,
+                onEdit: () {},
+                onShare: () {},
+                onManage: () {},
+              ),
+              _buildSwitchListTile(
+                context: context,
+                icon: CupertinoIcons.bell,
+                title: 'Notificaciones',
+                value: viewModel.notificationsEnabled,
+                onChanged: viewModel.toggleNotifications,
+              ),
+              _buildSwitchListTile(
+                context: context,
+                icon: CupertinoIcons.moon,
+                title: 'Modo oscuro',
+                value: viewModel.darkModeEnabled,
+                onChanged: (value) {
+                  viewModel.toggleDarkMode(value);
+                  onToggleTheme();
+                },
+              ),
+              _buildListTile(
+                context: context,
+                icon: CupertinoIcons.lock,
+                title: 'Privacidad y seguridad',
+                onTap: () {},
+              ),
+              _buildListTile(
+                context: context,
+                icon: CupertinoIcons.question_circle,
+                title: 'Soporte',
+                onTap: () {},
+              ),
+              _buildListTile(
+                context: context,
+                icon: CupertinoIcons.info,
+                title: 'Acerca de',
+                onTap: () {},
+              ),
+              _buildListTile(
+                context: context,
+                icon: CupertinoIcons.power,
+                title: 'Cerrar sesión',
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-          _buildSwitchListTile(
-            icon: CupertinoIcons.bell,
-            title: 'Notificaciones',
-            value: _notificationsEnabled,
-            onChanged: (value) {
-              setState(() {
-                _notificationsEnabled = value;
-              });
-            },
-          ),
-          _buildSwitchListTile(
-            icon: CupertinoIcons.moon,
-            title: 'Modo oscuro',
-            value: _darkModeEnabled,
-            onChanged: (value) {
-              setState(() {
-                _darkModeEnabled = value;
-                widget.onToggleTheme();
-              });
-            },
-          ),
-          _buildListTile(
-            icon: CupertinoIcons.lock,
-            title: 'Privacidad y seguridad',
-            onTap: () {},
-          ),
-          _buildListTile(
-            icon: CupertinoIcons.question_circle,
-            title: 'Soporte',
-            onTap: () {},
-          ),
-          _buildListTile(
-            icon: CupertinoIcons.info,
-            title: 'Acerca de',
-            onTap: () {},
-          ),
-          _buildListTile(
-            icon: CupertinoIcons.power,
-            title: 'Cerrar sesión',
-            onTap: () {
-              // Navegar a la pantalla de "Iniciar sesión"
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      LoginPage(), // Reemplaza LoginPage con tu página de inicio de sesión
-                ),
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildListTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required VoidCallback onTap,
@@ -105,6 +99,7 @@ class _SettingsTabState extends State<SettingsTab> {
   }
 
   Widget _buildSwitchListTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required bool value,
