@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/extensions/time_extensions.dart';
@@ -46,7 +50,78 @@ class NewEventPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              Text(
+                viewModel.imageBase64.value.isNotEmpty
+                    ? "Imagen del evento"
+                    : "Selecciona una imagen",
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () async {
+                  final ImagePicker picker = ImagePicker();
+                  final pickedImg = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+                  if (pickedImg != null) {
+                    File imageFile = File(pickedImg.path);
+                    List<int> imageBytes = await imageFile.readAsBytes();
+                    String base64Image = base64Encode(imageBytes);
+                    viewModel.imageBase64.value = base64Image;
+                  }
+                },
+                child: Obx(() {
+                  return Stack(
+                    alignment: Alignment
+                        .center, // Alinea todos los hijos del Stack en el centro
+                    children: [
+                      CircleAvatar(
+                        radius: 80,
+                        backgroundColor: Colors.grey[200],
+                        backgroundImage: viewModel.imageBase64.value.isNotEmpty
+                            ? MemoryImage(
+                                base64Decode(viewModel.imageBase64.value))
+                            : const AssetImage('assets/placeholder_image.png')
+                                as ImageProvider,
+                      ),
+                      const Icon(
+                        CupertinoIcons.photo,
+                        size: 50,
+                        color: AppColors.yellow,
+                      ),
+                    ],
+                  );
+                }),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Obx(() => Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Switch(
+                              value: viewModel.isPublic.value,
+                              onChanged: (value) {
+                                viewModel.setEventVisibility(value);
+                              },
+                              activeColor: AppColors.red,
+                            ),
+                            const SizedBox(width: 15),
+                            const Text(
+                              'Evento público',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
               _buildTextField(
                 CupertinoIcons.tickets,
                 'Título',
@@ -91,6 +166,12 @@ class NewEventPage extends StatelessWidget {
                 'Link de chat',
                 (value) => viewModel.chatLink.value = value,
               ),
+              const SizedBox(height: 2),
+              _buildTextField(
+                CupertinoIcons.music_note,
+                'Link de la playlist',
+                (value) => viewModel.playlistLink.value = value,
+              ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -98,19 +179,23 @@ class NewEventPage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      viewModel.clearEventForm();
                     },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                    child: const Text('Cancelar'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.red),
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed: () {
-                      // Lógica para aceptar el evento
-                      Navigator.pop(context);
+                      viewModel.submitEvent(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange[700]),
+                      backgroundColor: AppColors.yellow,
+                    ),
                     child: const Text('Aceptar'),
                   ),
                   const SizedBox(width: 16),
@@ -165,11 +250,10 @@ class NewEventPage extends StatelessWidget {
                   style: TextStyle(
                     color: text == null
                         ? Colors.grey
-                        : AppColors
-                            .darkBackgroundColor, // Color gris si está vacío
+                        : AppColors.darkBackgroundColor,
                     fontSize: 16,
                   ),
-                  overflow: TextOverflow.ellipsis, // Limita el texto largo
+                  overflow: TextOverflow.ellipsis,
                   maxLines: 1, // Solo muestra una línea
                 ),
               ),

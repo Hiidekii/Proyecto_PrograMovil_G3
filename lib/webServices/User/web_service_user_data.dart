@@ -20,7 +20,7 @@ class WebServiceUserData implements WebServiceProtocol {
         headers: headers,
       );
       print("USER DATA $response");
-      return BaseResponse.fromJson(response, User.fromJson as dynamic);
+      return BaseResponse.fromJson(response, (json) => User.fromJson(json));
     } catch (error) {
       throw Exception('Error al traer los datos del usuario: $error');
     }

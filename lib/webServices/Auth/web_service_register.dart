@@ -26,7 +26,7 @@ class WebServiceRegister implements WebServiceProtocol {
         body: body,
       );
       return BaseResponse.fromJson(
-          response, RegisterResponse.fromJson as dynamic);
+          response, (json) => RegisterResponse.fromJson(json));
     } catch (error) {
       throw Exception('Error al realizar el login: $error');
     }

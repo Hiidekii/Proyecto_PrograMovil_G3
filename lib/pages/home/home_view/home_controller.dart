@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_create_event.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_public_events.dart';
 import 'package:proyecto_programovil_g3/webServices/User/web_service_user_events.dart';
 
@@ -9,7 +10,8 @@ class HomeController extends GetxController {
   final RxList<EventDataResponse> publicEvents = <EventDataResponse>[].obs;
   final webServiceUserEvents = WebServiceUserEvents();
   final webServicePublicEvents = WebServicePublicEvents();
-  final GetStorage storage = GetStorage(); // Instancia de GetStorage
+  final webServiceCreateEvent = WebServiceCreateEvent();
+  final GetStorage storage = GetStorage();
   @override
   void onInit() {
     super.onInit();

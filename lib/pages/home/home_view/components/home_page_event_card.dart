@@ -110,9 +110,9 @@ class HomePageEventCard extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.all(10),
                         child: const QSaleImage(
-                          imgUrlString: "https://picsum.photos/200/200",
+                          imgUrlString: "https://picsum.photos/200/300",
                           width: 70,
-                          height: 70,
+                          height: 100,
                         ),
                       ),
                     ],
@@ -127,7 +127,7 @@ class HomePageEventCard extends StatelessWidget {
                           child: Text(
                             event.title,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                                fontWeight: FontWeight.bold, fontSize: 18),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2, // Limitar a dos líneas
                           ),

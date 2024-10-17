@@ -8,8 +8,11 @@ import 'package:proyecto_programovil_g3/pages/auth/login/login_page.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_page.dart';
 import 'package:proyecto_programovil_g3/pages/landing/landing_page.dart';
 import 'package:proyecto_programovil_g3/pages/wrapper/wrapper.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
+  tz.initializeTimeZones();
+
   await GetStorage.init();
   runApp(MyApp());
   await initializeDateFormatting('es_ES', null);

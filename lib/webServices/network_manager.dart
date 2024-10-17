@@ -96,7 +96,8 @@ enum EndPoint {
   userData,
   userEvents,
   //events,
-  publicEvents
+  publicEvents,
+  createEvent
 }
 
 extension EndPointExtension on EndPoint {
@@ -112,6 +113,8 @@ extension EndPointExtension on EndPoint {
         return 'user/events';
       case EndPoint.publicEvents:
         return 'event/public';
+      case EndPoint.createEvent:
+        return 'event/create';
     }
   }
 }
