@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/event_card.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/section_header.dart';
-import 'package:proyecto_programovil_g3/pages/events/event_detail_screen.dart';
 import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart'; // Asegúrate de importar esta clase
 
 class EventsTab extends StatelessWidget {
@@ -24,24 +23,24 @@ class EventsTab extends StatelessWidget {
             isEditable: true,
             isFavorite: false,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EventDetailScreen(
-                    title: 'Cumpleaños de Hideki',
-                    date: '21/10/24',
-                    itemDescription: 'Descripción del evento',
-                    itemValue: '5',
-                    moneyDescription: 'Local',
-                    moneyValue: '300',
-                    isItemConfirmed: true,
-                    isMoneyConfirmed: true,
-                    imageUrl: 'assets/img/E1.png',
-                    isEditable: false,
-                    isFavorite: true,
-                  ),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const EventDetailScreen(
+              //       title: 'Cumpleaños de Hideki',
+              //       date: '21/10/24',
+              //       itemDescription: 'Descripción del evento',
+              //       itemValue: '5',
+              //       moneyDescription: 'Local',
+              //       moneyValue: '300',
+              //       isItemConfirmed: true,
+              //       isMoneyConfirmed: true,
+              //       imageUrl: 'assets/img/E1.png',
+              //       isEditable: false,
+              //       isFavorite: true,
+              //     ),
+              //   ),
+              // );
             },
           ),
           SectionHeader(title: 'Favoritos'),
@@ -56,24 +55,24 @@ class EventsTab extends StatelessWidget {
             isEditable: false,
             isFavorite: true,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EventDetailScreen(
-                    title: 'Cumpleaños de Luis',
-                    date: '13/10/24',
-                    itemDescription: 'Descripción del evento',
-                    itemValue: '5',
-                    moneyDescription: 'Local',
-                    moneyValue: '300',
-                    isItemConfirmed: true,
-                    isMoneyConfirmed: true,
-                    imageUrl: 'assets/img/E2.png',
-                    isEditable: false,
-                    isFavorite: true,
-                  ),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const EventDetailScreen(
+              //       title: 'Cumpleaños de Luis',
+              //       date: '13/10/24',
+              //       itemDescription: 'Descripción del evento',
+              //       itemValue: '5',
+              //       moneyDescription: 'Local',
+              //       moneyValue: '300',
+              //       isItemConfirmed: true,
+              //       isMoneyConfirmed: true,
+              //       imageUrl: 'assets/img/E2.png',
+              //       isEditable: false,
+              //       isFavorite: true,
+              //     ),
+              //   ),
+              // );
             },
           ),
           SectionHeader(title: 'Mis planes'),
@@ -88,24 +87,24 @@ class EventsTab extends StatelessWidget {
             isEditable: false,
             isFavorite: false,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EventDetailScreen(
-                    title: 'Cumpleaños de Kohji',
-                    date: '06/10/24',
-                    itemDescription: 'Descripción del evento',
-                    itemValue: '5',
-                    moneyDescription: 'Local',
-                    moneyValue: '300',
-                    isItemConfirmed: true,
-                    isMoneyConfirmed: true,
-                    imageUrl: 'assets/img/E3.png',
-                    isEditable: false,
-                    isFavorite: false,
-                  ),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const EventDetailScreen(
+              //       title: 'Cumpleaños de Kohji',
+              //       date: '06/10/24',
+              //       itemDescription: 'Descripción del evento',
+              //       itemValue: '5',
+              //       moneyDescription: 'Local',
+              //       moneyValue: '300',
+              //       isItemConfirmed: true,
+              //       isMoneyConfirmed: true,
+              //       imageUrl: 'assets/img/E3.png',
+              //       isEditable: false,
+              //       isFavorite: false,
+              //     ),
+              //   ),
+              // );
             },
           ),
         ],

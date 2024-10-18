@@ -1,8 +1,8 @@
 class EventLocationResponse {
   final String formattedAddress;
   final String displayName;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
 
   EventLocationResponse({
     required this.formattedAddress,

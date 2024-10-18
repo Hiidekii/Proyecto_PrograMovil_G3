@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:proyecto_programovil_g3/extensions/image_extensions.dart';
 import 'package:proyecto_programovil_g3/models/GoogleMaps/place_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_create_event.dart';
 import 'package:proyecto_programovil_g3/webServices/GoogleMaps/web_service_google_maps.dart';
@@ -25,7 +24,6 @@ class NewEventViewModel extends GetxController {
   var isPublic = false.obs; // Por defecto, es público
 
   final webServiceCreateEvent = WebServiceCreateEvent();
-  final GetStorage storage = GetStorage();
 
   void searchLocations(String query) async {
     if (query.isNotEmpty) {
@@ -76,24 +74,25 @@ class NewEventViewModel extends GetxController {
     );
 
     try {
-      final token = storage.read('token') ?? "";
-      String compressedBase64 = await compressBase64Image(imageBase64.value);
-      print(compressedBase64);
       final response = await webServiceCreateEvent.fetchData(
-        token,
-        title.value,
-        description.value,
-        compressedBase64,
-        chatLink.value,
-        playlistLink.value,
-        combinedDateTime,
-        selectedPlace.value?.displayName.text ?? "",
-        selectedPlace.value?.formattedAddress ?? "",
-        selectedPlace.value?.location.latitude ?? 1.0,
-        selectedPlace.value?.location.longitude ?? 1.0,
-      );
+          title.value,
+          description.value,
+          imageBase64.value,
+          chatLink.value,
+          playlistLink.value,
+          combinedDateTime,
+          selectedPlace.value?.displayName.text ?? "",
+          selectedPlace.value?.formattedAddress ?? "",
+          selectedPlace.value?.location.latitude ?? 1.0,
+          selectedPlace.value?.location.longitude ?? 1.0,
+          isPublic.value);
       if (response.success) {
-        Get.snackbar('Éxito', 'El evento se ha creado correctamente.');
+        Get.snackbar(
+          'Éxito',
+          'El evento se ha creado correctamente.',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
         clearEventForm();
         Navigator.pop(context);
       } else {

@@ -46,8 +46,8 @@ class HomePagePublicEvents extends StatelessWidget {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            const QSaleImage(
-                              imgUrlString: "https://picsum.photos/200/300",
+                            QSaleImage(
+                              imgUrlString: event.thumbnail,
                               width: 200,
                               height: 300,
                             ),
@@ -62,32 +62,38 @@ class HomePagePublicEvents extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.3),
-                                              blurRadius: 10,
-                                              spreadRadius: 1,
-                                              offset: const Offset(0, 4),
+                                          margin: const EdgeInsets.all(10),
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                                blurRadius: 10,
+                                                spreadRadius: 1,
+                                                offset: const Offset(0, 4),
+                                              ),
+                                            ],
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () => {
+                                              controller.setFavouriteState(
+                                                  event.id,
+                                                  (event.isFavourite) ?? false)
+                                            },
+                                            child: Icon(
+                                              isFavorite
+                                                  ? CupertinoIcons.heart_fill
+                                                  : CupertinoIcons.heart,
+                                              size: 30,
+                                              color: isFavorite
+                                                  ? Colors.red
+                                                  : Colors.black,
                                             ),
-                                          ],
-                                        ),
-                                        child: Icon(
-                                          isFavorite
-                                              ? CupertinoIcons.heart_fill
-                                              : CupertinoIcons.heart,
-                                          size: 30,
-                                          color: isFavorite
-                                              ? Colors.red
-                                              : Colors.black,
-                                        ),
-                                      )
+                                          ))
                                     ],
                                   ),
                                   Container(

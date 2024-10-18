@@ -12,10 +12,11 @@ import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   tz.initializeTimeZones();
-
   await GetStorage.init();
+
+  await initializeDateFormatting('es_PE', null);
+
   runApp(MyApp());
-  await initializeDateFormatting('es_ES', null);
 }
 
 class MyApp extends StatefulWidget {
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> {
           Locale('en'), // English
           Locale('es'), // Spanish
         ],
-        locale: const Locale('es', 'ES'),
+        locale: const Locale('es', 'PE'),
         theme: AppTheme.lightTheme(),
         darkTheme: AppTheme.darkTheme(),
         themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,

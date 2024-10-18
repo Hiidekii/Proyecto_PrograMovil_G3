@@ -10,6 +10,7 @@ class NetworkManager {
 
   String _baseURL() {
     String server = 'appquesalebackend-production.up.railway.app/que_sale';
+    // String server = '127.0.0.1:8000/que_sale';
     String httpProtocol = 'https';
 
     return '$httpProtocol://$server';
@@ -19,6 +20,13 @@ class NetworkManager {
     return '${_baseURL()}/${endPoint.path}';
   }
 
+  String mapToQueryParams(Map<String, dynamic> params) {
+    return params.entries
+        .map((entry) =>
+            '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+
   Future<Map<String, dynamic>> requestWith<T>({
     required EndPoint endPoint,
     required HTTPMethod method,
@@ -26,20 +34,22 @@ class NetworkManager {
     Map<String, String>? headers,
     Map<String, dynamic> body = const {},
   }) async {
-    final Uri url = Uri.parse(_endpoint(endPoint));
+    var finalEndPoint = _endpoint(endPoint);
+    if (params.isNotEmpty) {
+      finalEndPoint = '$finalEndPoint/?${mapToQueryParams(params)}';
+    }
+    final Uri url = Uri.parse(finalEndPoint);
     http.Response response;
-
+    print("FETCHING ${finalEndPoint}");
     headers ??= {};
-    // 20211918@aloe.ulima.edu.pe
+
     switch (method) {
       case HTTPMethod.get:
-        print("HEADEARSSSSSSS======== $headers");
         response = await http.get(url, headers: headers);
         break;
       case HTTPMethod.post:
         final effectiveHeaders = Map<String, String>.from(headers);
         effectiveHeaders['Content-Type'] = "application/json";
-        print("Headers: $effectiveHeaders , $body");
         response = await http.post(url,
             headers: effectiveHeaders, body: jsonEncode(body));
         break;
@@ -97,7 +107,9 @@ enum EndPoint {
   userEvents,
   //events,
   publicEvents,
-  createEvent
+  createEvent,
+  setFavourite,
+  eventDetail,
 }
 
 extension EndPointExtension on EndPoint {
@@ -115,6 +127,10 @@ extension EndPointExtension on EndPoint {
         return 'event/public';
       case EndPoint.createEvent:
         return 'event/create';
+      case EndPoint.setFavourite:
+        return 'event/favourite';
+      case EndPoint.eventDetail:
+        return 'event/detail';
     }
   }
 }

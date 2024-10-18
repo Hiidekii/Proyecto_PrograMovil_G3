@@ -1,16 +1,19 @@
-import 'package:proyecto_programovil_g3/models/Auth/register_response.dart';
+import 'dart:ffi';
+
+import 'package:get_storage/get_storage.dart';
+import 'package:proyecto_programovil_g3/models/Auth/check_response.dart';
 import 'package:proyecto_programovil_g3/models/base_response.dart';
 import 'package:proyecto_programovil_g3/webServices/network_manager.dart';
 import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
 
 class WebServiceCreateEvent implements WebServiceProtocol {
+  final GetStorage storage = GetStorage();
   @override
   EndPoint get endPoint => EndPoint.createEvent;
   @override
   HTTPMethod get httpMethod => HTTPMethod.post;
 
-  Future<BaseResponse<RegisterResponse>> fetchData(
-    String token,
+  Future<BaseResponse<CheckResponse>> fetchData(
     String title,
     String description,
     String thumbnail,
@@ -21,23 +24,24 @@ class WebServiceCreateEvent implements WebServiceProtocol {
     String formattedAddress,
     double latitude,
     double longitude,
+    bool isPublic,
   ) async {
+    final token = storage.read('token') ?? "";
     final headers = {
       'Authorization': 'Token $token',
     };
     final body = {
       "title": title,
       "description": description,
-      "thumbnail":
-          thumbnail, // Debe ser una URL o el nombre de la imagen que has subido
+      "thumbnail": thumbnail,
       "wsp_link": wspLink,
       "music_link": musicLink,
-      "datetime": datetime
-          .toIso8601String(), // Asegúrate de que 'datetime' sea un objeto DateTime
+      "datetime": datetime.toIso8601String(),
       "displayName": displayName,
       "formattedAddress": formattedAddress,
       "latitude": latitude,
-      "longitude": longitude
+      "longitude": longitude,
+      "isPublic": isPublic,
     };
 
     try {
@@ -48,7 +52,7 @@ class WebServiceCreateEvent implements WebServiceProtocol {
         body: body,
       );
       return BaseResponse.fromJson(
-          response, (json) => RegisterResponse.fromJson(json));
+          response, (json) => CheckResponse.fromJson(json));
     } catch (error) {
       throw Exception('Error al crear el evento: $error');
     }
