@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_location_response.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
-import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_view_model.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_detail.dart';
 
 class EventDetailViewModel extends GetxController {
@@ -19,6 +18,7 @@ class EventDetailViewModel extends GetxController {
       musicLink: "adawd",
       members: [],
       location: EventLocationResponse(
+          placeId: "s",
           formattedAddress: "Ad",
           displayName: "Ad",
           latitude: 1.01231,

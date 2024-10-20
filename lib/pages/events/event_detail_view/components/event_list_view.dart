@@ -15,8 +15,8 @@ class _ListSectionState extends State<ListSection> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(
-          16.0), // Espaciado alrededor de todo el contenido
+      padding: const EdgeInsets.symmetric(
+          vertical: 16.0), // Espaciado alrededor de todo el contenido
       child: Card(
         color: AppColors.yellow,
         elevation: 1, // Sombra de la tarjeta
@@ -27,8 +27,7 @@ class _ListSectionState extends State<ListSection> {
           children: [
             SizedBox(height: 10),
             ExpansionTile(
-              tilePadding: EdgeInsets.symmetric(
-                  horizontal: 20), // Quita el padding del tile
+              tilePadding: EdgeInsets.symmetric(horizontal: 20),
               collapsedIconColor: Colors.black, // Color del icono colapsado
               iconColor: Colors.black, // Color del icono expandido
               title: Text(

@@ -49,12 +49,16 @@ class CalendarEventCard extends StatelessWidget {
                           Text(
                             formattedHour,
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                           Text(
                             formattedMinutes,
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -76,11 +80,17 @@ class CalendarEventCard extends StatelessWidget {
                       Text(
                         event.title,
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(event.location.displayName,
-                          style: const TextStyle(fontSize: 16)),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          )),
                     ],
                   ),
                 ),

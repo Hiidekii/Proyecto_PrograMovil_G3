@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/webServices/User/web_service_user_events.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,7 +11,6 @@ class CalendarController extends GetxController {
 
   final RxList<EventDataResponse> userEvents = <EventDataResponse>[].obs;
   final webServiceUserEvents = WebServiceUserEvents();
-  final GetStorage storage = GetStorage();
 
   @override
   void onInit() {
@@ -21,10 +19,9 @@ class CalendarController extends GetxController {
   }
 
   void loadUserEvents() async {
-    final token = storage.read('token') ?? "";
-    final response = await webServiceUserEvents.fetchData(token);
+    final response = await webServiceUserEvents.fetchData();
     userEvents.value = response.data.events;
-    print("SONDANDANWDOAWDAWDAWDAWDAWD${response.data}");
+    print("SONDANDANWDOAWDAWDAWDAWDAWD${response.data.events}");
   }
 
   // Métodos

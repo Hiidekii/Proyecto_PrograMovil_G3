@@ -18,7 +18,7 @@ class GoogleMapsService {
       "Content-Type": 'application/json',
       "X-Goog-Api-Key": apiKey,
       "X-Goog-FieldMask":
-          "places.displayName,places.formattedAddress,places.location"
+          "places.displayName,places.formattedAddress,places.location,places.id"
     };
 
     final Uri url = Uri.parse(endPoint);

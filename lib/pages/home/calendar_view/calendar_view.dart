@@ -11,7 +11,7 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Inyectar el controlador para que esté disponible en toda la vista
+    Get.delete<CalendarController>(force: true);
     final CalendarController controller = Get.put(CalendarController());
 
     return Scaffold(

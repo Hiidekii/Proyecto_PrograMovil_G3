@@ -7,7 +7,6 @@ class Location {
     required this.longitude,
   });
 
-  // Factory method para crear una instancia de 'Location' desde un mapa JSON
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       latitude: json['latitude'],
@@ -15,7 +14,6 @@ class Location {
     );
   }
 
-  // Método para convertir una instancia de 'Location' a JSON
   Map<String, dynamic> toJson() {
     return {
       'latitude': latitude,

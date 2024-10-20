@@ -1,15 +1,18 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_list_response.dart';
 import 'package:proyecto_programovil_g3/models/base_response.dart';
 import 'package:proyecto_programovil_g3/webServices/network_manager.dart';
 import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
 
 class WebServiceUserEvents implements WebServiceProtocol {
+  final GetStorage storage = GetStorage();
   @override
   EndPoint get endPoint => EndPoint.userEvents;
   @override
   HTTPMethod get httpMethod => HTTPMethod.get;
 
-  Future<BaseResponse<EventListResponse>> fetchData(String token) async {
+  Future<BaseResponse<EventListResponse>> fetchData() async {
+    final token = storage.read('token') ?? "";
     final headers = {
       'Authorization': 'Token $token',
     };

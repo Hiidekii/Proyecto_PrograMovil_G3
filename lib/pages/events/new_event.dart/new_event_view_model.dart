@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/GoogleMaps/place_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_create_event.dart';
 import 'package:proyecto_programovil_g3/webServices/GoogleMaps/web_service_google_maps.dart';
@@ -81,6 +80,7 @@ class NewEventViewModel extends GetxController {
           chatLink.value,
           playlistLink.value,
           combinedDateTime,
+          selectedPlace.value?.placeId ?? "",
           selectedPlace.value?.displayName.text ?? "",
           selectedPlace.value?.formattedAddress ?? "",
           selectedPlace.value?.location.latitude ?? 1.0,

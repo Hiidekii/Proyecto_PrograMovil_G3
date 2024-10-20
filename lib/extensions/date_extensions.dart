@@ -1,4 +1,3 @@
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -9,6 +8,12 @@ extension DateTimeExtensions on DateTime {
     final location = tz.getLocation(timeZone);
     final localTime = tz.TZDateTime.from(this, location);
     return DateFormat(format, 'es').format(localTime);
+  }
+
+  DateTime toLocalTime({String timeZone = 'America/Lima'}) {
+    final location = tz.getLocation(timeZone);
+    final localTime = tz.TZDateTime.from(this, location);
+    return localTime;
   }
 
   bool isToday() {

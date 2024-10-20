@@ -14,7 +14,6 @@ class DisplayName {
       languageCode: json['languageCode'] as String?,
     );
   }
-  // Método para convertir una instancia de 'DisplayName' a JSON
   Map<String, dynamic> toJson() {
     return {
       'text': text,

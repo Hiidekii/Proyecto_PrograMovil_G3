@@ -1,3 +1,4 @@
+import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_location_response.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
 
@@ -40,7 +41,7 @@ class EventDataResponse {
       title: json['title'],
       description: json['description'],
       thumbnail: json['thumbnail'],
-      dateTime: DateTime.parse(json['dateTime']),
+      dateTime: DateTime.parse(json['dateTime']).toLocalTime(),
       wspLink: json['wsp_link'],
       musicLink: json['music_link'],
       isPublic: json['isPublic'],

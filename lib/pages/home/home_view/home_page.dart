@@ -11,6 +11,7 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.delete<HomeController>(force: true);
     final HomeController controller = Get.put(HomeController());
 
     return Scaffold(
@@ -37,7 +38,7 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            HomePageAllEvents(),
+            HomePageUserEvents(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -71,7 +72,7 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            HomePagePublicEvents(), // Descomenta si es necesario
+            HomePagePublicEvents(),
             SizedBox(
               height: 60,
             ),

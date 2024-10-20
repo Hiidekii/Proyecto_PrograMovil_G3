@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_public_events.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_set_favourite.dart';
@@ -11,7 +10,6 @@ class HomeController extends GetxController {
   final webServiceUserEvents = WebServiceUserEvents();
   final webServicePublicEvents = WebServicePublicEvents();
   final webServiceSetFavourite = WebServiceSetFavourite();
-  final GetStorage storage = GetStorage();
 
   @override
   void onInit() {
@@ -21,21 +19,17 @@ class HomeController extends GetxController {
   }
 
   void loadUserEvents() async {
-    final token = storage.read('token') ?? "";
-    final response = await webServiceUserEvents.fetchData(token);
+    final response = await webServiceUserEvents.fetchData();
     userEvents.value = response.data.events;
   }
 
   void loadPublicEvents() async {
-    final token = storage.read('token') ?? "";
-    final response = await webServicePublicEvents.fetchData(token);
+    final response = await webServicePublicEvents.fetchData();
     publicEvents.value = response.data.events;
   }
 
   void setFavouriteState(int eventId, bool newState) async {
-    final token = storage.read('token') ?? "";
-    final response =
-        await webServiceSetFavourite.fetchData(token, eventId, !newState);
+    final response = await webServiceSetFavourite.fetchData(eventId, !newState);
     if (response.success) {
       refreshEvents();
     }

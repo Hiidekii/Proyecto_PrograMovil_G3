@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_location_response.dart';
+import 'package:url_launcher/url_launcher.dart'; // Asegúrate de añadir esta dependencia en tu pubspec.yaml
 
 class EventMapView extends StatelessWidget {
   final EventLocationResponse eventLocation;
@@ -9,8 +10,12 @@ class EventMapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Construir el enlace de Google Maps utilizando el place_id
+    final String googleMapsUrl =
+        'https://www.google.com/maps/search/?api=1&query=${eventLocation.latitude},${eventLocation.longitude}&query_place_id=${eventLocation.placeId}';
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Card(
         elevation: 5, // Sombra de la tarjeta
         shape: RoundedRectangleBorder(
@@ -77,13 +82,20 @@ class EventMapView extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               ElevatedButton(
-                onPressed: () {
-                  // Abre Google Maps con la dirección del evento
-                  // Aquí puedes implementar la lógica para abrir Google Maps
+                onPressed: () async {
+                  final Uri googleMapsUri = Uri.parse(googleMapsUrl);
+                  if (await canLaunchUrl(googleMapsUri)) {
+                    await launchUrl(googleMapsUri);
+                  } else {
+                    throw 'No se pudo abrir $googleMapsUrl';
+                  }
                 },
-                child: const Text('Ver en Google Maps'),
+                child: const Text(
+                  'Ver en Google Maps',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.red, // Color del botón
+                  foregroundColor: Colors.white, // Color del botón
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
