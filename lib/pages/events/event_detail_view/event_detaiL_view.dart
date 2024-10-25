@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_detail_card_view.dart';
-import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_list_view.dart';
+import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_list/event_list_view.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_detail_view_model.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_map_view.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_people_view.dart';
-import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_event_basic_card.dart';
 
 class EventDetailScreen extends StatelessWidget {
   final int id;
@@ -23,10 +23,12 @@ class EventDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() {
-          return Text('${controller.event.value.title}');
-        }),
-      ),
+          title: const Text(
+        'Detalle del evento',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      )),
       body: RefreshIndicator(
         onRefresh: () async {
           controller.loadRefresh();
@@ -34,7 +36,7 @@ class EventDetailScreen extends StatelessWidget {
         child: Obx(() {
           final event = controller.event.value;
           return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
             child: ListView(
               children: [
                 EventDetailCard(
@@ -43,35 +45,29 @@ class EventDetailScreen extends StatelessWidget {
                   thumbnail: event.thumbnail,
                   date: event.dateTime.formatToCustomString(),
                 ),
+                const SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () => controller.changeTab(0),
-                        icon: const Icon(Icons.map), // Ícono para La Ubi
-                        label: const Text('Ubi'),
-                      ),
+                    _CustomButton(
+                      onPressed: () => controller.changeTab(0),
+                      icon: Icons.map,
+                      label: 'Ubi',
                     ),
-                    const SizedBox(width: 8), // Espaciado entre botones
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () => controller.changeTab(1),
-                        icon: const Icon(Icons.list), // Ícono para La Lista
-                        label: const Text('Lista'),
-                      ),
+                    const SizedBox(width: 10),
+                    _CustomButton(
+                      onPressed: () => controller.changeTab(1),
+                      icon: Icons.list,
+                      label: 'Lista',
                     ),
-                    const SizedBox(width: 8), // Espaciado entre botones
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () => controller.changeTab(2),
-                        icon: const Icon(Icons.people), // Ícono para La Gente
-                        label: const Text('Gente'),
-                      ),
+                    const SizedBox(width: 10),
+                    _CustomButton(
+                      onPressed: () => controller.changeTab(2),
+                      icon: Icons.people,
+                      label: 'Gente',
                     ),
                   ],
                 ),
-                const SizedBox(height: 20), // Espacio entre botones y vistas
 
                 // Sub-vistas que cambian con los botones
                 Obx(() {
@@ -93,6 +89,59 @@ class EventDetailScreen extends StatelessWidget {
             ),
           );
         }),
+      ),
+    );
+  }
+}
+
+class _CustomButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  const _CustomButton({
+    Key? key,
+    required this.onPressed,
+    required this.icon,
+    required this.label,
+    this.color = AppColors.yellow, // Cambié 'required' a 'this' para el color
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          decoration: BoxDecoration(
+            color: color, // Utiliza el color proporcionado
+            borderRadius: BorderRadius.circular(20.0),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.grey.withOpacity(0.5),
+            //     spreadRadius: 1,
+            //     blurRadius: 3,
+            //     offset: const Offset(0, 3),
+            //   ),
+            // ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: Colors.white), // Color del icono
+              const SizedBox(width: 8), // Espacio entre icono y texto
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

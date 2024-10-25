@@ -21,7 +21,7 @@ class EventDetailCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppColors.softRed,
+        color: AppColors.red,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(

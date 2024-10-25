@@ -43,11 +43,7 @@ class ProfileCard extends StatelessWidget {
       color: Colors.black54,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 16, 92, 124), Color(0xFF2E2E5B)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: AppColors.blue,
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: ListTile(
@@ -62,11 +58,12 @@ class ProfileCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
+              fontSize: 20,
             ),
           ),
           subtitle: Text(
             email,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white, fontSize: 12),
           ),
         ),
       ),

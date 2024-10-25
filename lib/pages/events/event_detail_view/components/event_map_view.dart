@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_location_response.dart';
 import 'package:url_launcher/url_launcher.dart'; // Asegúrate de añadir esta dependencia en tu pubspec.yaml
 
@@ -17,9 +18,10 @@ class EventMapView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Card(
-        elevation: 5, // Sombra de la tarjeta
+        color: AppColors.softBlack,
+        elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+          borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -31,7 +33,7 @@ class EventMapView extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
-                  color: Colors.black87, // Color más suave
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 8),
@@ -40,13 +42,13 @@ class EventMapView extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
-                  color: Colors.black54,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 eventLocation.formattedAddress,
-                style: const TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 15),
               ClipRRect(

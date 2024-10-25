@@ -30,7 +30,6 @@ class EventPeopleView extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Colors.black87,
             ),
           ),
           const SizedBox(height: 8),
@@ -44,7 +43,6 @@ class EventPeopleView extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
-              color: Colors.black87,
             ),
           ),
           const SizedBox(height: 8),
@@ -83,9 +81,7 @@ class PersonTile extends StatelessWidget {
         break;
     }
     return GestureDetector(
-      onTap: () {
-        // Aquí puedes manejar la acción al tocar la tarjeta
-      },
+      onTap: () {},
       child: Container(
         width: double.infinity, // Ocupa todo el ancho disponible
         margin: const EdgeInsets.only(bottom: 10.0), // Espaciado entre tarjetas

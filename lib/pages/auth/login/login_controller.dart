@@ -18,6 +18,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    emailController.text = "20211918@aloe.ulima.edu.pe";
+    passwordController.text = "admin";
     // Escuchar cambios en los campos de texto
     emailController.addListener(_validateForm);
     passwordController.addListener(_validateForm);

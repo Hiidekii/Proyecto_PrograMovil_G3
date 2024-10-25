@@ -9,9 +9,9 @@ class NetworkManager {
   NetworkManager._internal();
 
   String _baseURL() {
-    String server = 'appquesalebackend-production.up.railway.app/que_sale';
-    // String server = '127.0.0.1:8000/que_sale';
-    String httpProtocol = 'https';
+    // String server = 'appquesalebackend-production.up.railway.app/que_sale';
+    String server = '127.0.0.1:8000/que_sale';
+    String httpProtocol = 'http';
 
     return '$httpProtocol://$server';
   }
@@ -67,7 +67,8 @@ class NetworkManager {
   Future<Map<String, dynamic>> _processResponse(http.Response response) async {
     if (response.statusCode == 200) {
       try {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final Map<String, dynamic> responseData =
+            jsonDecode(utf8.decode(response.bodyBytes));
         print("RESPONSE DATA ===== $responseData");
         return responseData;
       } catch (e) {
@@ -109,6 +110,7 @@ enum EndPoint {
   publicEvents,
   createEvent,
   setFavourite,
+  setUserItem,
   eventDetail,
 }
 
@@ -129,6 +131,8 @@ extension EndPointExtension on EndPoint {
         return 'event/create';
       case EndPoint.setFavourite:
         return 'event/favourite';
+      case EndPoint.setUserItem:
+        return 'event/setUserItem';
       case EndPoint.eventDetail:
         return 'event/detail';
     }
