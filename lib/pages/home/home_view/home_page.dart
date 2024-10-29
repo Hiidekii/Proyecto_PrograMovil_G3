@@ -7,8 +7,6 @@ import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_pag
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_controller.dart';
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
-
   @override
   Widget build(BuildContext context) {
     Get.delete<HomeController>(force: true);

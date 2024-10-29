@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/models/Auth/check_response.dart';
 import 'package:proyecto_programovil_g3/models/base_response.dart';

@@ -10,10 +10,11 @@ class NetworkManager {
 
   String _baseURL() {
     // String server = 'appquesalebackend-production.up.railway.app/que_sale';
-    String server = '127.0.0.1:8000/que_sale';
+    String baseUrl = '192.168.1.7:8000/que_sale';
+    // String server = '127.0.0.1:8000/que_sale';
     String httpProtocol = 'http';
 
-    return '$httpProtocol://$server';
+    return '$httpProtocol://$baseUrl';
   }
 
   String _endpoint(EndPoint endPoint) {
@@ -128,7 +129,7 @@ extension EndPointExtension on EndPoint {
       case EndPoint.publicEvents:
         return 'event/public';
       case EndPoint.createEvent:
-        return 'event/create';
+        return 'event/edit_or_create';
       case EndPoint.setFavourite:
         return 'event/favourite';
       case EndPoint.setUserItem:
