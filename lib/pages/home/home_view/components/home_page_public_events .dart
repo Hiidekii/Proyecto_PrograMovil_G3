@@ -4,7 +4,7 @@ import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_event_basic_card.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_controller.dart';
 
-import '../../../events/event_detail_view/event_detaiL_view.dart';
+import '../../../events/event_detail_view/event_detail_view.dart';
 
 class HomePagePublicEvents extends StatelessWidget {
   const HomePagePublicEvents({super.key});

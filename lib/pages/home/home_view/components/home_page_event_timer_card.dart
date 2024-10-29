@@ -5,7 +5,7 @@ import 'package:proyecto_programovil_g3/components/q_sale_image.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
-import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_detaiL_view.dart';
+import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_detail_view.dart';
 
 class HomePageEventTimerCard extends StatelessWidget {
   final EventDataResponse event;
