@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_programovil_g3/webServices/Auth/web_service_login.dart';
-import 'package:proyecto_programovil_g3/models/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/User/web_service_user_data.dart';
 
 class LoginController extends GetxController {
@@ -19,6 +18,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    emailController.text = "20211918@aloe.ulima.edu.pe";
+    passwordController.text = "admin";
     // Escuchar cambios en los campos de texto
     emailController.addListener(_validateForm);
     passwordController.addListener(_validateForm);

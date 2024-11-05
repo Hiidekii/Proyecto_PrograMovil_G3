@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
-import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_view_model.dart';
+import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarViewTableCalendar extends StatelessWidget {
-  final CalendarViewModel viewModel;
-
-  // Constructor para inicializar el `viewModel`
-  const CalendarViewTableCalendar({super.key, required this.viewModel});
+  const CalendarViewTableCalendar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Obtener el controlador usando Get.find()
+    final CalendarController controller = Get.find<CalendarController>();
+
     return Container(
-      color: AppColors.cream, // Cambia a AppColors.cream si lo necesitas
+      color: AppColors.cream,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0),
-        child: TableCalendar(
-          locale: 'es_ES',
-          focusedDay: viewModel.focusedDay,
-          selectedDayPredicate: (day) => day == viewModel.selectedDay,
-          startingDayOfWeek: StartingDayOfWeek.monday,
-          calendarFormat: viewModel.calendarFormat,
-          onDaySelected: (selectedDay, focusedDay) {
-            viewModel.setSelectedDay(selectedDay);
-            viewModel.setFocusedDay(focusedDay);
-          },
-          firstDay: DateTime.now().add(const Duration(days: -1000)),
-          onFormatChanged: (format) {
-            viewModel.setCalendarFormat(format);
-          },
-          headerStyle: const HeaderStyle(
-            titleCentered: true,
-            formatButtonVisible: false,
-          ),
-          lastDay: DateTime.utc(2100, 12, 12),
-        ),
+        child: Obx(() => TableCalendar(
+              locale: 'es_ES',
+              focusedDay: controller.focusedDay.value,
+              selectedDayPredicate: (day) =>
+                  day == controller.selectedDay.value,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              calendarFormat: controller.calendarFormat.value,
+              onDaySelected: (selectedDay, focusedDay) {
+                controller.setSelectedDay(selectedDay);
+                controller.setFocusedDay(focusedDay);
+              },
+              firstDay: DateTime.now().add(const Duration(days: -1000)),
+              onFormatChanged: (format) {
+                controller.setCalendarFormat(format);
+              },
+              headerStyle: const HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+              ),
+              lastDay: DateTime.utc(2100, 12, 12),
+            )),
       ),
     );
   }

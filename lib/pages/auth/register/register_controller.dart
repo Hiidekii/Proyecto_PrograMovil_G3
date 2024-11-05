@@ -11,6 +11,7 @@ class RegisterController extends GetxController {
   var isButtonEnabled = false.obs;
   var isPasswordVisible = false.obs;
   var isConfirmPasswordVisible = false.obs;
+  RxString imageBase64 = ''.obs;
 
   @override
   void onInit() {
@@ -26,11 +27,12 @@ class RegisterController extends GetxController {
     String email = emailController.text;
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
-
+    String image64 = imageBase64.value;
     isButtonEnabled.value = _isValidEmail(email) &&
         password.isNotEmpty &&
         confirmPassword.isNotEmpty &&
-        username.isNotEmpty;
+        username.isNotEmpty &&
+        image64.length > 20;
   }
 
   bool _isValidEmail(String email) {
@@ -54,9 +56,10 @@ class RegisterController extends GetxController {
     String username = usernameController.text;
     String email = emailController.text;
     String password = passwordController.text;
+    String image64 = imageBase64.value;
     try {
-      final response =
-          await webServiceRegister.fetchData(username, email, password);
+      final response = await webServiceRegister.fetchData(
+          username, email, password, image64);
       if (response.success) {
         Navigator.pushReplacementNamed(context, "/login");
       } else {

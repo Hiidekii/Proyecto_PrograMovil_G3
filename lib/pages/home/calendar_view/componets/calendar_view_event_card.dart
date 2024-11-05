@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
-import 'package:proyecto_programovil_g3/pages/home/calendar_view/models/calendar_event.dart';
+import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 
 class CalendarEventCard extends StatelessWidget {
-  final CalendarEvent event;
+  final EventDataResponse event;
   final bool isLastEvent;
 
   const CalendarEventCard({
@@ -15,10 +16,10 @@ class CalendarEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Formato de fecha
-    final String formattedHour = event.date.formatToCustomString(format: 'HH');
-    final String formattedMinutes = DateFormat('mm').format(event.date);
-
+    final String formattedHour =
+        event.dateTime.formatToCustomString(format: 'HH');
+    final String formattedMinutes = DateFormat('mm').format(event.dateTime);
+    const color = AppColors.red;
     return Padding(
       padding: const EdgeInsets.all(0),
       child: Column(
@@ -40,7 +41,7 @@ class CalendarEventCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 5),
                       decoration: BoxDecoration(
-                        color: event.color,
+                        color: AppColors.red,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Column(
@@ -48,12 +49,16 @@ class CalendarEventCard extends StatelessWidget {
                           Text(
                             formattedHour,
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                           Text(
                             formattedMinutes,
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -66,7 +71,7 @@ class CalendarEventCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: event.color,
+                    color: color,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -75,11 +80,17 @@ class CalendarEventCard extends StatelessWidget {
                       Text(
                         event.title,
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 4),
-                      Text(event.location,
-                          style: const TextStyle(fontSize: 16)),
+                      Text(event.location.displayName,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          )),
                     ],
                   ),
                 ),

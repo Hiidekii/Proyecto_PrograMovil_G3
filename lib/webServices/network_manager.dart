@@ -9,14 +9,23 @@ class NetworkManager {
   NetworkManager._internal();
 
   String _baseURL() {
-    String server = 'appquesalebackend-production.up.railway.app/que_sale';
-    String httpProtocol = 'https';
+    String baseUrl = 'appquesalebackend-production.up.railway.app/que_sale';
+    // String baseUrl = '192.168.1.7:8000/que_sale';
+    // String baseUrl = '127.0.0.1:8000/que_sale';
+    String httpProtocol = 'http';
 
-    return '$httpProtocol://$server';
+    return '$httpProtocol://$baseUrl';
   }
 
   String _endpoint(EndPoint endPoint) {
     return '${_baseURL()}/${endPoint.path}';
+  }
+
+  String mapToQueryParams(Map<String, dynamic> params) {
+    return params.entries
+        .map((entry) =>
+            '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
   }
 
   Future<Map<String, dynamic>> requestWith<T>({
@@ -26,20 +35,22 @@ class NetworkManager {
     Map<String, String>? headers,
     Map<String, dynamic> body = const {},
   }) async {
-    final Uri url = Uri.parse(_endpoint(endPoint));
+    var finalEndPoint = _endpoint(endPoint);
+    if (params.isNotEmpty) {
+      finalEndPoint = '$finalEndPoint/?${mapToQueryParams(params)}';
+    }
+    final Uri url = Uri.parse(finalEndPoint);
     http.Response response;
-
+    print("FETCHING ${finalEndPoint}");
     headers ??= {};
-    // 20211918@aloe.ulima.edu.pe
+
     switch (method) {
       case HTTPMethod.get:
-        print("HEADEARSSSSSSS======== $headers");
         response = await http.get(url, headers: headers);
         break;
       case HTTPMethod.post:
         final effectiveHeaders = Map<String, String>.from(headers);
         effectiveHeaders['Content-Type'] = "application/json";
-        print("Headers: $effectiveHeaders , $body");
         response = await http.post(url,
             headers: effectiveHeaders, body: jsonEncode(body));
         break;
@@ -57,7 +68,9 @@ class NetworkManager {
   Future<Map<String, dynamic>> _processResponse(http.Response response) async {
     if (response.statusCode == 200) {
       try {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final Map<String, dynamic> responseData =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        print("RESPONSE DATA ===== $responseData");
         return responseData;
       } catch (e) {
         throw Exception(e);
@@ -88,9 +101,18 @@ enum HTTPMethod {
 }
 
 enum EndPoint {
+  //auth
   login,
   register,
+  //user
   userData,
+  userEvents,
+  //events,
+  publicEvents,
+  createEvent,
+  setFavourite,
+  setUserItem,
+  eventDetail,
 }
 
 extension EndPointExtension on EndPoint {
@@ -102,6 +124,18 @@ extension EndPointExtension on EndPoint {
         return 'auth/register';
       case EndPoint.userData:
         return 'user/info';
+      case EndPoint.userEvents:
+        return 'user/events';
+      case EndPoint.publicEvents:
+        return 'event/public';
+      case EndPoint.createEvent:
+        return 'event/edit_or_create';
+      case EndPoint.setFavourite:
+        return 'event/favourite';
+      case EndPoint.setUserItem:
+        return 'event/setUserItem';
+      case EndPoint.eventDetail:
+        return 'event/detail';
     }
   }
 }

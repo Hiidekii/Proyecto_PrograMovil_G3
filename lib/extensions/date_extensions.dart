@@ -1,8 +1,19 @@
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 extension DateTimeExtensions on DateTime {
-  String formatToCustomString({String format = 'EEEE d \'de\' MMMM'}) {
-    return DateFormat(format, 'es_ES').format(this);
+  String formatToCustomString(
+      {String format = 'EEEE d \'de\' MMMM',
+      String timeZone = 'America/Lima'}) {
+    final location = tz.getLocation(timeZone);
+    final localTime = tz.TZDateTime.from(this, location);
+    return DateFormat(format, 'es').format(localTime);
+  }
+
+  DateTime toLocalTime({String timeZone = 'America/Lima'}) {
+    final location = tz.getLocation(timeZone);
+    final localTime = tz.TZDateTime.from(this, location);
+    return localTime;
   }
 
   bool isToday() {

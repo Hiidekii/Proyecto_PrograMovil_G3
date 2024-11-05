@@ -1,5 +1,5 @@
+import 'package:proyecto_programovil_g3/models/User/user_response.dart';
 import 'package:proyecto_programovil_g3/models/base_response.dart';
-import 'package:proyecto_programovil_g3/models/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/network_manager.dart';
 import 'package:proyecto_programovil_g3/webServices/web_service_protocol.dart';
 
@@ -20,7 +20,7 @@ class WebServiceUserData implements WebServiceProtocol {
         headers: headers,
       );
       print("USER DATA $response");
-      return BaseResponse.fromJson(response, User.fromJson);
+      return BaseResponse.fromJson(response, (json) => User.fromJson(json));
     } catch (error) {
       throw Exception('Error al traer los datos del usuario: $error');
     }

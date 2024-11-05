@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_controller.dart';
 
@@ -22,7 +27,7 @@ class RegisterPage extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 45),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -38,6 +43,48 @@ class RegisterPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              final ImagePicker picker = ImagePicker();
+                              final pickedImg = await picker.pickImage(
+                                source: ImageSource.gallery,
+                              );
+                              if (pickedImg != null) {
+                                File imageFile = File(pickedImg.path);
+                                List<int> imageBytes =
+                                    await imageFile.readAsBytes();
+                                String base64Image = base64Encode(imageBytes);
+                                control.imageBase64.value = base64Image;
+                              }
+                            },
+                            child: Obx(() {
+                              return Container(
+                                // Añadido contenedor para el borde
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.yellow, // Color del borde
+                                    width: 3, // Ancho del borde
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 80,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: control
+                                          .imageBase64.value.isNotEmpty
+                                      ? MemoryImage(base64Decode(
+                                          control.imageBase64.value))
+                                      : const AssetImage(
+                                              'assets/images/placeholder_image.png')
+                                          as ImageProvider,
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                        const SizedBox(
+                            height: 20), // Espacio entre el avatar y el texto
                         const Text(
                           'Nombre de Usuario',
                           style: TextStyle(

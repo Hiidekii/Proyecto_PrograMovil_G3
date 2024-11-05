@@ -45,7 +45,10 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(_titles[_currentIndex]),
+          title: Text(
+            _titles[_currentIndex],
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             // IconButton(icon: Icon(CupertinoIcons.search), onPressed: () {}),
             IconButton(

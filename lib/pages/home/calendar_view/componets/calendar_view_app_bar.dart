@@ -1,23 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
-import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_view_model.dart';
+import 'package:proyecto_programovil_g3/pages/home/calendar_view/calendar_controller.dart';
 
 class CalendarViewAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  final CalendarViewModel viewModel;
-
-  const CalendarViewAppBar({super.key, required this.viewModel});
+  const CalendarViewAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Obtener el controlador usando Get.find()
+    final CalendarController controller = Get.find<CalendarController>();
+
     return AppBar(
       automaticallyImplyLeading: false,
       title: Text(
-        viewModel.selectedDay.isToday()
+        controller.selectedDay.value.isToday()
             ? 'Hoy'
-            : viewModel.selectedDay.formatToCustomString(),
+            : controller.selectedDay.value.formatToCustomString(),
         style: const TextStyle(
             fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
       ),
@@ -35,7 +37,8 @@ class CalendarViewAppBar extends StatelessWidget
               icon: const Icon(CupertinoIcons.xmark),
               color: Colors.white,
               onPressed: () {
-                viewModel.dismissView(context);
+                // Cambia viewModel.dismissView por controller.dismissView
+                controller.dismissView(context);
               },
             ),
           ),

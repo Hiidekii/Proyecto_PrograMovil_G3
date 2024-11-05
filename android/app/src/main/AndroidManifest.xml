@@ -4,6 +4,9 @@
 
     <!-- Permiso para acceder a la ubicación de red -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- PERMISO PARA ACCEDER A LA CAMARA-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <!-- Declara el uso del hardware de GPS -->
     <uses-feature android:name="android.hardware.location.gps" />
