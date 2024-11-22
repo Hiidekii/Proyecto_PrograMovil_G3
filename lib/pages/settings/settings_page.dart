@@ -73,7 +73,7 @@ class SettingsTab extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginPage(),
+                      builder: (context) => LoginPage(), //que ejecute una funcion del viewmodel que borre sessionstorage
                     ),
                   );
                 },
