@@ -5,6 +5,7 @@ import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_pag
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_favorite_events%20.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/components/home_page_public_events%20.dart';
 import 'package:proyecto_programovil_g3/pages/home/home_view/home_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -19,8 +20,8 @@ class HomeTab extends StatelessWidget {
         },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const [
-            Padding(
+          children: [
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -35,8 +36,14 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            HomePageUserEvents(),
-            Padding(
+            Obx(() {
+              if (controller.userEvents.isEmpty) {
+                return _buildShimmerEffect();
+              } else {
+                return const HomePageUserEvents();
+              }
+            }),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -52,8 +59,14 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            HomePageFavoritesEvents(),
-            Padding(
+            Obx(() {
+              if (controller.publicEvents.isEmpty) {
+                return _buildShimmerEffect();
+              } else {
+                return const HomePageFavoritesEvents();
+              }
+            }),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -69,11 +82,40 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-            HomePagePublicEvents(),
-            SizedBox(
+            Obx(() {
+              if (controller.publicEvents.isEmpty) {
+                return _buildShimmerEffect();
+              } else {
+                return const HomePagePublicEvents();
+              }
+            }),
+            const SizedBox(
               height: 60,
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmerEffect() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount:
+              5, // You can set this to a reasonable count for loading items
+          itemBuilder: (context, index) {
+            return Container(
+              width: 200,
+              height: 250,
+              margin: const EdgeInsets.only(right: 10),
+              color: Colors.white,
+            );
+          },
         ),
       ),
     );
