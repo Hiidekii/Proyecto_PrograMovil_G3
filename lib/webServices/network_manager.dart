@@ -114,6 +114,7 @@ enum EndPoint {
   setFavourite,
   setUserItem,
   eventDetail,
+  setUserEventStatus
 }
 
 extension EndPointExtension on EndPoint {
@@ -137,6 +138,8 @@ extension EndPointExtension on EndPoint {
         return 'event/setUserItem';
       case EndPoint.eventDetail:
         return 'event/detail';
+      case EndPoint.setUserEventStatus:
+        return 'event/setUserEventStatus';
     }
   }
 }

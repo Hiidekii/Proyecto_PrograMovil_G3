@@ -6,11 +6,13 @@ import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_add_user_event_item.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_detail.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_set_user_event_status.dart';
 
 class EventDetailViewModel extends GetxController {
   final WebServiceEventDetail webServiceEventDetail = WebServiceEventDetail();
   final WebServiceAddUserEventItem webServiceUserItem =
       WebServiceAddUserEventItem();
+  final WebServiceSetUserEventStatus webServiceSetUserEventStatus = WebServiceSetUserEventStatus();
   var event = Rx<EventDataResponse>(
     EventDataResponse(
       id: 1,
@@ -125,14 +127,12 @@ class EventDetailViewModel extends GetxController {
     return currentUser?.confirmation ?? '';
   }
 
-  Future<void> updateAttendance(String status) async {
+  void updateAttendance(int status) async {
     try {
-      // Aquí deberás implementar el servicio web para actualizar la asistencia
-      // final response = await webServiceUpdateAttendance.fetchData(eventId, status);
-      // if (response.success) {
-      //   loadEventDetail();
-      // }
-      loadEventDetail(); // Temporalmente solo recargamos los datos
+      final response = await webServiceSetUserEventStatus.fetchData(eventId, status);
+      if (response.success) {
+        loadEventDetail();
+      }
     } catch (error) {
       ErrorSnackbar().showError(error.toString());
     }

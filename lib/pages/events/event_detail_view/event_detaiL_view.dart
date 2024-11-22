@@ -27,21 +27,21 @@ class EventDetailScreen extends StatelessWidget {
               ListTile(
                 title: Text('Por Confirmar'),
                 onTap: () {
-                  controller.updateAttendance('Por Confirmar');
+                  controller.updateAttendance(1);
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: Text('Confirmar'),
                 onTap: () {
-                  controller.updateAttendance('Confirmado');
+                  controller.updateAttendance(2);
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: Text('No asistirá'),
                 onTap: () {
-                  controller.updateAttendance('No asistirá');
+                  controller.updateAttendance(3);
                   Navigator.pop(context);
                 },
               ),
@@ -165,7 +165,7 @@ class EventDetailScreen extends StatelessWidget {
                           if (isConfirmed) {
                             _showConfirmationDialog(context, controller);
                           } else {
-                            controller.updateAttendance('Confirmado');
+                            controller.updateAttendance(2);
                           }
                         },
                         icon: isConfirmed ? Icons.edit : Icons.check,
