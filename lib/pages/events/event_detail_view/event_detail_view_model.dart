@@ -96,4 +96,45 @@ class EventDetailViewModel extends GetxController {
     searchController.dispose();
     super.onClose();
   }
+
+  String getCurrentUserRole() {
+    final currentUser = event.value.members?.firstWhere(
+      (member) => member.username.contains("(Tú)"),
+      orElse: () => User(
+        username: "",
+        email: "",
+        thumbnail: "",
+        role: "",
+        confirmation: ""
+      )
+    );
+    return currentUser?.role ?? '';
+  }
+
+  String getCurrentUserConfirmation() {
+    final currentUser = event.value.members?.firstWhere(
+      (member) => member.username.contains("(Tú)"),
+      orElse: () => User(
+        username: "",
+        email: "",
+        thumbnail: "",
+        role: "",
+        confirmation: ""
+      )
+    );
+    return currentUser?.confirmation ?? '';
+  }
+
+  Future<void> updateAttendance(String status) async {
+    try {
+      // Aquí deberás implementar el servicio web para actualizar la asistencia
+      // final response = await webServiceUpdateAttendance.fetchData(eventId, status);
+      // if (response.success) {
+      //   loadEventDetail();
+      // }
+      loadEventDetail(); // Temporalmente solo recargamos los datos
+    } catch (error) {
+      ErrorSnackbar().showError(error.toString());
+    }
+  }
 }

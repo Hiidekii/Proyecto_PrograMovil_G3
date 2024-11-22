@@ -15,12 +15,48 @@ class EventDetailScreen extends StatelessWidget {
 
   EventDetailScreen({required this.id});
 
+  void _showConfirmationDialog(BuildContext context, EventDetailViewModel controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Cambiar Asistencia'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('Por Confirmar'),
+                onTap: () {
+                  controller.updateAttendance('Por Confirmar');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Confirmar'),
+                onTap: () {
+                  controller.updateAttendance('Confirmado');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('No asistirá'),
+                onTap: () {
+                  controller.updateAttendance('No asistirá');
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.delete<EventDetailViewModel>(force: true);
     final EventDetailViewModel controller = Get.put(EventDetailViewModel(id));
 
-    // Cargar los detalles del evento
     controller.loadEventDetail();
 
     return Scaffold(
@@ -32,19 +68,26 @@ class EventDetailScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Text(
-              "Editar",
-              style: TextStyle(
-                  color: AppColors.red,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              // Acción al presionar el botón
-              print("Botón de información presionado");
-            },
-          ),
+          Obx(() {
+            final currentUserRole = controller.getCurrentUserRole();
+            if (currentUserRole == 'Admin') {
+              return IconButton(
+                icon: const Text(
+                  "Editar",
+                  style: TextStyle(
+                    color: AppColors.red,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                onPressed: () {
+                  // Acción de edición
+                  print("Botón de edición presionado");
+                },
+              );
+            }
+            return SizedBox.shrink();
+          }),
         ],
       ),
       body: RefreshIndicator(
@@ -56,8 +99,7 @@ class EventDetailScreen extends StatelessWidget {
           return Stack(
             children: [
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
                 child: ListView(
                   children: [
                     EventDetailCard(
@@ -89,8 +131,6 @@ class EventDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
-                    // Sub-vistas que cambian con los botones
                     Obx(() {
                       if (controller.selectedIndex.value == 0) {
                         return EventMapView(
@@ -106,9 +146,7 @@ class EventDetailScreen extends StatelessWidget {
                         );
                       }
                     }),
-                    const SizedBox(
-                      height: 50,
-                    )
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
@@ -118,14 +156,23 @@ class EventDetailScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     height: 100,
-                    child: CustomButton(
-                      onPressed: () {
-                        print("CONFIRMAR");
-                      },
-                      icon: Icons.check,
-                      label: "Confirmar Asistencia",
-                      color: Colors.green,
-                    ),
+                    child: Obx(() {
+                      final userConfirmation = controller.getCurrentUserConfirmation();
+                      final isConfirmed = userConfirmation == 'Confirmado';
+                      
+                      return CustomButton(
+                        onPressed: () {
+                          if (isConfirmed) {
+                            _showConfirmationDialog(context, controller);
+                          } else {
+                            controller.updateAttendance('Confirmado');
+                          }
+                        },
+                        icon: isConfirmed ? Icons.edit : Icons.check,
+                        label: isConfirmed ? "Cambiar Asistencia" : "Confirmar Asistencia",
+                        color: isConfirmed ? Colors.blue : Colors.green,
+                      );
+                    }),
                   )
                 ],
               )
