@@ -14,7 +14,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
 
-    // Ejemplo de datos JSON iniciales
     String jsonString = '''
     [
       {"type": "text", "sender": "User1", "message": "Hello!", "profileImageUrl": "../assets/images/placeholder_image.png"},
@@ -31,7 +30,6 @@ class _ChatScreenState extends State<ChatScreen> {
     ]
     ''';
 
-    // Cargar mensajes iniciales desde el JSON
     setState(() {
       _messages.addAll(parseMessages(jsonString));
     });
@@ -87,7 +85,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           TextButton(
             onPressed: () {
-              // Check if at least two options have been filled in
               final nonEmptyOptions = optionControllers
                   .where((controller) => controller.text.isNotEmpty)
                   .toList();
@@ -105,7 +102,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 });
                 Navigator.pop(context);
               } else {
-                // Show a message if there are less than 2 options
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -134,17 +130,13 @@ void _voteInPoll(int messageIndex, int optionIndex) {
   setState(() {
     final pollMessage = _messages[messageIndex];
 
-    // If the user clicks on an already selected option, deselect it and remove the vote
     if (pollMessage.selectedOption == optionIndex) {
-      // Deselect the current vote (set selectedOption to null)
       pollMessage.responses![optionIndex]--;
       pollMessage.selectedOption = null;
     } else {
-      // If another option was selected, decrement the previous vote and increment the new vote
       if (pollMessage.selectedOption != null) {
         pollMessage.responses![pollMessage.selectedOption!]--;
       }
-      // Set the new selected option
       pollMessage.selectedOption = optionIndex;
       pollMessage.responses![optionIndex]++;
     }
@@ -204,19 +196,18 @@ void _voteInPoll(int messageIndex, int optionIndex) {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 246, 164, 42), // Set the background color to orange
-              borderRadius: BorderRadius.circular(30), // Rounded corners
+              color: const Color.fromARGB(255, 246, 164, 42), 
+              borderRadius: BorderRadius.circular(30), 
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2), // Subtle shadow
+                  color: Colors.grey.withOpacity(0.2),
                   blurRadius: 10,
-                  offset: Offset(0, 4), // Shadow position
+                  offset: Offset(0, 4),
                 ),
               ],
             ),
             child: Row(
               children: <Widget>[
-                // Text Field for typing message
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -224,20 +215,18 @@ void _voteInPoll(int messageIndex, int optionIndex) {
                       controller: _controller,
                       decoration: InputDecoration(
                         hintText: 'Escribe un mensaje',
-                        border: InputBorder.none, // Remove default border
-                        focusedBorder: InputBorder.none, // Remove focus border
-                        enabledBorder: InputBorder.none, // Remove enabled border
+                        border: InputBorder.none, 
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
                       ),
                     ),
                   ),
                 ),
-                // Send Button
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: _sendMessage,
                   color: Colors.white,
                 ),
-                // Poll Button
                 IconButton(
                   icon: Icon(Icons.poll),
                   onPressed: _createPoll,
@@ -327,8 +316,8 @@ Widget _buildPollMessage(Message message, int index) {
                 child: Container(
                   decoration: BoxDecoration(
                     color: message.selectedOption == optionIndex
-                        ? Colors.blue // Blue background when selected
-                        : Colors.transparent, // Transparent when not selected
+                        ? Colors.blue 
+                        : Colors.transparent, 
                     border: Border.all(
                       color: message.selectedOption == optionIndex
                           ? Colors.blue
@@ -341,10 +330,10 @@ Widget _buildPollMessage(Message message, int index) {
                   child: message.selectedOption == optionIndex
                       ? Icon(
                           Icons.star,
-                          color: Colors.white, // White check icon when selected
+                          color: Colors.white,
                           size: 6,
                         )
-                      : SizedBox.shrink(), // Hide icon when not selected
+                      : SizedBox.shrink(),
                 ),
               ),
             );
@@ -360,15 +349,14 @@ Widget _buildPollMessage(Message message, int index) {
 }
 }
 
-// Clase de mensaje
 class Message {
-  final String type; // "text" o "poll"
+  final String type;
   final String sender;
   final String message;
   final String profileImageUrl;
-  final List<String>? options; // Opciones de encuesta
-  final List<int>? responses; // Respuestas para cada opción
-  int? selectedOption; // Opción seleccionada por el usuario
+  final List<String>? options; 
+  final List<int>? responses;
+  int? selectedOption; 
 
   Message({
     required this.type,
@@ -392,7 +380,6 @@ class Message {
   }
 }
 
-// Convertir JSON a lista de mensajes
 List<Message> parseMessages(String jsonString) {
   final parsed = json.decode(jsonString).cast<Map<String, dynamic>>();
   return parsed.map<Message>((json) => Message.fromJson(json)).toList();
