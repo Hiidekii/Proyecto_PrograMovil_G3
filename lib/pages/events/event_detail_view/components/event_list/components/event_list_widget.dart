@@ -32,7 +32,7 @@ class ListWidget extends StatelessWidget {
           height: 10,
         ),
         EventExapansionList(
-          categoryItems: category.items,
+          categoryItems: category.items ?? [],
           categoryType: category.categoryType ?? EventCategoryType.chancha,
           aportarFunct: (itemID, amount) =>
               controller.addUserItem(itemID, amount),

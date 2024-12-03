@@ -10,9 +10,9 @@ class NetworkManager {
 
   String _baseURL() {
     // String baseUrl = 'appquesalebackend-production.up.railway.app/que_sale';
-    // String baseUrl = '192.168.1.7:8000/que_sale';
-    String baseUrl = '127.0.0.1:8000/que_sale';
-    //String baseUrl = '10.188.184.96:8000/que_sale';
+    String baseUrl = '192.168.1.4:8000/que_sale';
+    // String baseUrl = '127.0.0.1:8000/que_sale';
+    //String baseUrl = '10.188.184.96:8000Rque_sale';
     String httpProtocol = 'http';
 
     return '$httpProtocol://$baseUrl';
@@ -114,7 +114,10 @@ enum EndPoint {
   setFavourite,
   setUserItem,
   eventDetail,
-  setUserEventStatus
+  eventItemCategories,
+  setEventItem,
+  setUserEventStatus,
+  deleteUserEvent
 }
 
 extension EndPointExtension on EndPoint {
@@ -140,6 +143,12 @@ extension EndPointExtension on EndPoint {
         return 'event/detail';
       case EndPoint.setUserEventStatus:
         return 'event/setUserEventStatus';
+      case EndPoint.eventItemCategories:
+        return 'event/categories';
+      case EndPoint.setEventItem:
+        return 'event/setEventItem';
+      case EndPoint.deleteUserEvent:
+        return 'event/deleteUserEvent';
     }
   }
 }

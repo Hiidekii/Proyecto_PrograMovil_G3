@@ -8,7 +8,6 @@ import 'package:proyecto_programovil_g3/configs/theme.dart';
 import 'package:proyecto_programovil_g3/pages/auth/login/login_page.dart';
 import 'package:proyecto_programovil_g3/pages/auth/register/register_page.dart';
 import 'package:proyecto_programovil_g3/pages/landing/landing_page.dart';
-import 'package:proyecto_programovil_g3/pages/events/components/chat/chat_screen.dart';
 import 'package:proyecto_programovil_g3/pages/wrapper/wrapper.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -58,7 +57,6 @@ class _MyAppState extends State<MyApp> {
           '/': (context) => LandingPage(),
           '/login': (context) => LoginPage(),
           '/register': (context) => RegisterPage(),
-          '/chat': (context) => ChatScreen(),
           '/wrapper': (context) => Wrapper(onToggleTheme: _toggleTheme),
         });
   }

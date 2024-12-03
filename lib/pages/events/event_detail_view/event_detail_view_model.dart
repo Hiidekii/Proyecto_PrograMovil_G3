@@ -1,18 +1,28 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/components/q_sale_error_manager.dart';
+import 'package:proyecto_programovil_g3/models/Events/event_category_response.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_location_response.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_add_user_event_item.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_detail.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_item.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_get_categories.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_set_user_event_status.dart';
 
 class EventDetailViewModel extends GetxController {
   final WebServiceEventDetail webServiceEventDetail = WebServiceEventDetail();
   final WebServiceAddUserEventItem webServiceUserItem =
       WebServiceAddUserEventItem();
-  final WebServiceSetUserEventStatus webServiceSetUserEventStatus = WebServiceSetUserEventStatus();
+  final WebServiceSetUserEventStatus webServiceSetUserEventStatus =
+      WebServiceSetUserEventStatus();
+
+  final WebServiceGetCategories webServiceItemCategories =
+      WebServiceGetCategories();
+  final WebServiceEventItem webServiceEventItem = WebServiceEventItem();
   var event = Rx<EventDataResponse>(
     EventDataResponse(
       id: 1,
@@ -32,6 +42,12 @@ class EventDetailViewModel extends GetxController {
       lista: [],
     ),
   );
+  var categories = RxList<CategoryResponse>();
+  var selectedItemCategory = Rx<CategoryResponse>(CategoryResponse(
+      id: 1, type: EventCategoryType.jama.name, floatable: false));
+  void selectCategory(CategoryResponse category) {
+    selectedItemCategory.value = category;
+  }
 
   var filteredPeople = <User>[].obs;
 
@@ -39,10 +55,39 @@ class EventDetailViewModel extends GetxController {
 
   var selectedIndex = 0.obs;
   final int eventId;
+  var isAddItemModalOpen = false.obs;
+  var isEditedModeActivated = false.obs;
+
   EventDetailViewModel(this.eventId);
 
   void changeTab(int index) {
     selectedIndex.value = index;
+  }
+
+  void toggleItemModal() {
+    isAddItemModalOpen.value = !isAddItemModalOpen.value;
+  }
+
+  void toggleEditMode() {
+    isEditedModeActivated.value = !isEditedModeActivated.value;
+  }
+
+  void getCategories() async {
+    final response = await webServiceItemCategories.fetchData();
+    if (response.success) {
+      categories.value = response.data.categories;
+    }
+  }
+
+  void createEventItem(String newName, double newAmount) async {
+    final _ = await webServiceEventItem.createItem(
+      eventId,
+      selectedItemCategory.value.id,
+      newName,
+      newAmount,
+    );
+    toggleItemModal();
+    loadRefresh();
   }
 
   void loadRefresh() {
@@ -52,12 +97,8 @@ class EventDetailViewModel extends GetxController {
   void loadEventDetail() async {
     final response = await webServiceEventDetail.fetchData(eventId);
     if (response.success) {
-      print("REEMPLAZANDO");
       event.value = response.data;
-      print('xd ${event.value.members}');
-      print('OJITO${filteredPeople}');
     } else {
-      print("Error al cargar los detalles del evento: ${response.data}");
       filteredPeople.clear();
     }
   }
@@ -82,7 +123,7 @@ class EventDetailViewModel extends GetxController {
       if (response.success) {
         loadEventDetail();
       } else {
-        print(response.data);
+        ErrorSnackbar().showError(response.data.error);
       }
     } catch (error) {
       ErrorSnackbar().showError(error.toString());
@@ -101,35 +142,32 @@ class EventDetailViewModel extends GetxController {
 
   String getCurrentUserRole() {
     final currentUser = event.value.members?.firstWhere(
-      (member) => member.username.contains("(Tú)"),
-      orElse: () => User(
-        username: "",
-        email: "",
-        thumbnail: "",
-        role: "",
-        confirmation: ""
-      )
-    );
+        (member) => member.username.contains("(Tú)"),
+        orElse: () => User(
+            username: "",
+            email: "",
+            thumbnail: "",
+            role: "",
+            confirmation: ""));
     return currentUser?.role ?? '';
   }
 
   String getCurrentUserConfirmation() {
     final currentUser = event.value.members?.firstWhere(
-      (member) => member.username.contains("(Tú)"),
-      orElse: () => User(
-        username: "",
-        email: "",
-        thumbnail: "",
-        role: "",
-        confirmation: ""
-      )
-    );
+        (member) => member.username.contains("(Tú)"),
+        orElse: () => User(
+            username: "",
+            email: "",
+            thumbnail: "",
+            role: "",
+            confirmation: ""));
     return currentUser?.confirmation ?? '';
   }
 
   void updateAttendance(int status) async {
     try {
-      final response = await webServiceSetUserEventStatus.fetchData(eventId, status);
+      final response =
+          await webServiceSetUserEventStatus.fetchData(eventId, status);
       if (response.success) {
         loadEventDetail();
       }

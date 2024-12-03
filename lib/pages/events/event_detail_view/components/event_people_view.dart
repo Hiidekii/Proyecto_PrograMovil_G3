@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:proyecto_programovil_g3/components/q_sale_custom_button.dart';
 import 'package:proyecto_programovil_g3/components/q_sale_image.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
+import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_detail_view_model.dart';
 
 class EventPeopleView extends StatelessWidget {
   final List<User> users;
@@ -13,6 +17,8 @@ class EventPeopleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final EventDetailViewModel controller = Get.find<EventDetailViewModel>();
+
     // Filtrar usuarios según el rol y el estado de confirmación
     final List<User> admins =
         users.where((user) => user.userRole == UserRole.admin).toList();
@@ -21,10 +27,42 @@ class EventPeopleView extends StatelessWidget {
         users.where((user) => user.userRole == UserRole.guest).toList();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    height: 80,
+                    child: CustomButton(
+                      onPressed: () {},
+                      icon: CupertinoIcons.person_2_fill,
+                      label: "Agregar Gente",
+                      color: Colors.green,
+                    ),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                    height: 80,
+                    child: CustomButton(
+                      onPressed: () {
+                        print("Xd");
+                        controller.toggleEditMode();
+                      },
+                      icon: CupertinoIcons.pencil,
+                      label: "Editar",
+                      color: Colors.red,
+                    ),
+                  )),
+            ],
+          ),
           const Text(
             'Administradores',
             style: TextStyle(
@@ -35,7 +73,9 @@ class EventPeopleView extends StatelessWidget {
           const SizedBox(height: 8),
           // Mostrar administradores
           if (admins.isNotEmpty)
-            ...admins.map((user) => PersonTile(person: user)).toList(),
+            ...admins
+                .map((user) => PersonTile(person: user, controller: controller))
+                .toList(),
           if (admins.isEmpty) const Text('No hay administradores.'),
           const SizedBox(height: 16),
           const Text(
@@ -48,7 +88,9 @@ class EventPeopleView extends StatelessWidget {
           const SizedBox(height: 8),
           // Mostrar invitados
           if (guests.isNotEmpty)
-            ...guests.map((user) => PersonTile(person: user)).toList(),
+            ...guests
+                .map((user) => PersonTile(person: user, controller: controller))
+                .toList(),
           if (guests.isEmpty) const Text('No hay invitados.'),
         ],
       ),
@@ -58,8 +100,9 @@ class EventPeopleView extends StatelessWidget {
 
 class PersonTile extends StatelessWidget {
   final User person;
+  final EventDetailViewModel controller;
 
-  const PersonTile({super.key, required this.person});
+  const PersonTile({super.key, required this.person, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +123,7 @@ class PersonTile extends StatelessWidget {
         confirmationIcon = Icons.help; // Ícono por defecto
         break;
     }
+
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -139,6 +183,36 @@ class PersonTile extends StatelessWidget {
                         ? Colors.orange // Color para pendientes
                         : Colors.red, // Color para declinados
               ),
+              const SizedBox(width: 10),
+              // Si está en modo de edición, mostrar el botón de tres puntos
+              Obx(() {
+                return controller.isEditedModeActivated.value
+                    ? PopupMenuButton<String>(
+                        onSelected: (String value) {
+                          if (value == 'make_admin') {
+                            // Lógica para hacer admin
+                            // controller.makeUserAdmin(person);
+                          } else if (value == 'remove') {
+                            // Lógica para eliminar usuario
+                            controller.updateAttendance(3);
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            const PopupMenuItem<String>(
+                              value: 'make_admin',
+                              child: Text('Hacer Admin'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'remove',
+                              child: Text('Eliminar'),
+                            ),
+                          ];
+                        },
+                        icon: const Icon(CupertinoIcons.ellipsis),
+                      )
+                    : SizedBox(); // Si no está en modo de edición, no mostrar el botón
+              }),
             ],
           ),
         ),

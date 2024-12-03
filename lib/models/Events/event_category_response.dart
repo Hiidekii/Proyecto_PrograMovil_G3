@@ -10,16 +10,16 @@ class CategoryResponse {
   final int id;
   final String type;
   final bool floatable;
-  final List<EventCategoryItem> items;
+  final List<EventCategoryItem>? items;
   CategoryResponse(
       {required this.id,
       required this.type,
       required this.floatable,
-      required this.items});
+      this.items});
 
   // Método para decodificar el JSON
   factory CategoryResponse.fromJson(Map<String, dynamic> json) {
-    print("DESDE LIST  ${json}");
+    print("DESDE CATEGORY ITEM  ${json}");
     return CategoryResponse(
       id: json['id'],
       type: json['type'],
