@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 
@@ -56,7 +55,7 @@ class ListItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0), // Borde redondeado
             ),
             child: Text(
-              '${isFloatable ? quantity : quantity.toInt()}',
+              '${isFloatable ? 'S/.' : ""}${isFloatable ? quantity : quantity.toInt()}',
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight

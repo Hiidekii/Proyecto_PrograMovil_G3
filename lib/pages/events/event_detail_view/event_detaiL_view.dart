@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/components/q_sale_custom_button.dart';
-import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_detail_card_view.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_list/components/add_item_modal_view.dart';

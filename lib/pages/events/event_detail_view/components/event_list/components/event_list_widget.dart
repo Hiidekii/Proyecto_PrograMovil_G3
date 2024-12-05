@@ -6,7 +6,7 @@ import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_det
 
 class ListWidget extends StatelessWidget {
   final CategoryResponse category;
-  ListWidget({Key? key, required this.category}) : super(key: key);
+  ListWidget({super.key, required this.category});
 
   final EventDetailViewModel controller = Get.find<EventDetailViewModel>();
   @override
@@ -16,19 +16,19 @@ class ListWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
               category.type,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         EventExapansionList(
@@ -36,7 +36,8 @@ class ListWidget extends StatelessWidget {
           categoryType: category.categoryType ?? EventCategoryType.chancha,
           aportarFunct: (itemID, amount) =>
               controller.addUserItem(itemID, amount),
-          isEditable: false,
+          isEditable: controller.isEditedModeActivated.value,
+          eliminarItem: (int itemId) => controller.deleteEventItem(itemId),
         )
       ],
     );

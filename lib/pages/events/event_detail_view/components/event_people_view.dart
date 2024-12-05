@@ -19,7 +19,6 @@ class EventPeopleView extends StatelessWidget {
   Widget build(BuildContext context) {
     final EventDetailViewModel controller = Get.find<EventDetailViewModel>();
 
-    // Filtrar usuarios según el rol y el estado de confirmación
     final List<User> admins =
         users.where((user) => user.userRole == UserRole.admin).toList();
 
@@ -31,38 +30,60 @@ class EventPeopleView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    height: 80,
-                    child: CustomButton(
-                      onPressed: () {},
-                      icon: CupertinoIcons.person_2_fill,
-                      label: "Agregar Gente",
-                      color: Colors.green,
-                    ),
-                  )),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                    height: 80,
-                    child: CustomButton(
-                      onPressed: () {
-                        print("Xd");
-                        controller.toggleEditMode();
-                      },
-                      icon: CupertinoIcons.pencil,
-                      label: "Editar",
-                      color: Colors.red,
-                    ),
-                  )),
-            ],
-          ),
+          Obx(() {
+            if ((controller.event.value.isAdmin ?? false) == true) {
+              return Row(
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        height: 80,
+                        child: CustomButton(
+                          onPressed: () {},
+                          icon: CupertinoIcons.person_2_fill,
+                          label: "Agregar Gente",
+                          color: Colors.green,
+                        ),
+                      )),
+                  (admins
+                                  .where(
+                                      (user) => !user.username.contains("Tú"))
+                                  .toList()
+                                  .length >
+                              1 ||
+                          guests
+                                  .where(
+                                      (user) => !user.username.contains("Tú"))
+                                  .toList()
+                                  .length >
+                              1)
+                      ? Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                top: 10, bottom: 10, left: 10),
+                            height: 80,
+                            child: CustomButton(
+                              onPressed: () {
+                                controller.toggleEditMode();
+                              },
+                              icon: controller.isEditedModeActivated.value
+                                  ? CupertinoIcons.xmark
+                                  : CupertinoIcons.pencil,
+                              label: (controller.isEditedModeActivated.value
+                                  ? "Cancelar"
+                                  : "Editar"),
+                              color: Colors.red,
+                            ),
+                          ))
+                      : const SizedBox.shrink(),
+                ],
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
           const Text(
             'Administradores',
             style: TextStyle(
@@ -108,27 +129,23 @@ class PersonTile extends StatelessWidget {
   Widget build(BuildContext context) {
     IconData confirmationIcon;
 
-    // Asignar el ícono según el estado de confirmación
     switch (person.confirmationStatus) {
       case ConfirmationStatus.confirmed:
-        confirmationIcon = Icons.check_circle; // Ícono para confirmados
+        confirmationIcon = Icons.check_circle;
         break;
       case ConfirmationStatus.pending:
-        confirmationIcon = Icons.access_time; // Ícono para pendientes
-        break;
-      case ConfirmationStatus.unconfirmed:
-        confirmationIcon = Icons.cancel; // Ícono para declinados
+        confirmationIcon = Icons.access_time;
         break;
       default:
-        confirmationIcon = Icons.help; // Ícono por defecto
+        confirmationIcon = Icons.help;
         break;
     }
 
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: double.infinity, // Ocupa todo el ancho disponible
-        margin: const EdgeInsets.only(bottom: 10.0), // Espaciado entre tarjetas
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
           color: AppColors.softBlack,
           borderRadius: BorderRadius.circular(10),
@@ -153,7 +170,7 @@ class PersonTile extends StatelessWidget {
                   imgScale: BoxFit.cover,
                 ),
               ),
-              const SizedBox(width: 10), // Espaciado entre imagen y texto
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   person.username,
@@ -165,36 +182,15 @@ class PersonTile extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              Text(
-                person.confirmation ?? "",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.left,
-              ),
               const SizedBox(width: 10),
-              Icon(
-                confirmationIcon,
-                color: person.confirmationStatus == ConfirmationStatus.confirmed
-                    ? Colors.green // Color para confirmados
-                    : person.confirmationStatus == ConfirmationStatus.pending
-                        ? Colors.orange // Color para pendientes
-                        : Colors.red, // Color para declinados
-              ),
-              const SizedBox(width: 10),
-              // Si está en modo de edición, mostrar el botón de tres puntos
               Obx(() {
-                return controller.isEditedModeActivated.value
+                return controller.isEditedModeActivated.value &&
+                        !person.username.contains("Tú")
                     ? PopupMenuButton<String>(
                         onSelected: (String value) {
                           if (value == 'make_admin') {
-                            // Lógica para hacer admin
-                            // controller.makeUserAdmin(person);
                           } else if (value == 'remove') {
-                            // Lógica para eliminar usuario
-                            controller.updateAttendance(3);
+                            controller.deleteUserFromEvent(person.id);
                           }
                         },
                         itemBuilder: (BuildContext context) {
@@ -209,9 +205,34 @@ class PersonTile extends StatelessWidget {
                             ),
                           ];
                         },
-                        icon: const Icon(CupertinoIcons.ellipsis),
+                        icon: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: AppColors.cream,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text("Editar"),
+                        ),
                       )
-                    : SizedBox(); // Si no está en modo de edición, no mostrar el botón
+                    : Row(
+                        children: [
+                          Text(
+                            person.confirmation ?? "",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(width: 10),
+                          Icon(confirmationIcon,
+                              color: person.confirmationStatus ==
+                                      ConfirmationStatus.confirmed
+                                  ? Colors.green
+                                  : Colors.orange),
+                        ],
+                      );
               }),
             ],
           ),

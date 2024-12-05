@@ -16,57 +16,66 @@ class ListSection extends StatelessWidget {
         children: [
           Obx(() {
             return Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Botón de "Agregar Item" más grande
-                  Expanded(
-                    flex: 2, // Hace que este botón ocupe más espacio
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      height: 80,
-                      child: CustomButton(
-                        onPressed: () {
-                          controller.toggleItemModal();
-                        },
-                        icon: CupertinoIcons.cart_fill_badge_plus,
-                        label: "Agregar Item",
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                  // Botón de "Editar"
-                  Expanded(
-                    flex: 1, // Ocupa el espacio restante
-                    child: Container(
-                      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                      height: 80,
-                      child: CustomButton(
-                        onPressed: () {
-                          controller.toggleEditMode();
-                        },
-                        icon: CupertinoIcons.pencil,
-                        label: "Editar",
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: controller.event.value.lista.map((category) {
-                  return Column(
-                    children: [
-                      ListWidget(
-                        category: category,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  );
-                }).toList(),
-              )
+              (controller.event.value.isAdmin ?? false)
+                  ? (Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2, // Hace que este botón ocupe más espacio
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            height: 80,
+                            child: CustomButton(
+                              onPressed: () {
+                                controller.toggleItemModal();
+                              },
+                              icon: CupertinoIcons.cart_fill_badge_plus,
+                              label: "Agregar Item",
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        (controller.event.value.lista.isNotEmpty)
+                            ? Expanded(
+                                flex: 1,
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 10),
+                                  height: 80,
+                                  child: CustomButton(
+                                    onPressed: () {
+                                      controller.toggleEditMode();
+                                    },
+                                    icon: controller.isEditedModeActivated.value
+                                        ? CupertinoIcons.xmark
+                                        : CupertinoIcons.pencil,
+                                    label:
+                                        (controller.isEditedModeActivated.value
+                                            ? "Cancelar"
+                                            : "Editar"),
+                                    color: Colors.red,
+                                  ),
+                                ))
+                            : const SizedBox.shrink(),
+                      ],
+                    ))
+                  : const SizedBox.shrink(),
+              controller.event.value.lista.isEmpty
+                  ? const Text('No hay elementos en la lista.')
+                  : Column(
+                      children: controller.event.value.lista.map((category) {
+                        return Column(
+                          children: [
+                            ListWidget(
+                              category: category,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        );
+                      }).toList(),
+                    )
             ]);
           }),
         ],

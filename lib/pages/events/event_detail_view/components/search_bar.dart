@@ -7,11 +7,11 @@ class SearchBar extends StatelessWidget {
   final String hintText;
 
   const SearchBar({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onChanged,
     required this.hintText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

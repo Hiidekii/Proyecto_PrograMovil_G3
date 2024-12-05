@@ -1,4 +1,5 @@
 class User {
+  String id;
   String username;
   String email;
   String thumbnail;
@@ -6,6 +7,7 @@ class User {
   String? confirmation;
 
   User({
+    required this.id,
     required this.username,
     required this.email,
     required this.thumbnail,
@@ -20,6 +22,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       'username': username,
       'email': email,
       'thumbnail': thumbnail,
@@ -30,6 +33,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: json['id'].toString(),
       username: json['username'],
       email: json['email'],
       thumbnail: json['thumbnail'],
@@ -55,8 +59,6 @@ class User {
     switch (confirmation!.toLowerCase()) {
       case 'confirmado':
         return ConfirmationStatus.confirmed;
-      case 'no asisitirá':
-        return ConfirmationStatus.unconfirmed;
       case 'pendiente':
         return ConfirmationStatus.pending;
       default:
@@ -72,6 +74,5 @@ enum UserRole {
 
 enum ConfirmationStatus {
   confirmed,
-  unconfirmed,
   pending,
 }

@@ -132,7 +132,7 @@ class AddItemModalView extends StatelessWidget {
                     if (itemName.isNotEmpty && amount != null && amount > 0) {
                       controller.createEventItem(itemName, amount);
                     } else {
-                      ErrorSnackbar().showError("Complete todos los campos");
+                      SnackbaManager().showError("Complete todos los campos");
                     }
                   },
                   child: const Text('Guardar'),

@@ -10,15 +10,17 @@ class EventExapansionList extends StatefulWidget {
   final List<EventCategoryItem> categoryItems;
   final EventCategoryType categoryType;
   final void Function(int, double) aportarFunct;
+  final void Function(int itemId) eliminarItem;
   final bool isEditable;
 
   const EventExapansionList({
-    Key? key,
+    super.key,
     required this.categoryItems,
     required this.categoryType,
     required this.aportarFunct,
+    required this.eliminarItem,
     required this.isEditable,
-  }) : super(key: key);
+  });
 
   @override
   _EventExapansionListState createState() => _EventExapansionListState();
@@ -83,6 +85,7 @@ class _EventExapansionListState extends State<EventExapansionList> {
                       Text(
                         widget.categoryItems[index].name,
                         style: const TextStyle(
+                          fontSize: 16,
                           color: AppColors.cream,
                           fontWeight: FontWeight.bold,
                         ),
@@ -139,47 +142,44 @@ class _EventExapansionListState extends State<EventExapansionList> {
                 ),
               )
             else
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controllers[index],
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: "Ingrese nombre",
-                        hintStyle: TextStyle(color: Colors.grey.shade400),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 15),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.categoryItems[index].name,
                       style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                      width: 10), // Espacio entre el TextField y el botón
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.red,
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: const Text(
-                      'Eliminar',
-                      style: TextStyle(
-                        color: Colors.white,
+                        fontSize: 16,
+                        color: AppColors.cream,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                ],
-              ),
+                    const Spacer(),
+                    const SizedBox(
+                        width: 10), // Espacio entre el TextField y el botón
+                    GestureDetector(
+                      onTap: () {
+                        widget.eliminarItem(widget.categoryItems[index].id);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: const Text(
+                          'Eliminar',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
         ],
       ),
     );

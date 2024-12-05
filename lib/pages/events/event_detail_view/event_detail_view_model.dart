@@ -8,6 +8,8 @@ import 'package:proyecto_programovil_g3/models/Events/event_location_response.da
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 import 'package:proyecto_programovil_g3/models/User/user_response.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_add_user_event_item.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_delete_event_item.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_delete_user_event.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_detail.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_item.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_get_categories.dart';
@@ -23,6 +25,11 @@ class EventDetailViewModel extends GetxController {
   final WebServiceGetCategories webServiceItemCategories =
       WebServiceGetCategories();
   final WebServiceEventItem webServiceEventItem = WebServiceEventItem();
+
+  final WebServiceDeleteEventItem webServiceDeleteEventItem =
+      WebServiceDeleteEventItem();
+  final WebServiceDeleteUserEvent webServiceDeleteUserEvent =
+      WebServiceDeleteUserEvent();
   var event = Rx<EventDataResponse>(
     EventDataResponse(
       id: 1,
@@ -123,15 +130,42 @@ class EventDetailViewModel extends GetxController {
       if (response.success) {
         loadEventDetail();
       } else {
-        ErrorSnackbar().showError(response.data.error);
+        SnackbaManager().showError(response.data.error);
       }
     } catch (error) {
-      ErrorSnackbar().showError(error.toString());
+      SnackbaManager().showError(error.toString());
     }
   }
 
-  void onAddPerson() {
-    print("Añadir persona");
+  void deleteEventItem(int ItemID) async {
+    try {
+      final response = await webServiceDeleteEventItem.fetchData(ItemID);
+      if (response.success) {
+        loadEventDetail();
+        SnackbaManager().ShowSuccess("Item eliminado correctamente");
+      } else {
+        SnackbaManager().showError(response.data.error);
+      }
+    } catch (error) {
+      SnackbaManager().showError(error.toString());
+    }
+  }
+
+  void deleteUserFromEvent(String userId) async {
+    try {
+      final response = await webServiceDeleteUserEvent.fetchData(
+        userId,
+        eventId,
+      );
+      if (response.success) {
+        loadEventDetail();
+        SnackbaManager().ShowSuccess("Usuario eliminado correctamente");
+      } else {
+        SnackbaManager().showError(response.data.error);
+      }
+    } catch (error) {
+      SnackbaManager().showError(error.toString());
+    }
   }
 
   @override
@@ -140,22 +174,11 @@ class EventDetailViewModel extends GetxController {
     super.onClose();
   }
 
-  String getCurrentUserRole() {
-    final currentUser = event.value.members?.firstWhere(
-        (member) => member.username.contains("(Tú)"),
-        orElse: () => User(
-            username: "",
-            email: "",
-            thumbnail: "",
-            role: "",
-            confirmation: ""));
-    return currentUser?.role ?? '';
-  }
-
   String getCurrentUserConfirmation() {
     final currentUser = event.value.members?.firstWhere(
         (member) => member.username.contains("(Tú)"),
         orElse: () => User(
+            id: "",
             username: "",
             email: "",
             thumbnail: "",
@@ -172,7 +195,7 @@ class EventDetailViewModel extends GetxController {
         loadEventDetail();
       }
     } catch (error) {
-      ErrorSnackbar().showError(error.toString());
+      SnackbaManager().showError(error.toString());
     }
   }
 }

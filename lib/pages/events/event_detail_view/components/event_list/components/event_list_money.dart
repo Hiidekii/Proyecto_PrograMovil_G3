@@ -51,7 +51,6 @@ class AmountInputWidget extends StatelessWidget {
           const SizedBox(width: 50),
           InkWell(
             onTap: () {
-              // Convertir el valor ingresado y ejecutar `aportarFunct`
               final amountText = _amountController.text;
               final amount = isFloatable
                   ? double.tryParse(amountText) ?? 0.0

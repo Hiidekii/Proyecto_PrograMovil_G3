@@ -10,6 +10,7 @@ class EventDataResponse {
   final int id;
   final String title;
   final String description;
+  final bool? isAdmin;
   final String thumbnail;
   final DateTime dateTime;
   final String wspLink;
@@ -26,6 +27,7 @@ class EventDataResponse {
       required this.id,
       required this.title,
       required this.description,
+      this.isAdmin,
       required this.thumbnail,
       required this.dateTime,
       required this.wspLink,
@@ -43,6 +45,7 @@ class EventDataResponse {
       id: json['id'],
       title: json['title'],
       description: json['description'],
+      isAdmin: json['isAdmin'],
       thumbnail: json['thumbnail'],
       dateTime: DateTime.parse(json['dateTime']).toLocalTime(),
       wspLink: json['wsp_link'],
