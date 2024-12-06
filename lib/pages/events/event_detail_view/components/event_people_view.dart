@@ -40,7 +40,8 @@ class EventPeopleView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         height: 80,
                         child: CustomButton(
-                          onPressed: () {},
+                          onPressed: () =>
+                              controller.showAddUserDialog(context),
                           icon: CupertinoIcons.person_2_fill,
                           label: "Agregar Gente",
                           color: Colors.green,
@@ -50,13 +51,13 @@ class EventPeopleView extends StatelessWidget {
                                   .where(
                                       (user) => !user.username.contains("Tú"))
                                   .toList()
-                                  .length >
+                                  .length >=
                               1 ||
                           guests
                                   .where(
                                       (user) => !user.username.contains("Tú"))
                                   .toList()
-                                  .length >
+                                  .length >=
                               1)
                       ? Expanded(
                           flex: 1,

@@ -14,6 +14,7 @@ import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_deta
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_item.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_get_categories.dart';
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_set_user_event_status.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_add_user_event.dart';
 
 class EventDetailViewModel extends GetxController {
   final WebServiceEventDetail webServiceEventDetail = WebServiceEventDetail();
@@ -30,6 +31,10 @@ class EventDetailViewModel extends GetxController {
       WebServiceDeleteEventItem();
   final WebServiceDeleteUserEvent webServiceDeleteUserEvent =
       WebServiceDeleteUserEvent();
+
+  final WebServiceAddUserEvent webServiceAddUserEvent =
+      WebServiceAddUserEvent();
+
   var event = Rx<EventDataResponse>(
     EventDataResponse(
       id: 1,
@@ -59,6 +64,9 @@ class EventDetailViewModel extends GetxController {
   var filteredPeople = <User>[].obs;
 
   TextEditingController searchController = TextEditingController();
+
+  final TextEditingController identifierController = TextEditingController();
+  var isAddingUser = false.obs;
 
   var selectedIndex = 0.obs;
   final int eventId;
@@ -168,10 +176,76 @@ class EventDetailViewModel extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    searchController.dispose();
-    super.onClose();
+  void showAddUserDialog(BuildContext context) {
+    isAddingUser.value = true;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Agregar Usuario'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: identifierController,
+                decoration: const InputDecoration(
+                  labelText: 'Identificador del usuario',
+                  hintText: 'Ingrese el código de 4 dígitos',
+                ),
+                keyboardType: TextInputType.number,
+                maxLength: 4,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+                identifierController.clear();
+                isAddingUser.value = false;
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (identifierController.text.length == 4) {
+                  try {
+                    final response = await webServiceAddUserEvent.fetchData(
+                      identifierController.text,
+                      eventId,
+                    );
+                    if (response.success) {
+                      Get.back();
+                      loadEventDetail();
+                      Get.snackbar(
+                        'Éxito',
+                        'Usuario agregado correctamente',
+                        backgroundColor: Colors.green,
+                      );
+                    } else {
+                      Get.snackbar(
+                        'Error',
+                        response.data.error ?? 'Error al agregar usuario',
+                        backgroundColor: Colors.red,
+                      );
+                    }
+                  } catch (e) {
+                    Get.snackbar(
+                      'Error',
+                      e.toString(),
+                      backgroundColor: Colors.red,
+                    );
+                  }
+                }
+                identifierController.clear();
+                isAddingUser.value = false;
+              },
+              child: const Text('Agregar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String getCurrentUserConfirmation() {
@@ -197,5 +271,12 @@ class EventDetailViewModel extends GetxController {
     } catch (error) {
       SnackbaManager().showError(error.toString());
     }
+  }
+
+  @override
+  void onClose() {
+    identifierController.dispose();
+    searchController.dispose();
+    super.onClose();
   }
 }

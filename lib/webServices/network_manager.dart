@@ -117,6 +117,7 @@ enum EndPoint {
   eventItemCategories,
   setEventItem,
   setUserEventStatus,
+  addUserEvent,
   deleteUserEvent,
   deleteEventItem
 }
@@ -142,6 +143,8 @@ extension EndPointExtension on EndPoint {
         return 'event/setUserItem';
       case EndPoint.eventDetail:
         return 'event/detail';
+      case EndPoint.addUserEvent:
+        return 'event/addEventUser';
       case EndPoint.setUserEventStatus:
         return 'event/setUserEventStatus';
       case EndPoint.eventItemCategories:
