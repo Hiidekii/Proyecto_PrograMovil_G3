@@ -17,31 +17,34 @@ class WebServiceCreateEvent implements WebServiceProtocol {
     String thumbnail,
     String wspLink,
     String musicLink,
-    DateTime datetime,
+    DateTime dateTime,
     String placeId,
     String displayName,
     String formattedAddress,
     double latitude,
     double longitude,
     bool isPublic,
+    {int? id}  // Agregamos el ID opcional
   ) async {
     final token = storage.read('token') ?? "";
     final headers = {
       'Authorization': 'Token $token',
     };
+
     final body = {
-      "title": title,
-      "description": description,
-      "thumbnail": thumbnail,
-      "wsp_link": wspLink,
-      "music_link": musicLink,
-      "datetime": datetime.toIso8601String(),
-      "placeId": placeId,
-      "displayName": displayName,
-      "formattedAddress": formattedAddress,
-      "latitude": latitude,
-      "longitude": longitude,
-      "isPublic": isPublic,
+      if (id != null) 'id': id,  // Incluimos el ID solo si está presente
+      'title': title,
+      'description': description,
+      'thumbnail': thumbnail,
+      'wsp_link': wspLink,
+      'music_link': musicLink,
+      'datetime': dateTime.toIso8601String(),
+      'placeId': placeId,
+      'displayName': displayName,
+      'formattedAddress': formattedAddress,
+      'latitude': latitude,
+      'longitude': longitude,
+      'isPublic': isPublic,
     };
 
     try {
@@ -51,10 +54,9 @@ class WebServiceCreateEvent implements WebServiceProtocol {
         headers: headers,
         body: body,
       );
-      return BaseResponse.fromJson(
-          response, (json) => CheckResponse.fromJson(json));
+      return BaseResponse.fromJson(response, (json) => CheckResponse.fromJson(json));
     } catch (error) {
-      throw Exception('Error al crear el evento: $error');
+      throw Exception('$error');
     }
   }
 }

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/components/q_sale_image.dart';
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart';
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_view_model.dart';
+import 'package:proyecto_programovil_g3/webServices/Event/web_service_event_detail.dart';
+import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
 
 class EventCard extends StatefulWidget {
+
   final String title;
   final String date;
   final String time;
@@ -13,8 +19,9 @@ class EventCard extends StatefulWidget {
   final VoidCallback? onManage;
   final bool isEditable;
   final bool isFavorite;
-
-  final VoidCallback? onTap; // Agregar esta línea
+  final VoidCallback? onTap;
+  final int eventId;  // Nuevo campo para el ID del evento
+  final EventDataResponse event;
 
   const EventCard({
     Key? key,
@@ -28,13 +35,43 @@ class EventCard extends StatefulWidget {
     required this.isEditable,
     required this.isFavorite,
     this.onTap,
+    required this.eventId,
+    required this.event,
   }) : super(key: key);
+
   @override
   _EventCardState createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
+  
   bool showDetails = false;
+  final WebServiceEventDetail _webService = WebServiceEventDetail();
+  EventDataResponse? eventDetails;
+  bool isLoading = false;
+
+  Future<void> loadEventDetails() async {
+    if (!showDetails || eventDetails != null) return;
+    
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final response = await _webService.fetchData(widget.eventId);
+      if (response.success) {
+        setState(() {
+          eventDetails = response.data;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("Error loading event details: $e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,17 +134,44 @@ class _EventCardState extends State<EventCard> {
   }
 
   Widget _buildItemDetails(BuildContext context) {
+    if (isLoading) {
+      return Container(
+        height: 50.0,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (eventDetails == null) {
+      // Cargar detalles si aún no están cargados
+      loadEventDetails();
+      return Container(
+        height: 50.0,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Container(
       height: 50.0,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _buildItemInfo('Bajona', '5', true, false, context),
-            SizedBox(width: 10.0),
-            _buildItemInfo('Trago', '20', false, true, context),
-            SizedBox(width: 10.0),
-            _buildItemInfo('Chancha', '300', true, true, context),
+            ...eventDetails!.lista.expand((category) {
+              return category.items!.map((item) =>
+                Row(
+                  children: [
+                    _buildItemInfo(
+                      category.type,
+                      item.totalAmount.toString(),
+                      item.items.isNotEmpty,  // Consideramos que hay confirmación si hay items
+                      category.floatable,
+                      context,
+                    ),
+                    SizedBox(width: 10.0),
+                  ],
+                ),
+              );
+            }).toList(),
           ],
         ),
       ),
@@ -213,8 +277,7 @@ class _EventCardState extends State<EventCard> {
     );
   }
 
-  Widget _buildActionButton(
-      BuildContext context, IconData icon, VoidCallback? onPressed) {
+  Widget _buildActionButton(BuildContext context, IconData icon, VoidCallback? onPressed) {
     return Container(
       width: 35,
       height: 35,
@@ -224,9 +287,29 @@ class _EventCardState extends State<EventCard> {
       ),
       child: IconButton(
         icon: Icon(icon, color: AppColors.getTextColor(context)),
-        onPressed: onPressed,
+        onPressed: () {
+          if (icon == CupertinoIcons.pencil) {
+            _showEditModal(context);
+          } else {
+            onPressed?.call();
+          }
+        },
         padding: EdgeInsets.zero,
       ),
     );
   }
+  void _showEditModal(BuildContext context) {
+    final viewModel = Get.put(NewEventViewModel());
+    viewModel.loadEventForEditing(widget.event);
+    
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return const NewEventPage();
+      },
+    );
+  }
+  
 }

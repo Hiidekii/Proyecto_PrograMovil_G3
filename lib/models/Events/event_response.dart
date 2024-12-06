@@ -10,33 +10,34 @@ class EventDataResponse {
   final int id;
   final String title;
   final String description;
-  final bool? isAdmin;
   final String thumbnail;
   final DateTime dateTime;
   final String wspLink;
   final String musicLink;
   final bool? isPublic;
   final bool? isFavourite;
+  final bool? isAdmin;  // Nuevo campo
   final EventLocationResponse location;
-  final List<User>? members; // Hacemos members opcional
+  final List<User>? members;
   final List<CategoryResponse> lista;
 
-  EventDataResponse(
-      {this.error,
-      this.message,
-      required this.id,
-      required this.title,
-      required this.description,
-      this.isAdmin,
-      required this.thumbnail,
-      required this.dateTime,
-      required this.wspLink,
-      required this.musicLink,
-      this.isPublic,
-      this.isFavourite,
-      required this.location,
-      required this.members, // Cambiamos a opcional
-      required this.lista});
+  EventDataResponse({
+    this.error,
+    this.message,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.thumbnail,
+    required this.dateTime,
+    required this.wspLink,
+    required this.musicLink,
+    this.isPublic,
+    this.isFavourite,
+    this.isAdmin,  // Agregamos el nuevo campo
+    required this.location,
+    required this.members,
+    required this.lista,
+  });
 
   factory EventDataResponse.fromJson(Map<String, dynamic> json) {
     return EventDataResponse(
@@ -45,17 +46,17 @@ class EventDataResponse {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      isAdmin: json['isAdmin'],
       thumbnail: json['thumbnail'],
       dateTime: DateTime.parse(json['dateTime']).toLocalTime(),
       wspLink: json['wsp_link'],
       musicLink: json['music_link'],
       isPublic: json['isPublic'],
       isFavourite: json['isFavourite'],
+      isAdmin: json['isAdmin'],  // Parseamos el nuevo campo
       location: EventLocationResponse.fromJson(json['location']),
       members: ((json['members'] as List<dynamic>?) ?? [])
           .map((user) => User.fromJson(user))
-          .toList(), // Manejo de opcional'
+          .toList(),
       lista: ((json['list'] as List<dynamic>?) ?? [])
           .map((category) => CategoryResponse.fromJson(category))
           .toList(),

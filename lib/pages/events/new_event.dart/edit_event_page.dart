@@ -9,15 +9,15 @@ import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/extensions/time_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/events/new_event.dart/location_modal_page.dart';
-import 'new_event_view_model.dart';
+import 'edit_event_view_model.dart'; // Asegúrate de importar el ViewModel
 
-class NewEventPage extends StatelessWidget {
-  const NewEventPage({super.key});
+class EditEventPage extends StatelessWidget {
+  const EditEventPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Instancia del controlador usando GetX
-    final NewEventViewModel viewModel = Get.put(NewEventViewModel());
+    final EditEventViewModel viewModel = Get.put(EditEventViewModel());
 
     return Padding(
       padding: EdgeInsets.only(
@@ -125,7 +125,7 @@ class NewEventPage extends StatelessWidget {
               _buildTextField(
                 CupertinoIcons.tickets,
                 'Título',
-                controller: viewModel.titleController,
+                (value) => viewModel.title.value = value,
               ),
               const SizedBox(height: 2),
               // Fecha
@@ -138,7 +138,7 @@ class NewEventPage extends StatelessWidget {
               _buildTextField(
                 CupertinoIcons.text_alignleft,
                 'Descripción',
-                controller: viewModel.descriptionController,
+                (value) => viewModel.description.value = value,
               ),
               const SizedBox(height: 2),
               GestureDetector(
@@ -164,13 +164,13 @@ class NewEventPage extends StatelessWidget {
               _buildTextField(
                 CupertinoIcons.chat_bubble_text,
                 'Link de chat',
-                controller: viewModel.chatLinkController,
+                (value) => viewModel.chatLink.value = value,
               ),
               const SizedBox(height: 2),
               _buildTextField(
                 CupertinoIcons.music_note,
                 'Link de la playlist',
-                controller: viewModel.playlistLinkController,
+                (value) => viewModel.playlistLink.value = value,
               ),
               const SizedBox(height: 16),
               Row(
@@ -210,28 +210,24 @@ class NewEventPage extends StatelessWidget {
   }
 
   Widget _buildTextField(
-    IconData icon,
-    String hintText,
-    {required TextEditingController controller}
-  ) {
+      IconData icon, String hintText, Function(String) onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: AppColors.darkBackgroundColor),
-          hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.grey),
-          filled: true,
-          fillColor: const Color.fromARGB(255, 255, 255, 255),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        child: TextField(
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            prefixIcon: Icon(icon, color: AppColors.darkBackgroundColor),
+            hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
+            filled: true,
+            fillColor: const Color.fromARGB(255, 255, 255, 255),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
-        ),
-        style: const TextStyle(color: Colors.black),
-      ),
-    );
+          style: const TextStyle(color: Colors.black),
+        ));
   }
 
   Widget _buildPlainText(IconData icon, String hint, String? text) {
@@ -268,7 +264,7 @@ class NewEventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDateField(BuildContext context, NewEventViewModel viewModel) {
+  Widget _buildDateField(BuildContext context, EditEventViewModel viewModel) {
     return GestureDetector(
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
@@ -302,7 +298,7 @@ class NewEventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeField(BuildContext context, NewEventViewModel viewModel) {
+  Widget _buildTimeField(BuildContext context, EditEventViewModel viewModel) {
     return GestureDetector(
       onTap: () async {
         TimeOfDay? pickedTime = await showTimePicker(

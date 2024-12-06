@@ -9,7 +9,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/timezone.dart';
 
-class NewEventViewModel extends GetxController {
+class EditEventViewModel extends GetxController {
   // Variables observables
   RxString imageBase64 = ''.obs;
   var title = ''.obs;
@@ -25,38 +25,20 @@ class NewEventViewModel extends GetxController {
   var isEditing = false.obs;
   var eventId = 0.obs;
 
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final chatLinkController = TextEditingController();
-  final playlistLinkController = TextEditingController();
-
   final webServiceCreateEvent = WebServiceCreateEvent();
-
-  @override
-  void onInit() {
-    super.onInit();
-    // Vinculamos los controladores con las variables reactivas
-    titleController.addListener(() => title.value = titleController.text);
-    descriptionController.addListener(() => description.value = descriptionController.text);
-    chatLinkController.addListener(() => chatLink.value = chatLinkController.text);
-    playlistLinkController.addListener(() => playlistLink.value = playlistLinkController.text);
-  }
 
   void loadEventForEditing(EventDataResponse event) {
     isEditing.value = true;
     eventId.value = event.id;
-    
-    // Actualizamos los controladores
-    titleController.text = event.title;
-    descriptionController.text = event.description;
-    chatLinkController.text = event.wspLink;
-    playlistLinkController.text = event.musicLink;
-    
-    // Resto de campos...
+    title.value = event.title;
+    description.value = event.description;
     date.value = event.dateTime;
     time.value = TimeOfDay.fromDateTime(event.dateTime);
+    chatLink.value = event.wspLink;
+    playlistLink.value = event.musicLink;
     isPublic.value = event.isPublic ?? false;
     
+    // Cargar ubicación
     selectedPlace.value = Place(
       placeId: event.location.placeId,
       displayName: DisplayName(text: event.location.displayName),
@@ -66,6 +48,9 @@ class NewEventViewModel extends GetxController {
         longitude: event.location.longitude,
       ),
     );
+    
+    // No cargamos la imagen ya que necesitaríamos convertirla de URL a base64
+    // El usuario deberá seleccionar una nueva imagen si desea cambiarla
   }
 
   void searchLocations(String query) async {
@@ -87,18 +72,12 @@ class NewEventViewModel extends GetxController {
   }
 
   Future<void> submitEvent(BuildContext context) async {
-    print("Validando campos...");
-    print("Title controller: ${titleController.text}");
-    print("Description controller: ${descriptionController.text}");
-    print("Chat link controller: ${chatLinkController.text}");
-    print("Playlist link controller: ${playlistLinkController.text}");
-
-    if (titleController.text.isEmpty ||
+    if (title.value.isEmpty ||
         date.value == null ||
         time.value == null ||
-        descriptionController.text.isEmpty ||
+        description.value.isEmpty ||
         selectedPlace.value == null ||
-        chatLinkController.text.isEmpty) {
+        chatLink.value.isEmpty) {
       setError("Todos los campos deben ser rellenados");
       return;
     }
@@ -122,11 +101,11 @@ class NewEventViewModel extends GetxController {
 
     try {
       final response = await webServiceCreateEvent.fetchData(
-        titleController.text,
-        descriptionController.text,
+        title.value,
+        description.value,
         imageBase64.value,
-        chatLinkController.text,
-        playlistLinkController.text,
+        chatLink.value,
+        playlistLink.value,
         combinedDateTime,
         selectedPlace.value?.placeId ?? "",
         selectedPlace.value?.displayName.text ?? "",
@@ -134,7 +113,7 @@ class NewEventViewModel extends GetxController {
         selectedPlace.value?.location.latitude ?? 1.0,
         selectedPlace.value?.location.longitude ?? 1.0,
         isPublic.value,
-        id: isEditing.value ? eventId.value : null,
+        id: isEditing.value ? eventId.value : null,  // Enviamos el ID solo si estamos editando
       );
 
       if (response.success) {
@@ -176,33 +155,17 @@ class NewEventViewModel extends GetxController {
   }
 
   void clearEventForm() {
-    // Limpiamos los controladores
-    titleController.clear();
-    descriptionController.clear();
-    chatLinkController.clear();
-    playlistLinkController.clear();
-    
-    // Resto de campos...
     imageBase64.value = '';
     title.value = '';
-    description.value = '';
     date.value = null;
     time.value = null;
+    description.value = '';
     selectedPlace.value = null;
     playlistLink.value = '';
     chatLink.value = '';
     isPublic.value = false;
+    // Agregamos la limpieza de las nuevas propiedades
     isEditing.value = false;
     eventId.value = 0;
-  }
-
-  @override
-  void onClose() {
-    // Limpiamos los controladores al cerrar
-    titleController.dispose();
-    descriptionController.dispose();
-    chatLinkController.dispose();
-    playlistLinkController.dispose();
-    super.onClose();
   }
 }
