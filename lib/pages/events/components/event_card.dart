@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_programovil_g3/configs/colors.dart';
+import 'package:proyecto_programovil_g3/components/q_sale_image.dart';
 
 class EventCard extends StatefulWidget {
   final String title;
@@ -170,9 +171,11 @@ class _EventCardState extends State<EventCard> {
         child: Container(
           height: 95,
           width: 83,
-          child: Image.asset(
-            widget.imageUrl,
-            fit: BoxFit.cover,
+          child: QSaleImage(
+            imgUrlString: widget.imageUrl,
+            width: 83,
+            height: 95,
+            imgScale: BoxFit.cover,
           ),
         ),
       ),

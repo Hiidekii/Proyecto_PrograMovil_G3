@@ -1,114 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/event_card.dart';
 import 'package:proyecto_programovil_g3/pages/events/components/section_header.dart';
-import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart'; // Asegúrate de importar esta clase
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart';
+import 'package:proyecto_programovil_g3/pages/events/events_page_view_model.dart';
 
 class EventsTab extends StatelessWidget {
+  final EventsPageViewModel controller = Get.put(EventsPageViewModel());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          SectionHeader(title: 'Mis eventos'),
-          EventCard(
-            title: 'Cumpleaños de Hideki',
-            date: '21/10/24',
-            time: '21:00',
-            imageUrl: 'assets/img/E1.png',
-            onEdit: () {},
-            onShare: () {},
-            onManage: () {},
-            isEditable: true,
-            isFavorite: false,
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const EventDetailScreen(
-              //       title: 'Cumpleaños de Hideki',
-              //       date: '21/10/24',
-              //       itemDescription: 'Descripción del evento',
-              //       itemValue: '5',
-              //       moneyDescription: 'Local',
-              //       moneyValue: '300',
-              //       isItemConfirmed: true,
-              //       isMoneyConfirmed: true,
-              //       imageUrl: 'assets/img/E1.png',
-              //       isEditable: false,
-              //       isFavorite: true,
-              //     ),
-              //   ),
-              // );
-            },
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.hasError.value) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Error: ${controller.errorMessage.value}'),
+                ElevatedButton(
+                  onPressed: controller.refreshEvents,
+                  child: const Text('Reintentar'),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: controller.refreshEvents,
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              if (controller.adminEvents.isNotEmpty) ...[
+                const SectionHeader(title: 'Mis eventos'),
+                ...controller.adminEvents.map((event) => EventCard(
+                      title: event.title,
+                      date: event.dateTime.toString().substring(0, 10),
+                      time: event.dateTime.toString().substring(11, 16),
+                      imageUrl: event.thumbnail,
+                      onEdit: () {},
+                      onShare: () {},
+                      onManage: () {},
+                      isEditable: true,
+                      isFavorite: event.isFavourite ?? false,
+                      onTap: () => controller.navigateToEventDetail(event.id),
+                    )),
+              ],
+              if (controller.favoriteEvents.isNotEmpty) ...[
+                const SectionHeader(title: 'Favoritos'),
+                ...controller.favoriteEvents.map((event) => EventCard(
+                      title: event.title,
+                      date: event.dateTime.toString().substring(0, 10),
+                      time: event.dateTime.toString().substring(11, 16),
+                      imageUrl: event.thumbnail,
+                      onEdit: null,
+                      onShare: () {},
+                      onManage: null,
+                      isEditable: false,
+                      isFavorite: true,
+                      onTap: () => controller.navigateToEventDetail(event.id),
+                    )),
+              ],
+              if (controller.guestEvents.isNotEmpty) ...[
+                const SectionHeader(title: 'Mis planes'),
+                ...controller.guestEvents.map((event) => EventCard(
+                      title: event.title,
+                      date: event.dateTime.toString().substring(0, 10),
+                      time: event.dateTime.toString().substring(11, 16),
+                      imageUrl: event.thumbnail,
+                      onEdit: null,
+                      onShare: () {},
+                      onManage: null,
+                      isEditable: false,
+                      isFavorite: event.isFavourite ?? false,
+                      onTap: () => controller.navigateToEventDetail(event.id),
+                    )),
+              ],
+            ],
           ),
-          SectionHeader(title: 'Favoritos'),
-          EventCard(
-            title: 'Cumpleaños de Luis',
-            date: '13/12/24',
-            time: '21:00',
-            imageUrl: 'assets/img/E2.png',
-            onEdit: null,
-            onShare: () {},
-            onManage: null,
-            isEditable: false,
-            isFavorite: true,
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const EventDetailScreen(
-              //       title: 'Cumpleaños de Luis',
-              //       date: '13/10/24',
-              //       itemDescription: 'Descripción del evento',
-              //       itemValue: '5',
-              //       moneyDescription: 'Local',
-              //       moneyValue: '300',
-              //       isItemConfirmed: true,
-              //       isMoneyConfirmed: true,
-              //       imageUrl: 'assets/img/E2.png',
-              //       isEditable: false,
-              //       isFavorite: true,
-              //     ),
-              //   ),
-              // );
-            },
-          ),
-          SectionHeader(title: 'Mis planes'),
-          EventCard(
-            title: 'Cumpleaños de Kohji',
-            date: '06/10/24',
-            time: '21:00',
-            imageUrl: 'assets/img/E3.png',
-            onEdit: null,
-            onShare: () {},
-            onManage: null,
-            isEditable: false,
-            isFavorite: false,
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const EventDetailScreen(
-              //       title: 'Cumpleaños de Kohji',
-              //       date: '06/10/24',
-              //       itemDescription: 'Descripción del evento',
-              //       itemValue: '5',
-              //       moneyDescription: 'Local',
-              //       moneyValue: '300',
-              //       isItemConfirmed: true,
-              //       isMoneyConfirmed: true,
-              //       imageUrl: 'assets/img/E3.png',
-              //       isEditable: false,
-              //       isFavorite: false,
-              //     ),
-              //   ),
-              // );
-            },
-          ),
-        ],
-      ),
+        );
+      }),
       floatingActionButton: Container(
         padding: const EdgeInsets.only(right: 5, bottom: 100),
         child: FloatingActionButton(
