@@ -5,6 +5,7 @@ class User {
   String thumbnail;
   String? role;
   String? confirmation;
+  String identifier;
 
   User({
     required this.id,
@@ -12,7 +13,8 @@ class User {
     required this.email,
     required this.thumbnail,
     this.role,
-    this.confirmation,
+    this.confirmation, 
+    required this.identifier
   });
 
   @override
@@ -28,6 +30,7 @@ class User {
       'thumbnail': thumbnail,
       'role': role,
       'confirmation': confirmation,
+      'identifier': identifier
     };
   }
 
@@ -39,6 +42,7 @@ class User {
       thumbnail: json['thumbnail'],
       role: json['role'] as String?,
       confirmation: json['confirmation'] as String?,
+      identifier: json['identifier']
     );
   }
   UserRole? get userRole {

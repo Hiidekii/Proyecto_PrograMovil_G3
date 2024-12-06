@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/components/q_sale_custom_button.dart';
+import 'package:proyecto_programovil_g3/configs/colors.dart';
 import 'package:proyecto_programovil_g3/extensions/date_extensions.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_detail_card_view.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_list/components/add_item_modal_view.dart';
@@ -9,6 +10,8 @@ import 'package:proyecto_programovil_g3/pages/events/event_detail_view/component
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/event_detail_view_model.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_map_view.dart';
 import 'package:proyecto_programovil_g3/pages/events/event_detail_view/components/event_people_view.dart';
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_page.dart';
+import 'package:proyecto_programovil_g3/pages/events/new_event.dart/new_event_view_model.dart';
 
 class EventDetailScreen extends StatelessWidget {
   final int id;
@@ -53,6 +56,25 @@ class EventDetailScreen extends StatelessWidget {
     );
   }
 
+  void _showEditModal(BuildContext context, event) {
+    // Inicializamos el ViewModel para la edición
+    final viewModel = Get.put(NewEventViewModel());
+    viewModel.loadEventForEditing(event);
+    
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return const NewEventPage();
+      },
+    ).then((_) {
+      // Recargamos los detalles del evento después de editar
+      final controller = Get.find<EventDetailViewModel>();
+      controller.loadEventDetail();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Inicia o reinicia el controlador para esta pantalla.
@@ -72,12 +94,13 @@ class EventDetailScreen extends StatelessWidget {
         actions: [
           CupertinoButton(
             padding: EdgeInsets.only(right: 20),
-            onPressed: () {},
-            child: const Icon(
-              CupertinoIcons
-                  .ellipses_bubble_fill, // Aquí pones el icono que deseas
-              color: Colors.black,
-              size: 28, // Ajusta el tamaño del icono según lo necesites
+            onPressed: () => _showEditModal(context, controller.event.value),
+            child: const Text(
+              'Editar',
+              style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.red
+          ),
             ),
           )
         ],

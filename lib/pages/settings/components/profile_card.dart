@@ -30,7 +30,6 @@ class ProfileCard extends StatelessWidget {
       children: [
         _buildCard(context),
         _buildImage(),
-        _buildActions(context),
       ],
     );
   }

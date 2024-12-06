@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_programovil_g3/models/Events/event_response.dart';
-import 'package:proyecto_programovil_g3/models/GoogleMaps/place_response.dart';
+import 'package:proyecto_programovil_g3/models/GoogleMaps/place_response.dart' as maps;
 import 'package:proyecto_programovil_g3/webServices/Event/web_service_create_event.dart';
 import 'package:proyecto_programovil_g3/webServices/GoogleMaps/web_service_google_maps.dart';
 
@@ -16,11 +16,11 @@ class NewEventViewModel extends GetxController {
   var date = Rx<DateTime?>(null);
   var time = Rx<TimeOfDay?>(null);
   var description = ''.obs;
-  var selectedPlace = Rx<Place?>(null);
+  var selectedPlace = Rx<maps.Place?>(null);
   var playlistLink = ''.obs;
   var chatLink = ''.obs;
   var searchText = ''.obs;
-  var places = <Place>[].obs;
+  var places = <maps.Place>[].obs;
   var isPublic = false.obs; // Por defecto, es público
   var isEditing = false.obs;
   var eventId = 0.obs;
@@ -57,11 +57,14 @@ class NewEventViewModel extends GetxController {
     time.value = TimeOfDay.fromDateTime(event.dateTime);
     isPublic.value = event.isPublic ?? false;
     
-    selectedPlace.value = Place(
-      placeId: event.location.placeId,
-      displayName: DisplayName(text: event.location.displayName),
+    selectedPlace.value = maps.Place(
+      id: event.location.placeId,
+      displayName: maps.DisplayName(
+        text: event.location.displayName,
+        languageCode: null  // Agregamos el languageCode como null
+      ),
       formattedAddress: event.location.formattedAddress,
-      location: PlaceLocation(
+      location: maps.Location(  // Cambiamos PlaceLocation por Location
         latitude: event.location.latitude,
         longitude: event.location.longitude,
       ),
@@ -69,16 +72,19 @@ class NewEventViewModel extends GetxController {
   }
 
   void searchLocations(String query) async {
+    print('Searching locations with query: $query');  // Debug log
     if (query.isNotEmpty) {
       try {
         final webServiceGoogleMaps = GoogleMapsService();
         final response = await webServiceGoogleMaps.fetchPlaces(query);
+        print('Places found: ${response.places.length}');  // Debug log
         places.assignAll(response.places);
       } catch (e) {
-        print('Error al buscar lugares: ${e.toString()}');
+        print('Error searching locations: $e');  // Debug log
+        setError('Error al buscar lugares: $e');
       }
     } else {
-      places.value = [];
+      places.clear();
     }
   }
 
@@ -110,7 +116,7 @@ class NewEventViewModel extends GetxController {
     }
 
     tz.initializeTimeZones();
-    final Location peru = tz.getLocation('America/Lima');
+    final tz.Location peru = tz.getLocation('America/Lima');
     final DateTime combinedDateTime = tz.TZDateTime(
       peru,
       date.value!.year,
@@ -128,7 +134,7 @@ class NewEventViewModel extends GetxController {
         chatLinkController.text,
         playlistLinkController.text,
         combinedDateTime,
-        selectedPlace.value?.placeId ?? "",
+        selectedPlace.value?.id?? "",
         selectedPlace.value?.displayName.text ?? "",
         selectedPlace.value?.formattedAddress ?? "",
         selectedPlace.value?.location.latitude ?? 1.0,

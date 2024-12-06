@@ -21,7 +21,7 @@ class SettingsTab extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             children: [
               ProfileCard(
-                name: "Hola, " + viewModel.userName + '!',
+                name: "Hola, " + viewModel.userName +' #'+viewModel.userIdentifier+ '!',
                 email: viewModel.userEmail,
                 imageUrl: viewModel.userImageUrl,
                 isEditable: true,
@@ -29,13 +29,6 @@ class SettingsTab extends StatelessWidget {
                 onEdit: () {},
                 onShare: () {},
                 onManage: () {},
-              ),
-              _buildSwitchListTile(
-                context: context,
-                icon: CupertinoIcons.bell,
-                title: 'Notificaciones',
-                value: viewModel.notificationsEnabled,
-                onChanged: viewModel.toggleNotifications,
               ),
               _buildSwitchListTile(
                 context: context,

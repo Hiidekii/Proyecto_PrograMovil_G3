@@ -54,23 +54,6 @@ class EventsTab extends StatelessWidget {
                   eventId: event.id,  // Agregamos el ID del evento
                 ),),
               ],
-              if (controller.favoriteEvents.isNotEmpty) ...[
-                const SectionHeader(title: 'Favoritos'),
-                ...controller.favoriteEvents.map((event) => EventCard(
-                    event: event,
-                    title: event.title,
-                    date: event.dateTime.toString().substring(0, 10),
-                    time: event.dateTime.toString().substring(11, 16),
-                    imageUrl: event.thumbnail,
-                    onEdit: () {},
-                    onShare: () {},
-                    onManage: () {},
-                    isEditable: true,
-                    isFavorite: event.isFavourite ?? false,
-                    onTap: () => controller.navigateToEventDetail(event.id),
-                    eventId: event.id,  // Agregamos el ID del evento
-                  ),),
-              ],
               if (controller.guestEvents.isNotEmpty) ...[
                 const SectionHeader(title: 'Mis planes'),
                 ...controller.guestEvents.map((event) => EventCard(

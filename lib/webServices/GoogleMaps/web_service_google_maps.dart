@@ -9,8 +9,9 @@ class GoogleMapsService {
   GoogleMapsService();
 
   Future<GoogleMapsPlacesResponse> fetchPlaces(String query) async {
+    print('Searching for places with query: $query');  // Debug log
+    
     final body = json.encode({
-      // Convierte el Map a JSON
       'textQuery': query,
     });
 
@@ -18,24 +19,26 @@ class GoogleMapsService {
       "Content-Type": 'application/json',
       "X-Goog-Api-Key": apiKey,
       "X-Goog-FieldMask":
-          "places.displayName,places.formattedAddress,places.location,places.id"
+          "places.id,places.displayName,places.formattedAddress,places.location"
     };
 
     final Uri url = Uri.parse(endPoint);
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+      print('Response status: ${response.statusCode}');  // Debug log
+      print('Response body: ${response.body}');  // Debug log
 
       if (response.statusCode == 200) {
-        // Parseamos la respuesta JSON al modelo GoogleMapsPlacesResponse
         final jsonResponse = json.decode(response.body);
         return GoogleMapsPlacesResponse.fromJson(jsonResponse);
       } else {
+        print('Error response: ${response.body}');  // Debug log
         throw Exception('Error en la petición: ${response.statusCode}');
       }
     } catch (error) {
-      throw Exception(
-          'Error al realizar la petición a Google Maps: $error con $query');
+      print('Exception caught: $error');  // Debug log
+      throw Exception('Error al realizar la petición a Google Maps: $error');
     }
   }
 }

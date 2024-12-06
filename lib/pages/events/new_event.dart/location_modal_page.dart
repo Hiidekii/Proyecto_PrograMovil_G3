@@ -51,7 +51,7 @@ class LocationModal extends StatelessWidget {
                           subtitle: Text(place.formattedAddress),
                           onTap: () {
                             controller.selectedPlace.value = Place(
-                                placeId: place.placeId,
+                                id: place.id,
                                 formattedAddress: place.formattedAddress,
                                 location: place.location,
                                 displayName: place.displayName);

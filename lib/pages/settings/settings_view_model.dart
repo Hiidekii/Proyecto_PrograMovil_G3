@@ -9,6 +9,7 @@ class SettingsViewModel extends ChangeNotifier {
   String _userName;
   String _userEmail;
   String _userImageUrl;
+  String _userIdentifier;
 
   // Propiedades de configuración
   bool _notificationsEnabled;
@@ -19,11 +20,13 @@ class SettingsViewModel extends ChangeNotifier {
     String userName = "Nombre del Usuario",
     String userEmail = "usuario@example.com",
     String userImageUrl = "assets/img/E1.png",
+    String userIdentifier = "0000",
     bool notificationsEnabled = true,
     bool darkModeEnabled = false,
   })  : _userName = userName,
         _userEmail = userEmail,
         _userImageUrl = userImageUrl,
+        _userIdentifier = userIdentifier,
         _notificationsEnabled = notificationsEnabled,
         _darkModeEnabled = darkModeEnabled {
     _onAppear();
@@ -38,6 +41,7 @@ class SettingsViewModel extends ChangeNotifier {
         _userName = userData.username;
         _userEmail = userData.email;
         _userImageUrl = userData.thumbnail;
+        _userIdentifier = userData.identifier;
         notifyListeners();
       } else {
         print("ERROR");
@@ -51,6 +55,7 @@ class SettingsViewModel extends ChangeNotifier {
   String get userName => _userName;
   String get userEmail => _userEmail;
   String get userImageUrl => _userImageUrl;
+  String get userIdentifier => _userIdentifier;
 
   bool get notificationsEnabled => _notificationsEnabled;
   bool get darkModeEnabled => _darkModeEnabled;

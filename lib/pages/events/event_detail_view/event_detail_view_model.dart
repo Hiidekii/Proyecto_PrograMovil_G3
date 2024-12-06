@@ -257,7 +257,8 @@ class EventDetailViewModel extends GetxController {
             email: "",
             thumbnail: "",
             role: "",
-            confirmation: ""));
+            confirmation: "",
+            identifier: ""));
     return currentUser?.confirmation ?? '';
   }
 

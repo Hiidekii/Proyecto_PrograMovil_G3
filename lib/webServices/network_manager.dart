@@ -9,11 +9,11 @@ class NetworkManager {
   NetworkManager._internal();
 
   String _baseURL() {
-    // String baseUrl = 'appquesalebackend-production.up.railway.app/que_sale';
-    String baseUrl = '192.168.18.192:8000/que_sale';
+    String baseUrl = 'appquesalebackend-production.up.railway.app/que_sale';
+    // String baseUrl = '192.168.18.192:8000/que_sale';
     // String baseUrl = '127.0.0.1:8000/que_sale';
     // String baseUrl = '10.142.208.127:8000/que_sale';
-    String httpProtocol = 'http';
+    String httpProtocol = 'https';
 
     return '$httpProtocol://$baseUrl';
   }
